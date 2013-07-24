@@ -58,6 +58,7 @@ enum ability_type
     // Others
     ABIL_DELAYED_FIREBALL,
     ABIL_END_TRANSFORMATION,
+    ABIL_STOP_SINGING, // From song of slaying
 
     // Species-specific abilities.
     // Demonspawn-only
@@ -295,6 +296,7 @@ enum attribute_type
     ATTR_EVOKER_XP,            // How much xp remaining until next evoker charge
 #endif
     ATTR_SEEN_BEOGH,           // Did an orc priest already offer conversion?
+    ATTR_XP_DRAIN,             // Severity of current skill drain
     NUM_ATTRIBUTES
 };
 
@@ -381,7 +383,8 @@ enum beam_type                  // bolt::flavour
     BEAM_INNER_FLAME,
     BEAM_SENTINEL_MARK,
     BEAM_DIMENSION_ANCHOR,
-    BEAM_LAST_ENCHANTMENT = BEAM_DIMENSION_ANCHOR,
+    BEAM_VULNERABILITY,
+    BEAM_LAST_ENCHANTMENT = BEAM_VULNERABILITY,
 
     BEAM_MEPHITIC,
     BEAM_GLOOM,
@@ -422,6 +425,9 @@ enum book_type
     BOOK_CHANGES,
     BOOK_TRANSFIGURATIONS,
     BOOK_WAR_CHANTS,
+#if TAG_MAJOR_VERSION > 34
+    BOOK_BATTLE,
+#endif
     BOOK_CLOUDS,
     BOOK_NECROMANCY,
     BOOK_CALLINGS,
@@ -433,7 +439,7 @@ enum book_type
     BOOK_UNLIFE,
     BOOK_CONTROL,
 #if TAG_MAJOR_VERSION == 34
-    BOOK_MUTATIONS,
+    BOOK_BATTLE, // was BOOK_MUTATIONS
 #endif
     BOOK_GEOMANCY,
     BOOK_EARTH,
@@ -997,7 +1003,6 @@ enum conduct_type
     DID_EXPLORATION,                      // Ashenzari, wrath timers
     DID_DESECRATE_HOLY_REMAINS,           // Zin/Ely/TSO/Yredelemnul
     DID_SEE_MONSTER,                      // TSO
-    DID_DESTROY_DECK,                     // Nemelex
 
     NUM_CONDUCTS
 };
@@ -1138,7 +1143,7 @@ enum level_state_type
 };
 
 // NOTE: The order of these is very important to their usage!
-// [dshaligram] If adding/removing from this list, also update view.cc!
+// [dshaligram] If adding/removing from this list, also update viewchar.cc!
 enum dungeon_char_type
 {
     DCHAR_WALL,
@@ -1159,6 +1164,7 @@ enum dungeon_char_type
     DCHAR_INVIS_EXPOSED,
     DCHAR_ITEM_DETECTED,
     DCHAR_ITEM_ORB,
+    DCHAR_ITEM_RUNE,
     DCHAR_ITEM_WEAPON,
     DCHAR_ITEM_ARMOUR,
     DCHAR_ITEM_WAND,
@@ -1509,6 +1515,10 @@ enum duration_type
     DUR_WEAK,
     DUR_DIMENSION_ANCHOR,
     DUR_ANTIMAGIC,
+    DUR_SPIRIT_HOWL,
+    DUR_INFUSION,
+    DUR_SONG_OF_SLAYING,
+    DUR_SONG_OF_SHIELDING,
     NUM_DURATIONS
 };
 
@@ -1545,7 +1555,9 @@ enum enchant_type
     ENCH_SLEEPY,         //   Monster can't wake until this wears off.
     ENCH_HELD,           //   Caught in a net.
     ENCH_BATTLE_FRENZY,  //   Monster is in a battle frenzy.
+#if TAG_MAJOR_VERSION == 34
     ENCH_TEMP_PACIF,
+#endif
     ENCH_PETRIFYING,
     ENCH_PETRIFIED,
     ENCH_LOWERED_MR,
@@ -1605,6 +1617,10 @@ enum enchant_type
     ENCH_RETCHING,
     ENCH_WEAK,
     ENCH_DIMENSION_ANCHOR,
+    ENCH_AWAKEN_VINES,   // Is presently animating snaplasher vines
+    ENCH_CONTROL_WINDS,
+    ENCH_WIND_AIDED,     // Ranged accuracy enhanced by nearby Control Winds
+    ENCH_SUMMON_CAPPED,  // Abjuring quickly because a summon cap was hit
     // Update enchantment names in mon-ench.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS
@@ -2055,7 +2071,9 @@ enum monster_type                      // menv[].type
     MONS_PORCUPINE,
     MONS_JACKAL,
     MONS_HOUND,
+#if TAG_MAJOR_VERSION == 34
     MONS_WAR_DOG,
+#endif
     MONS_WOLF,
     MONS_WARG,
     MONS_HELL_HOUND,
@@ -2125,6 +2143,9 @@ enum monster_type                      // menv[].type
     MONS_GIANT_ORANGE_BRAIN,
 
     MONS_DANCING_WEAPON,
+#if TAG_MAJOR_VERSION > 34
+    MONS_SPECTRAL_WEAPON,
+#endif
     MONS_HARPY,
     MONS_RAVEN,
     MONS_FIRE_CRAB,
@@ -2657,6 +2678,27 @@ enum monster_type                      // menv[].type
 
     MONS_SOJOBO,
 
+    MONS_CHIMERA,
+
+    MONS_SNAPLASHER_VINE,
+    MONS_SNAPLASHER_VINE_SEGMENT,
+    MONS_THORN_HUNTER,
+    MONS_BRIAR_PATCH,
+    MONS_SPIRIT_WOLF,
+    MONS_ANCIENT_BEAR,
+    MONS_WATER_NYMPH,
+    MONS_TREANT,
+    MONS_THORN_LOTUS,
+#if TAG_MAJOR_VERSION == 34
+    MONS_SPECTRAL_WEAPON,
+#endif
+
+    MONS_ELEMENTAL_WELLSPRING,
+
+    MONS_POLYMOTH,
+
+    MONS_DEATHCAP,
+
     NUM_MONSTERS,               // used for polymorph
 
     // MONS_NO_MONSTER can get put in savefiles, so it shouldn't change
@@ -2664,6 +2706,7 @@ enum monster_type                      // menv[].type
     MONS_NO_MONSTER = 1000,
 
     RANDOM_MONSTER = 2000, // used to distinguish between a random monster and using program bugs for error trapping {dlb}
+    RANDOM_TOUGHER_MONSTER, // used for poly upgrading monsters.
     RANDOM_MOBILE_MONSTER, // used for monster generation (shadow creatures)
     RANDOM_COMPATIBLE_MONSTER, // used for player shadow creatures (prevents repulsing summons)
 
@@ -2849,6 +2892,7 @@ enum mutation_type
     MUT_MANA_LINK,
     MUT_PETRIFICATION_RESISTANCE,
     MUT_TRAMPLE_RESISTANCE,
+    MUT_CLING,
     NUM_MUTATIONS,
 
     RANDOM_MUTATION,
@@ -3048,6 +3092,7 @@ enum shop_type
     SHOP_DISTILLERY,
     SHOP_SCROLL,
     SHOP_GENERAL,
+    SHOP_MISCELLANY,
     NUM_SHOPS, // must remain last 'regular' member {dlb}
     SHOP_UNASSIGNED = 100,
     SHOP_RANDOM,
@@ -3484,6 +3529,18 @@ enum spell_type
     SPELL_CALL_LOST_SOUL,
     SPELL_DIMENSION_ANCHOR,
     SPELL_BLINK_ALLIES_ENCIRCLE,
+    SPELL_AWAKEN_VINES,
+    SPELL_CONTROL_WINDS,
+    SPELL_THORN_VOLLEY,
+    SPELL_WALL_OF_BRAMBLES,
+    SPELL_WATERSTRIKE,
+    SPELL_HASTE_PLANTS,
+    SPELL_WIND_BLAST,
+    SPELL_STRIP_RESISTANCE,
+    SPELL_INFUSION,
+    SPELL_SONG_OF_SLAYING,
+    SPELL_SPECTRAL_WEAPON,
+    SPELL_SONG_OF_SHIELDING,
     NUM_SPELLS
 };
 
@@ -3715,6 +3772,7 @@ enum disable_type
     DIS_DELAY,
     DIS_CONFIRMATIONS,
     DIS_AFFLICTIONS,
+    DIS_MON_SIGHT,
     NUM_DISABLEMENTS
 };
 

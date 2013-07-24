@@ -631,7 +631,7 @@ static const char *kill_method_names[] =
     "falling_down_stairs", "acid", "curare",
     "beogh_smiting", "divine_wrath", "bounce", "reflect", "self_aimed",
     "falling_through_gate", "disintegration", "headbutt", "rolling",
-    "mirror_damage",
+    "mirror_damage", "spines",
 };
 
 static const char *_kill_method_name(kill_method_type kmt)
@@ -1174,7 +1174,9 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             || death_type == KILLED_BY_CLOUD
             || death_type == KILLED_BY_ROTTING
             || death_type == KILLED_BY_REFLECTION
-            || death_type == KILLED_BY_ROLLING)
+            || death_type == KILLED_BY_ROLLING
+            || death_type == KILLED_BY_SPINES
+            || death_type == KILLED_BY_WATER)
         && !invalid_monster_index(death_source)
         && menv[death_source].type != MONS_NO_MONSTER)
     {
@@ -1504,7 +1506,8 @@ void scorefile_entry::init(time_t dt)
         STATUS_HUNGER, STATUS_REGENERATION, STATUS_SICK, STATUS_SPEED,
         DUR_INVIS, DUR_POISONING, STATUS_MISSILES, DUR_SURE_BLADE,
         DUR_TRANSFORMATION, STATUS_CONSTRICTED, STATUS_SILENCE, STATUS_RECALL,
-        DUR_WEAK, DUR_DIMENSION_ANCHOR, DUR_ANTIMAGIC,
+        DUR_WEAK, DUR_DIMENSION_ANCHOR, DUR_ANTIMAGIC, DUR_SPIRIT_HOWL,
+        DUR_FLAYED, DUR_WATER_HOLD,
     };
 
     status_info inf;
@@ -1938,6 +1941,14 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         needs_damage = true;
         break;
 
+    case KILLED_BY_SPINES:
+        if (terse)
+            desc += apostrophise(death_source_desc()) + " spines";
+        else
+            desc += "Impaled on " + apostrophise(death_source_desc()) + " spines" ;
+        needs_damage = true;
+        break;
+
     case KILLED_BY_POISON:
         if (death_source_name.empty() || terse)
         {
@@ -2056,7 +2067,16 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         if (race == SP_MUMMY)
             desc += terse? "익사" : "깊은 물 아래로 가라앉았다.";
         else
-            desc += terse? "익사" : "익사했다.";
+        {
+            if (!death_source_name.empty())
+            {
+                desc += terse? "익사 " : "익사했다 ";
+				desc += " (";
+                desc += death_source_name + ")" ;
+            }
+            else
+                desc += terse? "익사" : "익사함";
+        }
         break;
 
     case KILLED_BY_STUPIDITY:

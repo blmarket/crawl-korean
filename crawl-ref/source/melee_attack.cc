@@ -38,6 +38,7 @@
 #include "makeitem.h"
 #include "message.h"
 #include "misc.h"
+#include "mon-abil.h"
 #include "mon-act.h"
 #include "mon-behv.h"
 #include "mon-cast.h"
@@ -136,7 +137,7 @@ melee_attack::melee_attack(actor *attk, actor *defn,
     if (attacker->is_monster())
     {
         mon_attack_def mon_attk = mons_attack_spec(attacker->as_monster(),
-                                               attack_number);
+                                                   attack_number);
 
         attk_type       = mon_attk.type;
         attk_flavour    = mon_attk.flavour;
@@ -362,6 +363,15 @@ bool melee_attack::handle_phase_attempted()
         xom_is_stimulated(attacker->is_player() ? 200 : 100);
     }
 
+    // Any attack against a monster we're afraid of has a chance to fail
+    if (attacker->is_player() && you.afraid_of(defender->as_monster())
+        && one_chance_in(3))
+    {
+        mprf("You attempt to attack %s, but flinch away in fear!",
+             defender->name(DESC_THE).c_str());
+        return false;
+    }
+
     // Defending monster protects itself from attacks using the wall
     // it's in. Zotdef: allow a 5% chance of a hit anyway
     if (defender->is_monster() && cell_is_solid(defender->pos())
@@ -496,7 +506,8 @@ static bool _flavour_triggers_damageless(attack_flavour flavour)
     return (flavour == AF_CRUSH
             || flavour == AF_DROWN
             || flavour == AF_PURE_FIRE
-            || flavour == AF_SHADOWSTAB);
+            || flavour == AF_SHADOWSTAB
+            || flavour == AF_WATERPORT);
 }
 
 /* An attack has been determined to have hit something
@@ -548,8 +559,28 @@ bool melee_attack::handle_phase_hit()
     // messages, etc.
     damage_done = calc_damage();
 
+    if (attacker->is_player() && you.duration[DUR_INFUSION])
+    {
+        if (you.magic_points > 0
+            || you.species == SP_DJINNI && ((you.hp - 1)/DJ_MP_RATE) > 0)
+        {
+            // infusion_power is set when the infusion spell is cast
+            const int pow = you.props["infusion_power"].get_int();
+            const int dmg = 2 + div_rand_round(pow, 25);
+            const int hurt = defender->apply_ac(dmg);
+
+            dprf(DIAG_COMBAT, "Infusion: dmg = %d hurt = %d", dmg, hurt);
+
+            if (hurt > 0)
+            {
+                damage_done += hurt;
+                dec_mp(1);
+            }
+        }
+    }
+
     bool stop_hit = false;
-    // Check if some hit-effect killed the monster.  We muse
+    // Check if some hit-effect killed the monster.
     if (attacker->is_player())
         stop_hit = !player_monattk_hit_effects();
 
@@ -1031,9 +1062,8 @@ bool melee_attack::attack()
             // wielded and end the turn.
             if (Options.auto_switch && !wielded_weapon_check(weapon, true))
                 for (int i = 0; i <= 1; ++i)
-                    if (is_melee_weapon(&you.inv[i]))
-                        if (wield_weapon(true, i))
-                            return false;
+                    if (is_melee_weapon(you.inv[i]) && wield_weapon(true, i))
+                        return false;
         }
 
         you.pet_target = attacker->mindex();
@@ -2077,6 +2107,35 @@ void melee_attack::set_attack_verb()
             else
                 attack_verb = pgettext("verb", "shred");
             break;
+        case TRAN_TREE:
+            if (damage_done < HIT_WEAK)
+                attack_verb = pgettext("verb", "hit");
+            else if (damage_done < HIT_MED)
+                attack_verb = pgettext("verb", "smack");
+            else if (damage_done < HIT_STRONG)
+                attack_verb = pgettext("verb", "pummel");
+            else
+                attack_verb = pgettext("verb", "thrash");
+            break;
+        case TRAN_DRAGON:
+            if (damage_done < HIT_WEAK)
+                attack_verb = pgettext("verb", "hit");
+            else if (damage_done < HIT_MED)
+                attack_verb = pgettext("verb", "claw");
+            else if (damage_done < HIT_STRONG)
+                attack_verb = pgettext("verb", "bite");
+            else
+                attack_verb = coinflip() ? pgettext("verb", "maul") : pgettext("verb", "trample");
+            break;
+        case TRAN_WISP:
+            if (damage_done < HIT_WEAK)
+                attack_verb = pgettext("verb", "touch");
+            else if (damage_done < HIT_MED)
+                attack_verb = pgettext("verb", "hit");
+            else
+                attack_verb = pgettext("verb", "engulf");
+            break;
+            break;
         case TRAN_STATUE:
         case TRAN_LICH:
             if (you.has_usable_claws())
@@ -2104,47 +2163,11 @@ void melee_attack::set_attack_verb()
                 break;
             }
             // or fall-through
+        case TRAN_NONE:
+        case TRAN_APPENDAGE:
         case TRAN_FUNGUS:
         case TRAN_ICE_BEAST:
         case TRAN_JELLY: // ?
-            if (damage_done < HIT_WEAK)
-                attack_verb = pgettext("verb", "hit");
-            else if (damage_done < HIT_MED)
-                attack_verb = pgettext("verb", "punch");
-            else
-                attack_verb = pgettext("verb", "pummel");
-            break;
-        case TRAN_TREE:
-            if (damage_done < HIT_WEAK)
-                attack_verb = "hit";
-            else if (damage_done < HIT_MED)
-                attack_verb = "smack";
-            else if (damage_done < HIT_STRONG)
-                attack_verb = "pummel";
-            else
-                attack_verb = "thrash";
-            break;
-        case TRAN_DRAGON:
-            if (damage_done < HIT_WEAK)
-                attack_verb = pgettext("verb", "hit");
-            else if (damage_done < HIT_MED)
-                attack_verb = pgettext("verb", "claw");
-            else if (damage_done < HIT_STRONG)
-                attack_verb = pgettext("verb", "bite");
-            else
-                attack_verb = coinflip() ? pgettext("verb", "maul") : pgettext("verb", "trample");
-            break;
-        case TRAN_WISP:
-            if (damage_done < HIT_WEAK)
-                attack_verb = "touch";
-            else if (damage_done < HIT_MED)
-                attack_verb = "hit";
-            else
-                attack_verb = "engulf";
-            break;
-            break;
-        case TRAN_NONE:
-        case TRAN_APPENDAGE:
             if (you.damage_type() == DVORP_CLAWING)
             {
                 if (damage_done < HIT_WEAK)
@@ -2169,10 +2192,48 @@ void melee_attack::set_attack_verb()
             }
             else
             {
-                if (damage_done < HIT_MED)
+                if (damage_done < HIT_WEAK)
+                    attack_verb = pgettext("verb", "hit");
+                else if (damage_done < HIT_MED)
                     attack_verb = pgettext("verb", "punch");
-                else
+                else if (damage_done < HIT_STRONG)
                     attack_verb = pgettext("verb", "pummel");
+                // XXX: detect this better
+                else if (defender->is_monster()
+                         && (get_mon_shape(defender->as_monster()->type)
+                               == MON_SHAPE_INSECT
+                             || get_mon_shape(defender->as_monster()->type)
+                                == MON_SHAPE_INSECT_WINGED
+                             || get_mon_shape(defender->as_monster()->type)
+                                == MON_SHAPE_CENTIPEDE
+                             || get_mon_shape(defender->as_monster()->type)
+                                == MON_SHAPE_ARACHNID))
+                {
+                    attack_verb = pgettext("verb", "squash");
+                    verb_degree = pgettext("verb", "like a proverbial bug");
+                }
+                else
+                {
+                    const char* punch_desc[][2] =
+                        {{"pound",     "into fine dust"},
+                         {"pummel",    "like a punching bag"},
+                         {"pulverise", ""},
+                         {"squash",    "like a bug"}};
+                    const int choice = random2(ARRAYSZ(punch_desc)); // 메모
+                    // XXX: could this distinction work better?
+                    if (choice == 0
+                        && defender->is_monster()
+                        && mons_has_blood(defender->as_monster()->type))
+                    {
+                        attack_verb = pgettext("verb", "beat");
+                        verb_degree = pgettext("verb", "into a bloody pulp");
+                    }
+                    else
+                    {
+                        attack_verb = punch_desc[choice][0];
+                        verb_degree = punch_desc[choice][1];
+                    }
+                }
             }
             break;
         } // transformations
@@ -2326,11 +2387,7 @@ void melee_attack::drain_defender()
     special_damage = 1 + random2(damage_done)
                          / (2 + defender->res_negative_energy());
 
-    if (defender->drain_exp(attacker,
-                            weapon
-                              ? weapon->name(false, DESC_PLAIN, false, true).c_str()
-                              : NULL,
-                            true))
+    if (defender->drain_exp(attacker, true, 15 + min(35, damage_done)))
     {
         if (defender->is_player())
             obvious_effect = true;
@@ -3449,8 +3506,12 @@ bool melee_attack::chop_hydra_head(int dam,
 {
     // Monster attackers have only a 25% chance of making the
     // chop-check to prevent runaway head inflation.
-    if (attacker->is_monster() && !one_chance_in(4))
+    // XXX: Tentatively making an exception for spectral weapons
+    if (attacker->is_monster() && attacker->type!= MONS_SPECTRAL_WEAPON
+        && !one_chance_in(4))
+    {
         return false;
+    }
 
     // Only cutting implements.
     if (dam_type != DVORP_SLICING && dam_type != DVORP_CHOPPING
@@ -4338,7 +4399,7 @@ string melee_attack::mons_attack_desc()
         ret = _(" from afar");
     }
 
-    if (weapon && attacker->type != MONS_DANCING_WEAPON)
+    if (weapon && attacker->type != MONS_DANCING_WEAPON && attacker->type != MONS_SPECTRAL_WEAPON)
         ret += make_stringf(gettext(" with %s"),
                             weapon->name(true, DESC_PLAIN).c_str());
 
@@ -4664,7 +4725,7 @@ void melee_attack::mons_apply_attack_flavour()
     case AF_CONFUSE:
         if (attk_type == AT_SPORE)
         {
-            if (defender->res_poison() > 0 || defender->is_unbreathing())
+            if (defender->is_unbreathing())
                 break;
 
             if (--(attacker->as_monster()->hit_dice) <= 0)
@@ -4783,7 +4844,7 @@ void melee_attack::mons_apply_attack_flavour()
     }
 
     case AF_HOLY:
-        if (defender->is_evil() || defender->is_unholy())
+        if (defender->undead_or_demonic())
             special_damage = attk_damage * 0.75;
 
         if (needs_message && special_damage)
@@ -4878,7 +4939,7 @@ void melee_attack::mons_apply_attack_flavour()
         break;
 
     case AF_DRAIN_SPEED:
-        if (coinflip() && !defender->res_negative_energy())
+        if (x_chance_in_y(3, 5) && !defender->res_negative_energy())
         {
             if (needs_message)
             {
@@ -4889,7 +4950,7 @@ void melee_attack::mons_apply_attack_flavour()
             }
 
             special_damage = 1 + random2(damage_done) / 2;
-            defender->slow_down(attacker, 3 + random2(5));
+            defender->slow_down(attacker, 5 + random2(7));
         }
         break;
 
@@ -4950,6 +5011,11 @@ void melee_attack::mons_apply_attack_flavour()
 
     case AF_SHADOWSTAB:
         attacker->as_monster()->del_ench(ENCH_INVIS, true);
+        break;
+
+    case AF_WATERPORT:
+        if (!defender->no_tele())
+            waterport_touch(attacker->as_monster(), defender);
         break;
     }
 }
@@ -5074,7 +5140,7 @@ void melee_attack::tendril_disarm()
 
     if (you.mutation[MUT_TENDRILS]
         && attacker->alive()
-        && mon->type != MONS_DANCING_WEAPON
+        && (!mons_class_is_animated_weapon(mon->type))
         && adjacent(you.pos(), mon->pos())
         && you.can_see(mon)
         && one_chance_in(5)
@@ -5092,6 +5158,10 @@ void melee_attack::tendril_disarm()
 
 void melee_attack::do_spines()
 {
+    // Monsters only get struck on their first attack per round
+    if (attacker->is_monster() && effective_attack_number > 0)
+        return;
+
     if (defender->is_player())
     {
         const item_def *body = you.slot_item(EQ_BODY_ARMOUR, false);
@@ -5099,16 +5169,10 @@ void melee_attack::do_spines()
         const int mut = (you.form == TRAN_PORCUPINE) ? 3
                         : player_mutation_level(MUT_SPINY);
 
-        if (mut && attacker->alive() && one_chance_in(evp / 3 + 1))
+        if (mut && attacker->alive() && one_chance_in(evp / 3 + 1)
+            && x_chance_in_y(2, 13 - (mut * 2)))
         {
-            if (test_hit(random2(3 + 4 * mut), attacker->melee_evasion(defender), true) < 0)
-            {
-                simple_monster_message(attacker->as_monster(),
-                                       _(" dodges your spines."));
-                return;
-            }
-
-            int dmg = roll_dice(mut, 6);
+            int dmg = roll_dice(2 + div_rand_round(mut - 1, 2), 5);
             int hurt = attacker->apply_ac(dmg) - evp / 3;
 
             dprf(DIAG_COMBAT, "Spiny: dmg = %d hurt = %d", dmg, hurt);
@@ -5125,37 +5189,38 @@ void melee_attack::do_spines()
             attacker->hurt(&you, hurt);
         }
     }
-    else if (defender->as_monster()->is_spiny())
+    else if (defender->as_monster()->spiny_degree() > 0)
     {
-        const int level = 1 + div_rand_round(defender->get_experience_level(), 4);
-
-        if (test_hit(random2(10 + 4 * level), attacker->melee_evasion(defender),
-            !attacker->is_player()) < 0)
+        // Thorn hunters can attack their own brambles without injury
+        if (defender->as_monster()->type == MONS_BRIAR_PATCH
+            && attacker->is_monster()
+            && attacker->as_monster()->type == MONS_THORN_HUNTER)
         {
-            if (you.can_see(defender))
-            {
-                mprf(_("%s %s %s spines."), attacker->name(DESC_THE).c_str(),
-                     attacker->conj_verb(pgettext("verb", "dodge")).c_str(),
-                     defender->name(DESC_ITS).c_str());
-                return;
-            }
+            return;
         }
-        else if (attacker->alive())
+
+        const int degree = defender->as_monster()->spiny_degree();
+
+        if (attacker->alive() && (x_chance_in_y(2, 5)
+            || random2(div_rand_round(attacker->armour_class(), 2)) < degree))
         {
-            int dmg = roll_dice(level, 4);
-            int hurt = attacker->apply_ac(dmg);
+            int dmg = (attacker->is_monster() ? roll_dice(degree, 3)
+                                              : roll_dice(degree, 4));
+            int hurt = attacker->apply_ac(dmg, AC_HALF);
             dprf(DIAG_COMBAT, "Spiny: dmg = %d hurt = %d", dmg, hurt);
 
             if (hurt <= 0)
                 return;
             if (you.can_see(defender) || attacker->is_player())
             {
-                mprf(_("%s %s struck by %s spines."), attacker->name(DESC_THE).c_str(),
+                mprf(_("%s %s struck by %s %s."), attacker->name(DESC_THE).c_str(),
                      attacker->conj_verb("are").c_str(),
-                     defender->name(DESC_ITS).c_str());
+                     defender->name(DESC_ITS).c_str(),
+                     defender->as_monster()->type == MONS_BRIAR_PATCH ? pgettext("spines","thorns")
+                                                                      : pgettext("spines","spines"));
             }
             if (attacker->is_player())
-                ouch(hurt, defender->mindex(), KILLED_BY_MONSTER);
+                ouch(hurt, defender->mindex(), KILLED_BY_SPINES);
             else
                 attacker->hurt(defender, hurt);
         }
@@ -5709,11 +5774,16 @@ int melee_attack::calc_damage()
         if (weapon && get_weapon_brand(*weapon) == SPWPN_SPEED)
             damage = div_rand_round(damage * 9, 10);
 
+        bool half_ac = (as_mon->type == MONS_PHANTASMAL_WARRIOR);
+
         // If the defender is asleep, the attacker gets a stab.
         if (defender && (defender->asleep()
                          || (attk_flavour == AF_SHADOWSTAB
                              &&!defender->can_see(attacker))))
         {
+            if (mons_class_flag(as_mon->type, M_STABBER))
+                half_ac = true;
+
             damage = damage * 5 / 2;
             dprf(DIAG_COMBAT, "Stab damage vs %s: %d",
                  defender->name(DESC_PLAIN).c_str(),
@@ -5723,8 +5793,7 @@ int melee_attack::calc_damage()
         if (cleaving)
             damage = cleave_damage_mod(damage);
 
-        return apply_defender_ac(damage, damage_max,
-                                 as_mon->type == MONS_PHANTASMAL_WARRIOR);
+        return apply_defender_ac(damage, damage_max, half_ac);
     }
     else
     {

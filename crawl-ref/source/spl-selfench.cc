@@ -16,6 +16,7 @@
 #include "libutil.h"
 #include "message.h"
 #include "misc.h"
+#include "shout.h"
 #include "spl-cast.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
@@ -77,11 +78,15 @@ spret_type ice_armour(int pow, bool fail)
         return SPRET_ABORT;
     }
 
-    // Allowed for Lava Orcs of sufficiently low temperature, despite
-    // their having a stoneskin-like effect.
-    if (you.duration[DUR_STONESKIN] || you.duration[DUR_FIRE_SHIELD])
+    if (player_stoneskin() || you.form == TRAN_STATUE)
     {
-        mpr("이 마법은 다른 마법과 그 효과가 충돌한다.");//mpr("The spell conflicts with another spell still in effect.");
+        mpr("얼음막은 암석 위로는 통하지 않는다.");
+        return SPRET_ABORT;
+    }
+
+    if (you.duration[DUR_FIRE_SHIELD])
+    {
+        mpr("당신의 화염 고리는 얼음을 즉시 녹여버릴 것이다.");
         return SPRET_ABORT;
     }
 
@@ -322,6 +327,45 @@ int cast_selective_amnesia(string *pre_msg)
     }
 
     return 1;
+}
+
+spret_type cast_infusion(int pow, bool fail)
+{
+    fail_check();
+    if (!you.duration[DUR_INFUSION])
+        mpr("Your attacks are magically infused.");
+    else
+        mpr("Your attacks are magically infused for longer.");
+
+    you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow), 100);
+    you.props["infusion_power"] = pow;
+
+    return SPRET_SUCCESS;
+}
+
+spret_type cast_song_of_slaying(int pow, bool fail)
+{
+    fail_check();
+
+    if (you.duration[DUR_SONG_OF_SLAYING])
+        mpr("You start a new song!");
+    else
+        mpr("You start singing a song of slaying.");
+
+    you.increase_duration(DUR_SONG_OF_SLAYING, 20 + pow / 3, 20 + pow / 3);
+
+    noisy(12, you.pos());
+
+    you.props["song_of_slaying_bonus"] = 0;
+    return SPRET_SUCCESS;
+}
+
+spret_type cast_song_of_shielding(int pow, bool fail)
+{
+    fail_check();
+    you.increase_duration(DUR_SONG_OF_SHIELDING, 10 + random2(pow) / 3, 40);
+    mpr("You are being protected by your magic.");
+    return SPRET_SUCCESS;
 }
 
 spret_type cast_silence(int pow, bool fail)

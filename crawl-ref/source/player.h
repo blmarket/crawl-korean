@@ -64,7 +64,6 @@ public:
   FixedVector<int8_t, NUM_STATS> stat_loss;
   FixedVector<int8_t, NUM_STATS> base_stats;
   FixedVector<int, NUM_STATS> stat_zero;
-  FixedVector<string, NUM_STATS> stat_zero_cause;
 
   int hunger;
   int disease;
@@ -350,8 +349,6 @@ public:
 
   int time_taken;
 
-  int shield_blocks;         // number of shield blocks since last action
-
   int old_hunger;            // used for hunger delta-meter (see output.cc)
 
   // Set when the character is going to a new level, to guard against levgen
@@ -435,6 +432,7 @@ public:
     bool visible_to(const actor *looker) const;
     bool can_see(const actor* a) const;
     bool nightvision() const;
+    reach_type reach_range() const;
 
     bool see_cell(const coord_def& p) const;
     const los_base* get_los();
@@ -535,7 +533,7 @@ public:
                        bool calc_unid = true) const;
 
     item_def *weapon(int which_attack = -1) const;
-    item_def *shield();
+    item_def *shield() const;
 
     bool      can_wield(const item_def &item,
                         bool ignore_curse = false,
@@ -594,13 +592,13 @@ public:
     void confuse(actor *, int strength);
     void weaken(actor *attacker, int pow);
     bool heal(int amount, bool max_too = false);
-    bool drain_exp(actor *, const char *aux = NULL, bool quiet = false,
-                   int pow = 3);
+    bool drain_exp(actor *, bool quiet = false, int pow = 3);
     bool rot(actor *, int amount, int immediate = 0, bool quiet = false);
     void sentinel_mark(bool trap = false);
     int hurt(const actor *attacker, int amount,
              beam_type flavour = BEAM_MISSILE,
-             bool cleanup_dead = true);
+             bool cleanup_dead = true,
+             bool attacker_effects = true);
 
     bool wont_attack() const { return true; };
     mon_attitude_type temp_attitude() const { return ATT_FRIENDLY; };
@@ -652,7 +650,7 @@ public:
     bool cannot_act() const;
     bool confused() const;
     bool caught() const;
-    bool backlit(bool check_haloed = true, bool self_halo = true, bool check_corona = true) const;
+    bool backlit(bool check_haloed = true, bool self_halo = true) const;
     bool umbra(bool check_haloed = true, bool self_halo = true) const;
     int halo_radius2() const;
     int silence_radius2() const;
@@ -919,7 +917,7 @@ void adjust_level(int diff, bool just_xp = false);
 
 bool player_genus(genus_type which_genus,
                    species_type species = SP_UNKNOWN);
-bool is_player_same_species(const monster_type mon, bool = false);
+bool is_player_same_genus(const monster_type mon, bool = false);
 monster_type player_mons(bool transform = true);
 void update_player_symbol();
 void update_vision_range();
@@ -985,6 +983,7 @@ void fly_player(int pow, bool already_flying = false);
 void float_player();
 bool land_player();
 bool is_hovering();
+bool djinni_floats();
 
 void dec_disease_player(int delay);
 

@@ -1552,8 +1552,8 @@ static bool _prompt_stairs(dungeon_feature_type ygrd, bool down)
     // Escaping.
     if (!down && ygrd == DNGN_EXIT_DUNGEON && !player_has_orb())
     {
-        string prompt = make_stringf(_("Are you sure you want to leave the "
-                                     "Dungeon?%s"),
+        string prompt = make_stringf(_("Are you sure you want to leave %s?%s"),
+                                     _(branches[root_branch].longname),
                                      crawl_state.game_is_tutorial() ? "" :
                                      _(" This will make you lose the game!"));
         if (!yesno(prompt.c_str(), false, 'n'))
@@ -1687,23 +1687,6 @@ static void _print_friendly_pickup_setting(bool was_changed)
     }
     else
         mprf(MSGCH_ERROR, "Your allies%s are collecting bugs!", now.c_str());
-}
-
-static void _do_look_around()
-{
-    dist lmove;   // Will be initialised by direction().
-    direction_chooser_args args;
-    args.restricts = DIR_TARGET;
-    args.just_looking = true;
-    args.needs_path = false;
-    args.target_prefix = "Here";
-    args.may_target_monster = gettext("Move the cursor around to observe a square.");
-    direction(lmove, args);
-    if (lmove.isValid && lmove.isTarget && !lmove.isCancel
-        && !crawl_state.arena_suspended)
-    {
-        start_travel(lmove.target);
-    }
 }
 
 static void _do_remove_armour()
@@ -1989,7 +1972,7 @@ void process_command(command_type cmd)
     case CMD_EXAMINE_OBJECT:       examine_object();         break;
     case CMD_FIRE:                 fire_thing();             break;
     case CMD_FORCE_CAST_SPELL:     do_cast_spell_cmd(true);  break;
-    case CMD_LOOK_AROUND:          _do_look_around();        break;
+    case CMD_LOOK_AROUND:          do_look_around();         break;
     case CMD_PRAY:                 pray();                   break;
     case CMD_QUAFF:                drink();                  break;
     case CMD_READ:                 read_scroll();            break;
@@ -2885,6 +2868,21 @@ static void _decrement_durations()
                           0,
                           _("Your shroud begins to fray at the edges."));
 
+    _decrement_a_duration(DUR_INFUSION, delay,
+            "Your attacks are no longer magically infused.",
+            0,
+            "You are feeling less magically infused.");
+
+    _decrement_a_duration(DUR_SONG_OF_SLAYING, delay,
+            "Your song has ended.",
+            0,
+            "Your song is almost over.");
+
+    _decrement_a_duration(DUR_SONG_OF_SHIELDING, delay,
+            "Your magic is no longer protecting you.",
+            0,
+            "You are feeling less protected by your magic.");
+
     _decrement_a_duration(DUR_SENTINEL_MARK, delay,
                           _("The sentinel's mark upon you fades away."));
 
@@ -2925,6 +2923,34 @@ static void _decrement_durations()
     }
 
     _decrement_a_duration(DUR_RETCHING, delay, _("Your fit of retching subsides."));
+
+    if (you.duration[DUR_SPIRIT_HOWL])
+    {
+        if (you.props.exists("next_spirit_pack")
+            && you.elapsed_time >= you.props["next_spirit_pack"].get_int()
+            && you.duration[DUR_SPIRIT_HOWL] > 150)
+        {
+            int num = spawn_spirit_pack(&you);
+            you.props["next_spirit_pack"].get_int() = you.elapsed_time + 50
+                                                      + random2(80)
+                                                      + (num * num) * 8;
+
+            // If we somehow couldn't spawn any, wait longer than normal
+            // (probably the player is in some place where spawning more isn't
+            // possibly, so let's waste lest time trying)
+            if (num == 0)
+                you.props["next_spirit_pack"].get_int() += 100;
+        }
+        if (_decrement_a_duration(DUR_SPIRIT_HOWL, delay))
+        {
+            mpr("The howling abruptly ceases.", MSGCH_DURATION);
+            for (monster_iterator mi; mi; ++mi)
+            {
+                if (mi->type == MONS_SPIRIT_WOLF && mi->has_ench(ENCH_HAUNTING))
+                    mi->del_ench(ENCH_ABJ);
+            }
+        }
+    }
 
     if (you.attribute[ATTR_NEXT_RECALL_INDEX] > 0)
         do_recall(delay);
@@ -3115,6 +3141,20 @@ static void _player_reacts()
 
     if (you.attribute[ATTR_NOISES])
         noisy_equipment();
+
+    // Handle sound-dependant effects that are silenced
+    if (silenced(you.pos()))
+    {
+        if (you.duration[DUR_SONG_OF_SLAYING])
+        {
+            mpr("The silence causes your song to end.");
+            _decrement_a_duration(DUR_SONG_OF_SLAYING, you.duration[DUR_SONG_OF_SLAYING]);
+        }
+    }
+
+    // Singing makes a continous noise
+    if (you.duration[DUR_SONG_OF_SLAYING])
+        noisy(10, you.pos());
 
     if (one_chance_in(10))
     {

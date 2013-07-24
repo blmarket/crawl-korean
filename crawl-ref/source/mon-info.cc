@@ -21,6 +21,7 @@
 #include "libutil.h"
 #include "message.h"
 #include "misc.h"
+#include "mon-chimera.h"
 #include "mon-iter.h"
 #include "mon-util.h"
 #include "monster.h"
@@ -28,6 +29,7 @@
 #include "religion.h"
 #include "showsymb.h"
 #include "skills2.h"
+#include "spl-summoning.h"
 #include "state.h"
 #include "tagstring.h"
 #include "terrain.h"
@@ -53,6 +55,10 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return NUM_MB_FLAGS;
 
     if (ench == ENCH_PETRIFIED && mons.has_ench(ENCH_PETRIFYING))
+        return NUM_MB_FLAGS;
+
+    // Don't claim that naturally 'confused' monsters are especially bewildered
+    if (ench == ENCH_CONFUSION && mons_class_flag(mons.type, M_CONFUSED))
         return NUM_MB_FLAGS;
 
     switch (ench)
@@ -172,6 +178,10 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_WEAK;
     case ENCH_DIMENSION_ANCHOR:
         return MB_DIMENSION_ANCHOR;
+    case ENCH_CONTROL_WINDS:
+        return MB_CONTROL_WINDS;
+    case ENCH_WIND_AIDED:
+        return MB_WIND_AIDED;
     default:
         return NUM_MB_FLAGS;
     }
@@ -200,7 +210,12 @@ static bool _is_public_key(string key)
      || key == "dbname"
      || key == "monster_tile"
      || key == "tile_num"
-     || key == "tile_idx")
+     || key == "tile_idx"
+     || key == "chimera_part_2"
+     || key == "chimera_part_3"
+     || key == "chimera_batty"
+     || key == "chimera_wings"
+     || key == "chimera_legs")
     {
         return true;
     }
@@ -344,6 +359,7 @@ monster_info::monster_info(monster_type p_type, monster_type p_base_type)
 
     fire_blocker = DNGN_UNSEEN;
 
+    u.ghost.acting_part = MONS_0;
     if (mons_is_pghost(type))
     {
         u.ghost.species = SP_HUMAN;
@@ -453,10 +469,21 @@ monster_info::monster_info(const monster* m, int milev)
             number = m->number;
         colour = m->colour;
 
-        if (m->is_summoned())
+        int stype = 0;
+        if (m->is_summoned(0, &stype))
+        {
             mb.set(MB_SUMMONED);
+            if (stype > 0 && stype < NUM_SPELLS
+                && summons_are_capped(static_cast<spell_type>(stype)))
+            {
+                mb.set(MB_SUMMONED_NO_STAIRS);
+            }
+        }
         else if (m->is_perm_summoned())
             mb.set(MB_PERM_SUMMON);
+
+        if (m->has_ench(ENCH_SUMMON_CAPPED))
+            mb.set(MB_SUMMONED_CAPPED);
     }
     else
     {
@@ -509,6 +536,15 @@ monster_info::monster_info(const monster* m, int milev)
         mb.set(MB_NAME_ZOMBIE);
     if (m->flags & MF_NAME_SPECIES)
         mb.set(MB_NO_NAME_TAG);
+
+    // Chimera acting head needed for name
+    u.ghost.acting_part = MONS_0;
+    if (type_known && mons_class_is_chimeric(type))
+    {
+        ASSERT(m->ghost.get());
+        ghost_demon& ghost = *m->ghost;
+        u.ghost.acting_part = ghost.acting_part;
+    }
 
     if (milev <= MILEV_NAME)
     {
@@ -796,6 +832,7 @@ string monster_info::_core_name() const
     case MONS_SIMULACRUM_SMALL: case MONS_SIMULACRUM_LARGE:
 #endif
     case MONS_SPECTRAL_THING:   case MONS_PILLAR_OF_SALT:
+    case MONS_CHIMERA:
         nametype = base_type;
         break;
 
@@ -846,13 +883,15 @@ string monster_info::_core_name() const
             break;
 
         case MONS_DANCING_WEAPON:
+        case MONS_SPECTRAL_WEAPON:
             if (inv[MSLOT_WEAPON].get())
             {
                 iflags_t ignore_flags = ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES;
                 bool     use_inscrip  = true;
                 const item_def& item = *inv[MSLOT_WEAPON];
-                s = (item.name(true, DESC_PLAIN, false, false, use_inscrip, false,
-                                  ignore_flags));
+                s = type==MONS_SPECTRAL_WEAPON ? _("spectral ") : "";
+                s += (item.name(true, DESC_PLAIN, false, false, use_inscrip, false,
+                                ignore_flags));
             }
             break;
 
@@ -898,7 +937,8 @@ string monster_info::common_name(description_level_type desc) const
     const string core = _core_name();
     const bool nocore = mons_class_is_zombified(type)
                         && mons_is_unique(base_type)
-                        && base_type == mons_species(base_type);
+                        && base_type == mons_species(base_type)
+                        || mons_class_is_chimeric(type);
 
     ostringstream ss;
 
@@ -934,6 +974,22 @@ string monster_info::common_name(description_level_type desc) const
             ss << make_stringf("%d", number);
 
         ss << gettext("-headed ");
+    }
+
+    if (mons_class_is_chimeric(type))
+    {
+        ss << "chimera";
+        monsterentry *me = NULL;
+        if (u.ghost.acting_part != MONS_0
+            && (me = get_monster_data(u.ghost.acting_part)))
+        {
+            // Specify an acting head
+            ss << "'s " << me->name << " head";
+        }
+        else
+            // Suffix parts in brackets
+            // XXX: Should have a desc level that disables this
+            ss << " (" << core << chimera_part_names() << ")";
     }
 
     if (!nocore)
@@ -1137,6 +1193,10 @@ bool monster_info::less_than(const monster_info& m1, const monster_info& m2,
     if (m1.type == MONS_BALLISTOMYCETE)
         return ((m1.number > 0) > (m2.number > 0));
 
+    // Shifters after real monsters of the same type.
+    if (m1.is(MB_SHAPESHIFTER) != m2.is(MB_SHAPESHIFTER))
+        return m2.is(MB_SHAPESHIFTER);
+
     if (zombified)
     {
         if (mons_class_is_zombified(m1.type))
@@ -1147,6 +1207,20 @@ bool monster_info::less_than(const monster_info& m1, const monster_info& m2,
                 return true;
             else if (m1.base_type > m2.base_type)
                 return false;
+        }
+
+        if (m1.type == MONS_CHIMERA)
+        {
+            for (int part = 1; part <= 3; part++)
+            {
+                const monster_type p1 = get_chimera_part(&m1, part);
+                const monster_type p2 = get_chimera_part(&m2, part);
+
+                if (p1 < p2)
+                    return true;
+                else if (p1 > p2)
+                    return false;
+            }
         }
 
         // Both monsters are hydras or hydra zombies, sort by number of heads.
@@ -1299,20 +1373,24 @@ void clear_monster_list_colours()
         _monster_list_colours[i] = -1;
 }
 
-void monster_info::to_string(int count, string& desc,
-                             int& desc_colour, bool fullname) const
+void monster_info::to_string(int count, string& desc, int& desc_colour,
+                             bool fullname, const char *adj) const
 {
     ostringstream out;
     _monster_list_colour_type colour_type = _NUM_MLC;
 
-    if (count == 1)
-        out << full_name();
-    else
-    {
-        // TODO: this should be done in a much cleaner way, with code to
-        // merge multiple monster_infos into a single common structure
-        out << count << " " << pluralised_name(fullname);
-    }
+    string full = count == 1 ? full_name() : pluralised_name(fullname);
+
+    if (adj && starts_with(full, "the "))
+        full.erase(0, 4);
+
+    // TODO: this should be done in a much cleaner way, with code to
+    // merge multiple monster_infos into a single common structure
+    if (count != 1)
+        out << count << " ";
+    if (adj)
+        out << adj << " ";
+    out << full;
 
 #ifdef DEBUG_DIAGNOSTICS
     out << " av" << mons_avg_hp(type);
@@ -1385,7 +1463,7 @@ vector<string> monster_info::attributes() const
     if (is(MB_FRENZIED))
         v.push_back(pgettext("attributes","consumed by blood-lust"));
     if (is(MB_ROUSED))
-        v.push_back(pgettext("attributes","roused with righteous anger"));
+        v.push_back(pgettext("attributes","inspired to greatness"));
     if (is(MB_HASTED))
         v.push_back(pgettext("attributes","moving very quickly"));
     if (is(MB_STRONG))
@@ -1480,6 +1558,10 @@ vector<string> monster_info::attributes() const
         v.push_back(pgettext("attributes","weak"));
     if (is(MB_DIMENSION_ANCHOR))
         v.push_back(pgettext("attributes","unable to translocate"));
+    if (is(MB_CONTROL_WINDS))
+        v.push_back(pgettext("attributes","controlling the winds"));
+    if (is(MB_WIND_AIDED))
+        v.push_back(pgettext("attributes","aim guided by the winds"));
     return v;
 }
 

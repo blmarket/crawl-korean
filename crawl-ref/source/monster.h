@@ -58,8 +58,6 @@ public:
     int foe_memory;                    // how long to 'remember' foe x,y
                                        // once they go out of sight.
 
-    int shield_blocks;                 // Count of shield blocks this round.
-
     god_type god;                      // What god the monster worships, if
                                        // any.
 
@@ -238,7 +236,7 @@ public:
     item_def *weapon(int which_attack = -1) const;
     item_def *launcher();
     item_def *missiles();
-    item_def *shield();
+    item_def *shield() const;
 
     bool      can_wield(const item_def &item,
                         bool ignore_curse = false,
@@ -363,7 +361,7 @@ public:
     bool is_icy() const;
     bool is_fiery() const;
     bool is_skeletal() const;
-    bool is_spiny() const;
+    int spiny_degree() const;
     bool paralysed() const;
     bool cannot_move() const;
     bool cannot_act() const;
@@ -371,7 +369,7 @@ public:
     bool confused_by_you() const;
     bool caught() const;
     bool asleep() const;
-    bool backlit(bool check_haloed = true, bool self_halo = true, bool check_corona = true) const;
+    bool backlit(bool check_haloed = true, bool self_halo = true) const;
     bool umbra(bool check_haloed = true, bool self_halo = true) const;
     int halo_radius2() const;
     int silence_radius2() const;
@@ -421,12 +419,12 @@ public:
     bool fully_petrify(actor *foe, bool quiet = false);
     void slow_down(actor *, int str);
     void confuse(actor *, int strength);
-    bool drain_exp(actor *, const char* aux = NULL, bool quiet = false,
-                   int pow = 3);
+    bool drain_exp(actor *, bool quiet = false, int pow = 3);
     bool rot(actor *, int amount, int immediate = 0, bool quiet = false);
     int hurt(const actor *attacker, int amount,
              beam_type flavour = BEAM_MISSILE,
-             bool cleanup_dead = true);
+             bool cleanup_dead = true,
+             bool attacker_effects = true);
     bool heal(int amount, bool max_too = false);
     void blame_damage(const actor *attacker, int amount);
     void blink(bool allow_partial_control = true);
@@ -493,6 +491,8 @@ public:
 
     bool is_divine_companion() const;
     bool is_projectile() const;
+    // Jumping spiders (jump instead of blink)
+    bool is_jumpy() const;
 
 private:
     void init_with(const monster& mons);

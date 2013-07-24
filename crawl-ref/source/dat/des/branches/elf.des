@@ -733,7 +733,7 @@ MAP
 ENDMAP
 
 NAME:  guppyfry_elf_castle
-DEPTH: Elf:2-4
+DEPTH: Elf:2-
 TAGS:  mini_float
 MONS:  deep elf soldier / deep elf mage / deep elf knight
 MONS:  deep elf blademaster / deep elf death mage / deep elf sorcerer
@@ -756,7 +756,7 @@ MAP
 ENDMAP
 
 NAME:  guppyfry_elf_garden
-DEPTH: Elf:2-4
+DEPTH: Elf:2-
 TAGS:  mini_float
 MONS:  deep elf soldier / deep elf mage / deep elf priest
 MONS:  deep elf blademaster / deep elf master archer / deep elf sorcerer
@@ -782,7 +782,7 @@ MAP
 ENDMAP
 
 NAME:  guppyfry_elf_altar
-DEPTH: Elf:2-4
+DEPTH: Elf:2-
 MONS:  deep elf knight / deep elf priest
 MONS:  deep elf high priest
 SUBST: F = G:6 F:1
@@ -804,7 +804,7 @@ xxxxx++xxxx
 ENDMAP
 
 NAME:  guppyfry_elf_lava
-DEPTH: Elf:2-4
+DEPTH: Elf:2-
 TAGS:  mini_float
 MONS:  deep elf conjurer / deep elf mage / deep elf summoner
 MONS:  deep elf annihilator / deep elf death mage / deep elf demonologist
@@ -833,12 +833,240 @@ MAP
 ..............
 ENDMAP
 
+NAME:    nicolae_elf_glass_and_crystal_pillar_1
+DEPTH:   Elf
+TAGS:    transparent extra allow_dup
+SHUFFLE: ab, bc
+SUBST:   a = m, b : mb, c = b, _ : .._
+CLEAR:   _
+MAP
+________
+_......_
+_.abba._
+_.bccb._
+_.bccb._
+_.abba._
+_......_
+________
+ENDMAP
+
+NAME:    nicolae_elf_glass_and_crystal_pillar_2
+DEPTH:   Elf
+TAGS:    transparent extra allow_dup
+SHUFFLE: ab, bc
+SUBST:   a = m, b : mb, c = b, _ : .._
+CLEAR:   _
+MAP
+_______
+_....._
+_.aba._
+_.bcb._
+_.aba._
+_....._
+_______
+ENDMAP
+
+NAME:    nicolae_elf_stair_hall
+DEPTH:   Elf:2-
+TAGS:    extra
+SUBST:   v : vb
+SHUFFLE: {[(
+MAP
+    xxxxxxxxxxxxxxx
+  xxxcccccccccccccx
+ xxccc...........cx
+ xcc....vv..vv..ccx
+xxc....vv..vv..cccx
+xcc...vv..vv..ccccx
+xc...vv..vv.......@
+xc.{..............@
+xc...vv..vv.......@
+xcc...vv..vv..ccccx
+xxc....vv..vv..cccx
+ xcc....vv..vv..ccx
+ xxccc...........cx
+  xxxcccccccccccccx
+    xxxxxxxxxxxxxxx
+ENDMAP
+
+NAME:    nicolae_elf_stone_circles
+DEPTH:   Elf
+TAGS:    transparent extra decor allow_dup luniq mini_float
+SHUFFLE: za, bd
+SUBST:   a = A, b = B, zd = c
+SHUFFLE: AB, DEFG
+SUBST:   AD : +, BEFG = c, Z : GT. U:3, c : cx
+MAP
+      ccFcc
+    Ecc...ccG
+   cc.......cc
+  Dc.....cczacc
+ cc.....cc...ccc
+ cdbc..cc.....cc
+ccc.cccc.......cc
+cc...cc.........c
+A..Z..+....Z....B
+cc...cc.........c
+ccc.cccc.......cc
+ cdbc..cc.....cc
+ cc.....cc...ccc
+  Dc.....cczacc
+   cc.......cc
+    Ecc...ccG
+      ccFcc
+ENDMAP
+
+NAME:   nicolae_elf_v_pinch
+DEPTH:  Elf
+TAGS:   transparent extra allow_dup luniq_pinch
+SUBST:  b : bc
+NSUBST: L = @ / ., R = @ / .
+MAP
+xxxxxxxxx
+bbxxxxxbb
+LbbxxxbbR
+L.bbxbb.R
+L..bbb..R
+L...b...R
+L.......R
+L.......R
+L.......R
+L...b...R
+L..bbb..R
+L.bbxbb.R
+LbbxxxbbR
+bbxxxxxbb
+xxxxxxxxx
+ENDMAP
+
+NAME:   nicolae_elf_w_pinch
+DEPTH:  Elf
+TAGS:   transparent extra allow_dup luniq_pinch
+SUBST:  b : bc
+NSUBST: L = @ / ., R = @ / .
+MAP
+xxxxxxxxxxxxxxxxx
+bbxxxxxbbbxxxxxbb
+Lbbxxxbb.bbxxxbbR
+L.bbxbb...bbxbb.R
+L..bbb.....bbb..R
+L...b.......b...R
+L...............R
+L...............R
+L...............R
+L...b.......b...R
+L..bbb.....bbb..R
+L.bbxbb...bbxbb.R
+Lbbxxxbb.bbxxxbbR
+bbxxxxxbbbxxxxxbb
+xxxxxxxxxxxxxxxxx
+ENDMAP
+
+NAME:   nicolae_elf_m_pinch
+DEPTH:  Elf
+TAGS:   transparent extra allow_dup luniq_pinch
+SUBST:  b : bc
+NSUBST: L = @ / ., R = @ / .
+MAP
+xxxxxxxxxxxxxxxxx
+xxxbbbxxxxxbbbxxx
+xxbb.bbxxxbb.bbxx
+xbb...bbxbb...bbx
+bb.....bbb.....bb
+b.......b.......b
+L...............R
+L...............R
+L...............R
+b.......b.......b
+bb.....bbb.....bb
+xbb...bbxbb...bbx
+xxbb.bbxxxbb.bbxx
+xxxbbbxxxxxbbbxxx
+xxxxxxxxxxxxxxxxx
+ENDMAP
+
+NAME:    nicolae_elf_big_sculpture_1
+DEPTH:   Elf
+TAGS:    transparent decor extra allow_dup
+SHUFFLE: abcdf
+SUBST:   a : .
+SHUFFLE: bcdef
+SUBST:   bcd : v, e : .v, f : .v, v : vbcx
+MAP
+.........
+.fda.adf.
+.deb.bed.
+.abc.cba.
+.........
+.abc.cba.
+.deb.bed.
+.fda.adf.
+.........
+ENDMAP
+
+NAME:    nicolae_elf_big_sculpture_2
+DEPTH:   Elf
+TAGS:    transparent decor extra allow_dup luniq
+SHUFFLE: mlk/mkl/nnn, abcdefghij
+SUBST:   ka = ., nbcd = v, e : .v, f : .v, g : .v, h : .v, i : .v, j : .v
+SUBST:   l : .v, m : .v, v : vbcx
+MAP
+  ...........
+  .abcd.dcba.
+....efg.gfe....
+.a...hi.ih...a.
+.be...j.j...eb.
+.cfh.......hfc.
+.dgij.klk.jigd.
+......lml......
+.dgij.klk.jigd.
+.cfh.......hfc.
+.be...j.j...eb.
+.a...hi.ih...a.
+....efg.gfe....
+  .abcd.dcba.
+  ...........
+ENDMAP
+
+NAME:    nicolae_elf_big_sculpture_3
+DEPTH:   Elf
+TAGS:    transparent extra decor allow_dup luniq
+: if crawl.coinflip() then
+SHUFFLE: bcegh
+SUBST:   b = .
+SHUFFLE: acdefghi
+: else
+SUBST:   f = v
+SHUFFLE: abcdeghi
+: end
+SUBST:   acd = v, b : .v, e : .v, f : .v, g : .v, h : .v, i : .v
+SUBST:   j : .v, v : vbcx
+MAP
+        .
+       ...
+      ..a..
+     ..bcb..
+    ..defed..
+   ....ghg....
+  ..d...i...d..
+ ..beg.....geb..
+..acfhi.j.ihfca..
+ ..beg.....geb..
+  ..d...i...d..
+   ....ghg....
+    ..defed..
+     ..bcb..
+      ..a..
+       ...
+        .
+ENDMAP
+
 ##############################################################################
 ##############################################################################
 #
-# Elf:5 branch endings
+# Elf:$ branch endings
 #
-# Total weight: 140.
+# Total weight: 150.
 ##############################################################################
 ##############################################################################
 
@@ -1398,4 +1626,49 @@ xxxxxxxxxxxxxxxcc.ccxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxc.cxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxc2cxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxx@xxxxxxxxxxxxxxxxxx
+ENDMAP
+
+# Before transform: 31x$, 26x*, 31x|, 4x1, 12x2, 12x3, 8x4, 8x5, 2x6, 2x7
+NAME:   grunt_elf_hall_spiral
+PLACE:  Elf:$
+ORIENT: centre
+: elf_setup(_G)
+: elf_monsters(_G)
+SUBST:   1=1., 2=2., 3=3., 4=4., 5=5.
+SHUFFLE: 23, 45, 67
+: elf_loot_defenders(_G)
+: elf_loot_randomisation(_G)
+MAP
+          xxxxc@cxxxxx
+        xxxcccc.cccccxxx
+      xxxccc........cccxxx
+     xxccc............cccxx
+    xxcc.....3.....2....ccxx
+   xxcc....2.....5...3...ccxx
+  xxcc.......bbb..........ccxx
+  xcc....3..bbb4..1........ccx
+ xxc.......bb$+..U..4.2.....cxx
+ xcc....2.bb*|b57.......3...ccx
+xxc..2....b|$$bbbbbbbbb......cxx
+xcc.....4.b$|*bb|*$|$|bb..2..ccx
+xc..3.....b|*bbb+bb*|$*bb.....cx
+xc.....1..b$bb|*$|bb*$|$bb.3..cx
+xc...5..U.b*b*$|*$|bbbb+bb....cc
+cc.......6b|+$|*$|*bbb5.4b.....@
+@.....b4.5bbb|*$|*$+|b6.......cc
+cc....bb+bbbb*$|*|$b*b.U..5...cx
+xc..3.bb$|$*bb$*|$bb$b..1.....cx
+xc.....bb*$|*bb+bbb*|b.....3..cx
+xcc..2..bb|$|$*|bb*|$b.4.....ccx
+xxc......bbbbbbbbb$$|b....2..cxx
+ xcc...3.......75b|*bb.2....ccx
+ xxc.....2.4..U..+$bb.......cxx
+  xcc........1..4bbb..3....ccx
+  xxcc..........bbb.......ccxx
+   xxcc...3...5.....2....ccxx
+    xxcc....2.....3.....ccxx
+     xxccc............cccxx
+      xxxccc........cccxxx
+        xxxccccc.ccccxxx
+          xxxxxx@xxxxx
 ENDMAP

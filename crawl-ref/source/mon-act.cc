@@ -465,7 +465,7 @@ static void _set_mons_move_dir(const monster* mons,
     }
 }
 
-static void _tweak_wall_mmov(const coord_def& monpos)
+static void _tweak_wall_mmov(const monster* mons, bool move_trees = false)
 {
     // The rock worm will try to move along through rock for as long as
     // possible. If the player is walking through a corridor, for example,
@@ -474,17 +474,40 @@ static void _tweak_wall_mmov(const coord_def& monpos)
     // This might cause the rock worm to take detours but it still
     // comes off as smarter than otherwise.
 
+    // If we're already moving into a shielded spot, don't adjust move
+    // (this leads to zig-zagging)
+    if (feat_is_solid(grd(mons->pos() + mmov)))
+        return;
+
     int dir = _compass_idx(mmov);
     ASSERT(dir != -1);
 
+
+    // If we're already adjacent to our target and shielded, don't shift position.
+    // If we're adjacent and unshielded, widen our search angle to include any
+    // spot adjacent to both us and our target
+    int range = 1;
+    if (mons->target == mons->pos() + mmov)
+    {
+        if (feat_is_solid(grd(mons->pos())))
+            return;
+        else
+        {
+            if (dir % 2 == 1)
+                range = 2;
+        }
+    }
+
     int count = 0;
     int choice = dir; // stick with mmov if none are good
-    for (int i = -1; i <= 1; ++i)
+    for (int i = -range; i <= range; ++i)
     {
         const int altdir = (dir + i + 8) % 8;
-        const coord_def t = monpos + mon_compass[altdir];
-        const bool good = in_bounds(t) && feat_is_rock(grd(t))
-                          && !feat_is_permarock(grd(t));
+        const coord_def t = mons->pos() + mon_compass[altdir];
+        const bool good = in_bounds(t)
+                          && (move_trees ? feat_is_tree(grd(t))
+                                         : feat_is_rock(grd(t))
+                                           && !feat_is_permarock(grd(t)));
         if (good && one_chance_in(++count))
             choice = altdir;
     }
@@ -616,9 +639,9 @@ static void _handle_movement(monster* mons)
     move_array good_move;
     _fill_good_move(mons, &good_move);
 
-    // Make rock worms prefer wall.
-    if (mons_wall_shielded(mons) && mons->target != mons->pos() + mmov)
-        _tweak_wall_mmov(mons->pos());
+    // Make rock worms and dryads prefer shielded terrain.
+    if (mons_wall_shielded(mons))
+        _tweak_wall_mmov(mons, mons->type == MONS_DRYAD);
 
     // If the monster is moving in your direction, whether to attack or
     // protect you, or towards a monster it intends to attack, check
@@ -1754,7 +1777,49 @@ static void _pre_monster_move(monster* mons)
         }
     }
 
+    if (mons->type == MONS_SNAPLASHER_VINE
+        && mons->props.exists("vine_awakener"))
+    {
+        monster* awakener = monster_by_mid(mons->props["vine_awakener"].get_int());
+        if (awakener && !awakener->can_see(mons))
+        {
+            simple_monster_message(mons, " falls limply to the ground.");
+            monster_die(mons, KILL_RESET, NON_MONSTER);
+            return;
+        }
+    }
+
+    // Possibly replenish bees (1 per 10 turns, on average)
+    if (mons->type == MONS_TREANT && mons->number < 5
+        && x_chance_in_y(you.time_taken, 100))
+    {
+        mons->number++;
+    }
+
+    if (mons_stores_tracking_data(mons))
+    {
+        actor* foe = mons->get_foe();
+        if (foe)
+        {
+            if (!mons->props.exists("foe_pos"))
+                mons->props["foe_pos"].get_coord() = foe->pos();
+            else
+            {
+                if (mons->props["foe_pos"].get_coord().distance_from(mons->pos())
+                    > foe->pos().distance_from(mons->pos()))
+                    mons->props["foe_approaching"].get_bool() = true;
+                else
+                    mons->props["foe_approaching"].get_bool() = false;
+
+                mons->props["foe_pos"].get_coord() = foe->pos();
+            }
+        }
+        else
+            mons->props.erase("foe_pos");
+    }
+
     reset_battlesphere(mons);
+    reset_spectral_weapon(mons);
 
     // This seems to need to go here to actually get monsters to slow down.
     // XXX: Replace with a new ENCH_LIQUEFIED_GROUND or something.
@@ -1820,8 +1885,11 @@ static void _pre_monster_move(monster* mons)
 
     // Memory is decremented here for a reason -- we only want it
     // decrementing once per monster "move".
-    if (mons->foe_memory > 0 && !you.penance[GOD_ASHENZARI])
+    if (mons->foe_memory > 0 && !you.penance[GOD_ASHENZARI]
+        && !mons_class_flag(mons->type, M_VIGILANT))
+    {
         mons->foe_memory -= you.time_taken;
+    }
 
     // Otherwise there are potential problems with summonings.
     if (mons->type == MONS_GLOWING_SHAPESHIFTER)
@@ -1863,7 +1931,7 @@ void handle_monster_move(monster* mons)
     if (!mons->has_action_energy())
         return;
 
-    move_demon_tentacle(mons);
+    move_solo_tentacle(mons);
 
     if (!mons->alive())
         return;
@@ -2103,6 +2171,11 @@ void handle_monster_move(monster* mons)
     }
     mon_nearby_ability(mons);
 
+    // XXX: A bit hacky, but stores where we WILL move, if we don't take
+    //      another action instead (used for decision-making)
+    if (mons_stores_tracking_data(mons))
+        mons->props["mmov"].get_coord() = mmov;
+
     if (!mons->asleep() && !mons_is_wandering(mons)
         && !mons->withdrawn()
         // Berserking monsters are limited to running up and
@@ -2116,6 +2189,17 @@ void handle_monster_move(monster* mons)
         beem.source      = mons->pos();
         beem.target      = mons->target;
         beem.beam_source = mons->mindex();
+
+        // XXX: Otherwise perma-confused monsters can almost never properly
+        // aim spells, since their target is constantly randomized.
+        // This does make them automatically aware of the player in several
+        // situations they otherwise would not, however.
+        if (mons_class_flag(mons->type, M_CONFUSED))
+        {
+            actor* foe = mons->get_foe();
+            if (foe && mons->can_see(foe))
+                beem.target = foe->pos();
+        }
 
         // Prevents unfriendlies from nuking you from offscreen.
         // How nice!
@@ -2339,6 +2423,18 @@ static void _post_monster_move(monster* mons)
         monster_die(mons, KILL_MISC, NON_MONSTER);
 }
 
+priority_queue<pair<monster *, int>,
+               vector<pair<monster *, int> >,
+               MonsterActionQueueCompare> monster_queue;
+
+// Inserts a monster into the monster queue (needed to ensure that any monsters
+// given energy or an action by a effect can actually make use of that energy
+// this round)
+void queue_monster_for_action(monster* mons)
+{
+    monster_queue.push(pair<monster *, int>(mons, mons->speed_increment));
+}
+
 //---------------------------------------------------------------
 //
 // handle_monsters
@@ -2348,10 +2444,6 @@ static void _post_monster_move(monster* mons)
 //---------------------------------------------------------------
 void handle_monsters(bool with_noise)
 {
-    priority_queue<pair<monster *, int>,
-                   vector<pair<monster *, int> >,
-                   MonsterActionQueueCompare> monster_queue;
-
     for (monster_iterator mi; mi; ++mi)
     {
         _pre_monster_move(*mi);
@@ -3150,6 +3242,8 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
 
     // Wandering mushrooms usually don't move while you are looking.
     if (mons->type == MONS_WANDERING_MUSHROOM
+        || mons->type == MONS_DEATHCAP
+        || mons->type == MONS_CURSE_SKULL
         || (mons->type == MONS_LURKING_HORROR
             && mons->foe_distance() > random2(LOS_RADIUS + 1)))
     {
@@ -3544,7 +3638,14 @@ static bool _may_cutdown(monster* mons, monster* targ)
     }
     // Outside of that case, can always cut mundane plants.
     if (mons_is_firewood(targ))
-        return true;
+    {
+        // Don't try to attack briars unless their damage will be insignificant
+        if (targ->type == MONS_BRIAR_PATCH && mons->type != MONS_THORN_HUNTER
+            && (mons->armour_class() * mons->hit_points) < 400)
+            return false;
+        else
+            return true;
+    }
 
     // In normal games, that's it.  Gotta keep those butterflies alive...
     if (!crawl_state.game_is_zotdef())
@@ -3955,8 +4056,8 @@ static void _heated_area(monster* mons)
     const int base_damage = random2(11);
 
     // Timescale, like with clouds:
-    const int speed = mons->speed > 0? mons->speed : 10;
-    const int timescaled = (std::max(0, base_damage) * 10 / speed);
+    const int speed = mons->speed > 0 ? mons->speed : 10;
+    const int timescaled = max(0, base_damage) * 10 / speed;
 
     // rF protects:
     const int resist = mons->res_fire();
@@ -3964,8 +4065,8 @@ static void _heated_area(monster* mons)
                                 BEAM_FIRE, resist,
                                 timescaled, true);
     // So does AC:
-    const int final_damage = std::max(0, adjusted_damage
-                                      - random2(mons->armour_class()));
+    const int final_damage = max(0, adjusted_damage
+                                 - random2(mons->armour_class()));
 
     if (final_damage > 0)
     {

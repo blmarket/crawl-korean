@@ -28,6 +28,7 @@
 #include "mon-iter.h"
 #include "mon-place.h"
 #include "religion.h"
+#include "spl-clouds.h"
 #include "spl-damage.h"
 #include "spl-summoning.h"
 #include "state.h"
@@ -477,15 +478,6 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
         behaviour_event(this, ME_EVAL);
         break;
 
-    case ENCH_TEMP_PACIF:
-        if (!quiet)
-            simple_monster_message(this, make_stringf(_(" seems to come to %s senses."),
-                            pronoun(PRONOUN_POSSESSIVE).c_str()).c_str());
-        // Yeah, this _is_ offensive to Zin, but hey, he deserves it (1KB).
-
-        behaviour_event(this, ME_EVAL);
-        break;
-
     case ENCH_PETRIFIED:
         if (!quiet)
             simple_monster_message(this, _(" is no longer petrified."));
@@ -616,6 +608,8 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
         if (type == MONS_BATTLESPHERE)
             return end_battlesphere(this, false);
     case ENCH_ABJ:
+        if (type == MONS_SPECTRAL_WEAPON)
+            return end_spectral_weapon(this, false);
         // Set duration to -1 so that monster_die() and any of its
         // callees can tell that the monster ran out of time or was
         // abjured.
@@ -821,6 +815,14 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             simple_monster_message(this, _(" is no longer weakened."));
         break;
 
+    case ENCH_AWAKEN_VINES:
+        unawaken_vines(this, quiet);
+        break;
+
+    case ENCH_CONTROL_WINDS:
+        if (!quiet && you.can_see(this))
+            mprf("The winds cease moving at %s will.", name(DESC_ITS).c_str());
+
     default:
         break;
     }
@@ -920,7 +922,7 @@ void monster::timeout_enchantments(int levels)
         case ENCH_CHARM: case ENCH_SLEEP_WARY: case ENCH_SICK:
         case ENCH_SLEEPY: case ENCH_PARALYSIS: case ENCH_PETRIFYING:
         case ENCH_PETRIFIED: case ENCH_SWIFT: case ENCH_BATTLE_FRENZY:
-        case ENCH_TEMP_PACIF: case ENCH_SILENCE: case ENCH_LOWERED_MR:
+        case ENCH_SILENCE: case ENCH_LOWERED_MR:
         case ENCH_SOUL_RIPE: case ENCH_BLEED: case ENCH_ANTIMAGIC:
         case ENCH_FEAR_INSPIRING: case ENCH_REGENERATION: case ENCH_RAISED_MR:
         case ENCH_MIRROR_DAMAGE: case ENCH_STONESKIN: case ENCH_LIQUEFYING:
@@ -1107,7 +1109,6 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_MIGHT:
     case ENCH_FEAR:
     case ENCH_PARALYSIS:
-    case ENCH_TEMP_PACIF:
     case ENCH_PETRIFYING:
     case ENCH_PETRIFIED:
     case ENCH_SICK:
@@ -1139,6 +1140,8 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_WRETCHED:
     case ENCH_SCREAMED:
     case ENCH_WEAK:
+    case ENCH_AWAKEN_VINES:
+    case ENCH_WIND_AIDED:
     // case ENCH_ROLLING:
         decay_enchantment(me);
         break;
@@ -1790,6 +1793,11 @@ void monster::apply_enchantment(const mon_enchant &me)
             del_ench(ENCH_HAUNTING);
         break;
 
+    case ENCH_CONTROL_WINDS:
+        apply_control_winds(this);
+        decay_enchantment(me);
+        break;
+
     default:
         break;
     }
@@ -1906,7 +1914,11 @@ static const char *enchant_names[] =
     "confusion", "invis", "poison", "rot", "summon", "abj", "corona",
     "charm", "sticky_flame", "glowing_shapeshifter", "shapeshifter", "tp",
     "sleep_wary", "submerged", "short_lived", "paralysis", "sick",
-    "sleepy", "held", "battle_frenzy", "temp_pacif", "petrifying",
+    "sleepy", "held", "battle_frenzy",
+#if TAG_MAJOR_VERSION == 34
+    "temp_pacif",
+#endif
+    "petrifying",
     "petrified", "lowered_mr", "soul_ripe", "slowly_dying", "eat_items",
     "aquatic_land", "spore_production",
 #if TAG_MAJOR_VERSION == 34
@@ -1922,6 +1934,7 @@ static const char *enchant_names[] =
     "inner_flame", "roused", "breath timer", "deaths_door", "rolling",
     "ozocubus_armour", "wretched", "screamed", "rune_of_recall", "injury bond",
     "drowning", "flayed", "haunting", "retching", "weak", "dimension_anchor",
+    "awaken vines", "control_winds", "wind_aided", "summon_capped",
     "buggy",
 };
 

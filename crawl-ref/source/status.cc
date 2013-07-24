@@ -136,6 +136,12 @@ static duration_def duration_data[] =
       BLUE, P_("status", "Disjoin"), P_("status","disjoining"), N_("You are disjoining your surroundings.") },
     { DUR_SENTINEL_MARK, true,
       MAGENTA, P_("status","Mark"), P_("status","marked"), N_("You are marked for hunting.") },
+    { DUR_INFUSION, true,
+      BLUE, P_("status","Infus"), P_("status","infused"), N_("Your attacks are magically infused.")},
+    { DUR_SONG_OF_SLAYING, true,
+      BLUE, P_("status","Slay"), P_("status","singing"), N_("Your melee attacks are strengthened by your song.")},
+    { DUR_SONG_OF_SHIELDING, true,
+      BLUE, P_("status","SShield"), P_("status","shielded"), N_("Your magic is protecting you.")},
     { DUR_FLAYED, true,
       RED, P_("status","Flay"), P_("status","flayed"), N_("You are covered in terrible wounds.") },
     { DUR_RETCHING, true,
@@ -143,7 +149,9 @@ static duration_def duration_data[] =
     { DUR_WEAK, false,
       RED, P_("status","Weak"), P_("status","weakened"), N_("Your attacks are enfeebled.") },
     { DUR_DIMENSION_ANCHOR, false,
-      RED, P_("status","-TELE"), P_("status","cannot translocate"), N_("You are firmly anchored to this plane.") },
+      RED, P_("status","-Tele"), P_("status","cannot translocate"), N_("You are firmly anchored to this plane.") },
+    { DUR_SPIRIT_HOWL, false,
+      MAGENTA, P_("status","Howl"), P_("status","spirit howling"), N_("The howling of a spirit pack pursues you.") },
 };
 
 static int duration_index[NUM_DURATIONS];
@@ -498,7 +506,8 @@ bool fill_status_info(int status, status_info* inf)
                 inf->light_colour = GREEN;
             else
                 inf->light_colour = DARKGREY;
-            _mark_expiring(inf, dur_expiring(DUR_TRANSFORMATION));
+            if (you.form == TRAN_SPIDER)
+                _mark_expiring(inf, dur_expiring(DUR_TRANSFORMATION));
         }
         break;
 
@@ -554,6 +563,11 @@ bool fill_status_info(int status, status_info* inf)
             inf->short_text   = _(M_("silenced"));
             inf->long_text    = _("You are silenced.");
         }
+        break;
+
+    case DUR_SONG_OF_SLAYING:
+        inf->light_text = make_stringf("Slay (%u)",
+                                       you.props["song_of_slaying_bonus"].get_int());
         break;
 
     case STATUS_NO_CTELE:

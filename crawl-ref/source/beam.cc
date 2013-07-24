@@ -1637,7 +1637,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
             if (mons->observable())
                 pbolt.obvious_effect = true;
 
-            mons->drain_exp(pbolt.agent(), pbolt.aux_source.c_str());
+            mons->drain_exp(pbolt.agent());
 
             if (YOU_KILL(pbolt.thrower))
                 did_god_conduct(DID_NECROMANCY, 2, pbolt.effect_known);
@@ -2574,10 +2574,10 @@ void bolt::drop_object()
             }
         }
 
-        copy_item_to_grid(*item, pos(), agent()->mindex(), 1);
+        copy_item_to_grid(*item, pos(), 1);
     }
     else
-        item_was_destroyed(*item, agent()->mindex());
+        item_was_destroyed(*item, NON_MONSTER);
 }
 
 // Returns true if the beam hits the player, fuzzing the beam if necessary
@@ -3010,6 +3010,12 @@ bool bolt::is_harmless(const monster* mon) const
 
     case BEAM_PETRIFY:
         return (mon->res_petrify() || mon->petrified());
+
+    case BEAM_MEPHITIC:
+        return mon->res_poison() > 0 || mon->is_unbreathing();
+
+    case BEAM_GHOSTLY_FLAME:
+        return mon->holiness() == MH_UNDEAD;
 
     default:
         return false;
@@ -3535,7 +3541,8 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_DIMENSION_ANCHOR:
-        mpr(_("You feel firmly anchored in space."));
+        mprf(_("You feel %sfirmly anchored in space."),
+             you.duration[DUR_DIMENSION_ANCHOR] ? pgettext("affectpe","more ") : "");
         you.increase_duration(DUR_DIMENSION_ANCHOR, 12 + random2(15), 50);
         if (you.duration[DUR_TELEPORT])
         {
@@ -3544,6 +3551,13 @@ void bolt::affect_player_enchantment()
         }
         you.duration[DUR_PHASE_SHIFT] = 0;
         you.redraw_evasion = true;
+        obvious_effect = true;
+        break;
+
+    case BEAM_VULNERABILITY:
+        if (!you.duration[DUR_LOWERED_MR])
+            mpr("Your magical defenses are stripped away!");
+        you.increase_duration(DUR_LOWERED_MR, 12 + random2(18), 50);
         obvious_effect = true;
         break;
 
@@ -4712,13 +4726,16 @@ bool bolt::ignores_monster(const monster* mon) const
     // battlespheres. We don't check mon->is_projectile() because that
     // check includes boulder beetles which should be hit.
     if (mons_is_projectile(mon)
-        || mon->type == MONS_BATTLESPHERE && mons_aligned(agent(), mon))
+        || (mon->type == MONS_BATTLESPHERE || mon->type == MONS_SPECTRAL_WEAPON)
+            && mons_aligned(agent(), mon))
     {
         return true;
     }
 
-    // Missiles go past bushes.
-    if (mons_species(mon->type) == MONS_BUSH && !is_beam && !is_explosion
+    // Missiles go past bushes and briar patches, unless aimed directly at them
+    if ((mons_species(mon->type) == MONS_BUSH || mon->type == MONS_BRIAR_PATCH)
+        && !is_beam && !is_explosion
+        && target != mon->pos()
         && name != "sticky flame"
         && name != "splash of liquid fire"
         && name != "lightning arc")
@@ -4756,6 +4773,8 @@ bool bolt::has_saving_throw() const
     case BEAM_BLINK_CLOSE:
     case BEAM_BLINK:
         return false;
+    case BEAM_VULNERABILITY:
+        return !one_chance_in(3);  // Ignores MR 1/3 of the time
     default:
         return true;
     }
@@ -4825,9 +4844,6 @@ bool enchant_monster_invisible(monster* mon, const string &how)
 
     if (!mon->has_ench(ENCH_INVIS) && mon->add_ench(ENCH_INVIS))
     {
-        // A casting of invisibility erases corona.
-        mon->del_ench(ENCH_CORONA);
-
         if (mons_near(mon))
         {
             const bool is_visible = mon->visible_to(&you);
@@ -5048,14 +5064,14 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         if (thrower == KILL_YOU || thrower == KILL_YOU_MISSILE)
         {
             // No KILL_YOU_CONF, or we get "You heal ..."
-            if (cast_healing(5 + damage.roll(), 5 + damage.num * damage.size,
+            if (cast_healing(3 + damage.roll(), 3 + damage.num * damage.size,
                              false, mon->pos()) > 0)
             {
                 obvious_effect = true;
             }
             msg_generated = true; // to avoid duplicate "nothing happens"
         }
-        else if (mon->heal(5 + damage.roll()))
+        else if (mon->heal(3 + damage.roll()))
         {
             if (mon->hit_points == mon->max_hit_points)
             {
@@ -5190,6 +5206,19 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         {
             if (simple_monster_message(mon, _(" is firmly anchored in space.")))
                 obvious_effect = true;
+        }
+        return MON_AFFECTED;
+
+    case BEAM_VULNERABILITY:
+        if (!mon->has_ench(ENCH_LOWERED_MR)
+            && mon->add_ench(mon_enchant(ENCH_LOWERED_MR, 0, agent())))
+        {
+            if (you.can_see(mon))
+            {
+                mprf("%s magical defenses are stripped away.",
+                     mon->name(DESC_ITS).c_str());
+                obvious_effect = true;
+            }
         }
         return MON_AFFECTED;
 
@@ -5906,13 +5935,13 @@ void bolt::set_agent(actor *actor)
     }
 }
 
-actor* bolt::agent() const
+actor* bolt::agent(bool ignore_reflection) const
 {
     killer_type nominal_ktype = thrower;
     int nominal_source = beam_source;
 
     // If the beam was reflected report a different point of origin
-    if (reflections > 0)
+    if (reflections > 0 && !ignore_reflection)
     {
         if (reflector == NON_MONSTER)
             nominal_ktype = KILL_YOU_MISSILE;
@@ -6031,6 +6060,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_ENSNARE:               return "magic web";
     case BEAM_SENTINEL_MARK:         return "sentinel's mark";
     case BEAM_DIMENSION_ANCHOR:      return "dimension anchor";
+    case BEAM_VULNERABILITY:         return "vulnerability";
 
     case NUM_BEAMS:                  die("invalid beam type");
     }

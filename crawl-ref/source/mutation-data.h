@@ -11,9 +11,6 @@
 // fourth strings = message given when losing the mutation
 // fifth  string  = wizard-mode name of mutation
 
-#ifndef MUTATION_DATA_H
-#define MUTATION_DATA_H
-
 { MUT_TOUGH_SKIN,                     0,  3, false,  true,  true,
   M_("tough skin"),
 
@@ -1507,7 +1504,7 @@
   "petrification resistance"
 },
 
-{ MUT_TRAMPLE_RESISTANCE,                  0,  1, false, false, false,
+{ MUT_TRAMPLE_RESISTANCE,                  1,  1, false, false, false,
   M_("trample resistance"),
 
   {M_("You are resistant to trampling."), "", ""},
@@ -1517,5 +1514,12 @@
   "trample resistance"
 },
 
+{ MUT_CLING,                               1,  1, false, false, true,
+  M_("cling"),
 
-#endif
+  {M_("You can cling to walls."), "", ""},
+  {M_("You feel sticky."), "", ""},
+  {M_("You feel slippery."), "", ""},
+
+  "cling"
+}

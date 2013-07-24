@@ -872,10 +872,6 @@ string get_god_dislikes(god_type which_god, bool /*verbose*/)
         really_dislikes.push_back("마법책을 파괴하는 행위");
         break;
 
-    case GOD_NEMELEX_XOBEH:
-        really_dislikes.push_back("카드 덱을 파괴하는 행위");
-        break;
-
     default:
         break;
     }
@@ -1378,7 +1374,7 @@ static bool _give_nemelex_gift(bool forced = false)
                                    true, 1, MAKE_ITEM_RANDOM_RACE,
                                    0, 0, GOD_NEMELEX_XOBEH);
 
-        move_item_to_grid(&thing_created, you.pos(), NON_MONSTER, true);
+        move_item_to_grid(&thing_created, you.pos(), true);
 
         if (thing_created != NON_ITEM)
         {
@@ -2269,8 +2265,7 @@ bool do_god_gift(bool forced)
                     // reason.
                     mark_had_book(gift);
 
-                    move_item_to_grid(&thing_created, you.pos(), NON_MONSTER,
-                                       true);
+                    move_item_to_grid(&thing_created, you.pos(), true);
 
                     if (thing_created != NON_ITEM)
                         success = true;
@@ -2938,18 +2933,24 @@ void lose_piety(int pgn)
 static bool _fedhas_protects_species(monster_type mc)
 {
     return (mons_class_is_plant(mc)
-            && mc != MONS_GIANT_SPORE);
+            && mons_class_holiness(mc) == MH_PLANT
+            && mc != MONS_GIANT_SPORE
+            && mc != MONS_SNAPLASHER_VINE
+            && mc != MONS_SNAPLASHER_VINE_SEGMENT);
 }
 
 bool fedhas_protects(const monster* target)
 {
-    return (target && _fedhas_protects_species(target->mons_species()));
+    return (target && _fedhas_protects_species(mons_base_type(target)));
 }
 
 // Fedhas neutralises most plants and fungi
 bool fedhas_neutralises(const monster* target)
 {
-    return (target && mons_is_plant(target));
+    return (target && mons_is_plant(target)
+            && target->holiness() == MH_PLANT
+            && target->type != MONS_SNAPLASHER_VINE
+            && target->type != MONS_SNAPLASHER_VINE_SEGMENT);
 }
 
 static string _god_hates_your_god_reaction(god_type god, god_type your_god)
@@ -3413,7 +3414,7 @@ bool player_can_join_god(god_type which_god)
     if (which_god == GOD_YREDELEMNUL && you.is_artificial())
         return false;
 
-    if (which_god == GOD_BEOGH && you.species != SP_HILL_ORC)
+    if (which_god == GOD_BEOGH && !player_genus(GENPC_ORCISH))
         return false;
 
     // Fedhas hates undead, but will accept demonspawn.
@@ -3501,11 +3502,6 @@ void god_pitch(god_type which_god)
         if (which_god == GOD_SIF_MUNA)
         {
             simple_god_message("은(는) 당신과 같은 무지한 자로부터의 숭배는 받아들이지 않는다!",
-                               which_god);
-        }
-        else if (which_god == GOD_BEOGH && you.species == SP_LAVA_ORC)
-        {
-            simple_god_message("은(는) 소리쳤다. \"저리 꺼져라, 선택받은 나의 종족을 어설프게 흉내낸 것에 불과한, 더럽고 역겨운 녀석아!\"",
                                which_god);
         }
         else if (!_transformed_player_can_join_god(which_god))
@@ -3889,13 +3885,9 @@ bool god_hates_spell(spell_type spell, god_type god)
             return true;
         break;
     case GOD_SHINING_ONE:
-        // TSO hates using poison, but is fine with curing it
-        // or destroying it.
-        if ((disciplines & SPTYP_POISON) && spell != SPELL_CURE_POISON
-            && spell != SPELL_IGNITE_POISON)
-        {
+        // TSO hates using poison, but is fine with curing it.
+        if ((disciplines & SPTYP_POISON) && spell != SPELL_CURE_POISON)
             return true;
-        }
         break;
     case GOD_YREDELEMNUL:
         if (spell == SPELL_STATUE_FORM)

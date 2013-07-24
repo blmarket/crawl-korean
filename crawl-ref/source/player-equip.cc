@@ -24,6 +24,7 @@
 #include "skills2.h"
 #include "spl-cast.h"
 #include "spl-miscast.h"
+#include "spl-summoning.h"
 #include "state.h"
 #include "stuff.h"
 #include "transform.h"
@@ -872,6 +873,16 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
 
         canned_msg(MSG_MANA_DECREASE);
     }
+
+    // Unwielding dismisses an active spectral weapon
+    monster *spectral_weapon = find_spectral_weapon(&you);
+    if (spectral_weapon)
+    {
+        mprf("Your spectral weapon disappears as %s.",
+             meld ? "your weapon melds" : "you unwield");
+        end_spectral_weapon(spectral_weapon, false, true);
+    }
+
 }
 
 static void _equip_armour_effect(item_def& arm, bool unmeld)
@@ -960,7 +971,10 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             if (!unmeld && you.spirit_shield() < 2)
             {
                 dec_mp(you.magic_points);
-                mpr(_("You feel your power drawn to a protective spirit."));
+                if (you.species == SP_DJINNI)
+                    mpr(_("You feel the presence of a powerless spirit."));
+                else
+                    mpr(_("You feel your power drawn to a protective spirit."));
                 if (you.species == SP_DEEP_DWARF)
                     mpr(gettext("Now linked to your health, your magic stops regenerating."));
             }
@@ -1348,7 +1362,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (you.spirit_shield() < 2 && !unmeld)
         {
             dec_mp(you.magic_points);
-            mpr(gettext("You feel your power drawn to a protective spirit."));
+            if (you.species == SP_DJINNI)
+                mpr(_("You feel the presence of a powerless spirit."));
+            else
+                mpr(_("You feel your power drawn to a protective spirit."));
             if (you.species == SP_DEEP_DWARF)
                 mpr(_("Now linked to your health, your magic stops regenerating."));
         }

@@ -130,7 +130,6 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
         case SP_VAMPIRE:
         case SP_FELID:
         case SP_OCTOPODE:
-        case SP_DJINNI:
             return CC_RESTRICTED;
         default:
             return CC_UNRESTRICTED;
@@ -201,6 +200,7 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
         case SP_GHOUL:
         case SP_FELID:
         case SP_OCTOPODE:
+        case SP_DJINNI:
             return CC_RESTRICTED;
         default:
             return CC_UNRESTRICTED;
@@ -310,6 +310,7 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
         case SP_OGRE:
         case SP_TROLL:
         case SP_MINOTAUR:
+        case SP_MUMMY:
         case SP_GHOUL:
             return CC_RESTRICTED;
         default:
@@ -350,6 +351,7 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
         case SP_MINOTAUR:
         case SP_TENGU:
         case SP_VAMPIRE:
+        case SP_DJINNI:
             return CC_RESTRICTED;
         default:
             return CC_UNRESTRICTED;
@@ -748,6 +750,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         case SP_SLUDGE_ELF:
         case SP_BASE_DRACONIAN:
         case SP_DJINNI:
+        case SP_GARGOYLE:
             return CC_UNRESTRICTED;
 
         default:

@@ -1,6 +1,6 @@
 drop_filter += useless_item
 
-auto_exclude += oklob,statue,curse skull,roxanne,hyperactive,lightning spire
+auto_exclude += oklob,statue,roxanne,hyperactive,lightning spire
 auto_exclude += mimic
 auto_exclude += 오클롭,얼음상,은상,주황빛 수정상,동상,저주받은 해골,록산느,번개탑,활발한 발리,미믹,오벨리스크
 

@@ -214,12 +214,12 @@ static void _turn_corpse_into_skeleton_and_chunks(item_def &item, bool prefer_ch
         turn_corpse_into_skeleton(item);
     }
 
-    copy_item_to_grid(copy, item_pos(item), MHITYOU);
+    copy_item_to_grid(copy, item_pos(item));
 }
 
 void butcher_corpse(item_def &item, maybe_bool skeleton, bool chunks)
 {
-    item_was_destroyed(item, MHITYOU);
+    item_was_destroyed(item);
     if (!mons_skeleton(item.mon_type))
         skeleton = MB_FALSE;
     if (skeleton == MB_TRUE || skeleton == MB_MAYBE && one_chance_in(3))
@@ -988,7 +988,7 @@ void turn_corpse_into_skeleton_and_blood_potions(item_def &item)
     if (o != NON_ITEM)
     {
         turn_corpse_into_blood_potions(blood_potions);
-        copy_item_to_grid(blood_potions, you.pos(), MHITYOU);
+        copy_item_to_grid(blood_potions, you.pos());
     }
 }
 
@@ -1465,6 +1465,11 @@ bool go_berserk(bool intentional, bool potion)
     return true;
 }
 
+// HACK ALERT: In the following several functions, want_move is true if the
+// player is travelling. If that is the case, things must be considered one
+// square closer to the player, since we don't yet know where the player will
+// be next turn.
+
 // Returns true if the monster has a path to the player, or it has to be
 // assumed that this is the case.
 static bool _mons_has_path_to_player(const monster* mon, bool want_move = false)
@@ -1550,10 +1555,7 @@ bool mons_is_safe(const monster* mon, const bool want_move,
     bool is_safe = (_mons_is_always_safe(mon)
                     || check_dist
                        && (mon->pacified() && dist > 1
-#ifdef WIZARD
-                           // Wizmode skill setting enforces hiddenness.
-                           || you.skills[SK_STEALTH] > 27 && dist > 2
-#endif
+                           || crawl_state.disables[DIS_MON_SIGHT] && dist > 2
                            // Only seen through glass walls or within water?
                            // Assuming that there are no water-only/lava-only
                            // monsters capable of throwing or zapping wands.
@@ -1648,6 +1650,8 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
             const int cloudidx = env.cgrid(you.pos());
             const cloud_type type = env.cloud[cloudidx].type;
 
+            // Temporary immunity allows travelling through a cloud but not
+            // resting in it.
             if (is_damaging_cloud(type, want_move))
             {
                 if (announce)
@@ -1712,7 +1716,8 @@ static const char *shop_types[] = {
     "food",
     "distillery",
     "scroll",
-    "general"
+    "general",
+    "gadget"
 };
 
 int str_to_shoptype(const string &s)
@@ -2271,7 +2276,13 @@ bool bad_attack(const monster *mon, string& adj, string& suffix)
     if (mon->friendly())
     {
         if (you.religion == GOD_OKAWARU)
+        {
             adj = gettext("your ally the ");
+
+            monster_info mi(mon, MILEV_NAME);
+            if (!mi.is(MB_NAME_UNQUALIFIED))
+                adj += ""; // "the ";
+        }
         else
             adj = gettext(M_("your "));
         return true;
@@ -2426,8 +2437,7 @@ bool is_orckind(const actor *act)
             return true;
         }
         if (mons_is_ghost_demon(mon->type)
-            && (mon->ghost->species == SP_HILL_ORC
-                || mon->ghost->species == SP_LAVA_ORC))
+            && (player_genus(GENPC_ORCISH, mon->ghost->species)))
         {
             return true;
         }

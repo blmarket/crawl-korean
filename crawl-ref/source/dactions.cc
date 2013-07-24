@@ -360,6 +360,5 @@ static void _daction_hog_to_human(monster *mon)
     if (could_see && !can_see)
         mpr(_("The hog vanishes!"));
     else if (!could_see && can_see)
-        mprf(_("%s appears from out of thin air!"),
-                mon->name(DESC_PLAIN).c_str());
+        mprf(_("%s appears from out of thin air!"), mon->name(DESC_PLAIN).c_str());
 }

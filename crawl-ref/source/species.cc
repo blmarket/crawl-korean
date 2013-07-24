@@ -172,16 +172,16 @@ string species_name(species_type speci, bool genus, bool adj)
         break;
     case GENPC_ORCISH:
         if (adj)  // doesn't care about species/genus
-            res = "Orcish";
+            res = M_("Orcish");
         else if (genus)
-            res = "Orc";
+            res = M_("Orc");
         else
         {
             switch (speci)
             {
             case SP_HILL_ORC: res = M_("Hill Orc"); break;
             case SP_LAVA_ORC: res = M_("Lava Orc"); break;
-            default:          res = "Orc";      break;
+            default:          res = M_("Orc");      break;
             }
         }
         break;
@@ -200,9 +200,6 @@ string species_name(species_type speci, bool genus, bool adj)
         case SP_TENGU:      res = M_("Tengu");                             break;
         case SP_GARGOYLE:   res = M_("Gargoyle");                          break;
 
-        case SP_HILL_ORC:
-            res = (adj ? M_("Orcish") : genus ? M_("Orc") : M_("Hill Orc"));
-            break;
         case SP_DEEP_DWARF:
             res = (adj ? M_("Dwarven") : genus ? M_("Dwarf") : M_("Deep Dwarf"));
             break;

@@ -22,6 +22,7 @@
 #include "message.h"
 #include "misc.h"
 #include "mon-behv.h"
+#include "mon-chimera.h"
 #include "mon-iter.h"
 #include "mon-place.h"
 #include "mon-pathfind.h"
@@ -65,6 +66,14 @@ void handle_monster_shouts(monster* mons, bool force)
     // choose a random verb and loudness for them.
     shout_type  s_type = mons_shouts(mons->type, false);
 
+    // Chimera can take a random shout type from any of their
+    // three components
+    if (mons->type == MONS_CHIMERA)
+    {
+        monster_type acting = mons->ghost->acting_part != MONS_0
+            ? mons->ghost->acting_part : random_chimera_part(mons);
+        s_type = mons_shouts(acting, false);
+    }
     // Silent monsters can give noiseless "visual shouts" if the
     // player can see them, in which case silence isn't checked for.
     // Muted monsters can't shout at all.
@@ -289,6 +298,10 @@ bool check_awaken(monster* mons)
 
     // Berserkers aren't really concerned about stealth.
     if (you.berserk())
+        return true;
+
+    // Vigilant monsters are always alerted
+    if (mons_class_flag(mons->type, M_VIGILANT))
         return true;
 
     // I assume that creatures who can sense invisible are very perceptive.
@@ -664,7 +677,8 @@ void check_monsters_sense(sense_type sense, int range, const coord_def& where)
             break;
 
         case SENSE_WEB_VIBRATION:
-            if (!mons_class_flag(mi->type, M_WEB_SENSE))
+            if (!mons_class_flag(mi->type, M_WEB_SENSE)
+                && !mons_class_flag(get_chimera_legs(*mi), M_WEB_SENSE))
                 break;
             if (!one_chance_in(4))
             {

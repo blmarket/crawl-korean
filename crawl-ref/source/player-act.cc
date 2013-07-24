@@ -104,7 +104,7 @@ void player::set_position(const coord_def &c)
     {
         reset_prev_move();
 
-        if (you.duration[DUR_QUAD_DAMAGE])
+        if (duration[DUR_QUAD_DAMAGE])
             invalidate_agrid(true);
 
         if (player_has_orb())
@@ -228,9 +228,9 @@ brand_type player::damage_brand(int)
     brand_type ret = SPWPN_NORMAL;
     const int wpn = equip[EQ_WEAPON];
 
-    if (wpn != -1 && !you.melded[EQ_WEAPON])
+    if (wpn != -1 && !melded[EQ_WEAPON])
     {
-        if (!is_range_weapon(inv[wpn]) && !you.suppressed())
+        if (!is_range_weapon(inv[wpn]) && !suppressed())
             ret = get_weapon_brand(inv[wpn]);
     }
     else if (duration[DUR_CONFUSING_TOUCH])
@@ -283,7 +283,7 @@ item_def *player::slot_item(equipment_type eq, bool include_melded) const
 // Returns the item in the player's weapon slot.
 item_def *player::weapon(int /* which_attack */) const
 {
-    if (you.melded[EQ_WEAPON])
+    if (melded[EQ_WEAPON])
         return NULL;
 
     return slot_item(EQ_WEAPON, false);
@@ -346,7 +346,7 @@ bool player::could_wield(const item_def &item, bool ignore_brand,
 }
 
 // Returns the shield the player is wearing, or NULL if none.
-item_def *player::shield()
+item_def *player::shield() const
 {
     return slot_item(EQ_SHIELD, false);
 }
@@ -422,9 +422,9 @@ string player::hand_name(bool plural, bool *can_plural) const
     {
         if (species == SP_FELID)
             str = M_("paw");
-        else if (you.has_usable_claws())
+        else if (has_usable_claws())
             str = M_("claw");
-        else if (you.has_usable_tentacles())
+        else if (has_usable_tentacles())
             str = M_("tentacle");
     }
 
@@ -459,9 +459,9 @@ string player::foot_name(bool plural, bool *can_plural) const
     {
         if (player_mutation_level(MUT_HOOVES) >= 3)
             str = M_("hoof");
-        else if (you.has_usable_talons())
+        else if (has_usable_talons())
             str = M_("talon");
-        else if (you.has_usable_tentacles())
+        else if (has_usable_tentacles())
         {
             str         = M_("tentacles");
             *can_plural = false;
@@ -670,7 +670,7 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
         return false;
     }
 
-    if (!you.can_bleed(false))
+    if (!can_bleed(false))
     {
         // XXX: This message assumes that you're undead.
         if (verbose)
@@ -680,7 +680,7 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
         return false;
     }
 
-    if (you.species == SP_GARGOYLE && you.petrifying())
+    if (species == SP_GARGOYLE && petrifying())
     {
         if (verbose)
             mpr("You cannot rage while you turn to stone.");
@@ -691,23 +691,23 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
     // trigger when the player attempts to activate berserk,
     // auto-iding at that point, but also killing the berserk and
     // wasting a turn.
-    if (you.stasis(false))
+    if (stasis(false))
     {
         if (verbose)
         {
-            const item_def *amulet = you.slot_item(EQ_AMULET, false);
+            const item_def *amulet = slot_item(EQ_AMULET, false);
             mprf(_("You cannot go berserk with %s on."),
                  amulet? amulet->name(true, DESC_YOUR).c_str() : _("your amulet"));
         }
         return false;
     }
 
-    if (!intentional && !potion && you.clarity())
+    if (!intentional && !potion && clarity())
     {
         if (verbose)
         {
             mpr(_("You're too calm and focused to rage."));
-            if (!you.clarity(false))
+            if (!clarity(false))
                 maybe_id_clarity();
         }
 
@@ -715,7 +715,7 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
     }
 
     ASSERT(HUNGER_STARVING - 100 + BERSERK_NUTRITION < 2066);
-    if (you.hunger <= 2066)
+    if (hunger <= 2066)
     {
         if (verbose)
             mpr(_("You're too hungry to go berserk."));
@@ -732,20 +732,21 @@ bool player::berserk() const
 
 bool player::can_cling_to_walls() const
 {
-    return you.form == TRAN_SPIDER;
+    return (player_mutation_level(MUT_CLING)
+        || form == TRAN_SPIDER);
 }
 
 bool player::is_web_immune() const
 {
     // Spider form
-    return can_cling_to_walls();
+    return form == TRAN_SPIDER;
 }
 
 bool player::shove(const char* feat_name)
 {
     for (distance_iterator di(pos()); di; ++di)
         if (in_bounds(*di) && !actor_at(*di) && !is_feat_dangerous(grd(*di))
-            && you.can_pass_through_feat(grd(*di)))
+            && can_pass_through_feat(grd(*di)))
         {
             moveto(*di);
             if (*feat_name)
@@ -758,5 +759,5 @@ bool player::shove(const char* feat_name)
 
 int player::constriction_damage() const
 {
-    return roll_dice(2, div_rand_round(you.strength(), 5));
+    return roll_dice(2, div_rand_round(strength(), 5));
 }

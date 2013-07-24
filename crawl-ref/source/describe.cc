@@ -43,6 +43,7 @@
 #include "macro.h"
 #include "menu.h"
 #include "message.h"
+#include "mon-chimera.h"
 #include "mon-stuff.h"
 #include "output.h"
 #include "player.h"
@@ -53,6 +54,7 @@
 #include "skills2.h"
 #include "spl-book.h"
 #include "spl-clouds.h"
+#include "spl-summoning.h"
 #include "state.h"
 #include "stuff.h"
 #include "env.h"
@@ -167,7 +169,7 @@ static const char* _jewellery_base_ability_string(int subtype)
     case RING_WIZARDRY:          return "Wiz";
     case RING_FIRE:              return "Fire";
     case RING_ICE:               return "Ice";
-    case RING_TELEPORTATION:     return "+/*TELE";
+    case RING_TELEPORTATION:     return "+/*Tele";
     case RING_TELEPORT_CONTROL:  return "cTele";
     case AMU_CLARITY:            return "Clar";
     case AMU_WARDING:            return "Ward";
@@ -1753,7 +1755,12 @@ string get_item_description(const item_def &item, bool verbose,
     ostringstream description;
 
     if (!dump)
-        description << item.name(true, DESC_INVENTORY_EQUIP) << ".";
+    {
+        string name = item.name(true, DESC_INVENTORY_EQUIP);
+        if (!in_inventory(item))
+            name = uppercase_first(name);
+        description << name << ".";
+    }
 
 #ifdef DEBUG_DIAGNOSTICS
     if (!dump)
@@ -1993,7 +2000,7 @@ string get_item_description(const item_def &item, bool verbose,
             }
 
             if ((god_hates_cannibalism(you.religion)
-                   && is_player_same_species(item.mon_type))
+                   && is_player_same_genus(item.mon_type))
                 || (you.religion == GOD_ZIN
                    && mons_class_intel(item.mon_type) >= I_NORMAL)
                 || (is_good_god(you.religion)
@@ -2818,7 +2825,7 @@ static void _adjust_item(item_def &item)
     formatted_string::parse_string(prompt).display();
     int keyin = getch_ck();
 
-    if (isalpha(keyin))
+    if (isaalpha(keyin))
     {
         int a = letter_to_index(item.slot);
         int b = letter_to_index(keyin);
@@ -2889,6 +2896,13 @@ static int _get_spell_description(const spell_type spell,
 #endif
     }
 
+    // Report summon cap
+    if (const int limit = summons_limit(spell))
+    {
+        description += "You can sustain at most " + number_in_words(limit)
+                       + " creatures summoned by this spell.";
+    }
+
     if (god_hates_spell(spell, you.religion))
     {
         description += std::string(_(god_name(you.religion).c_str()))
@@ -2919,9 +2933,9 @@ static int _get_spell_description(const spell_type spell,
     if (!quote.empty())
         description += "\n" + quote;
 
-    bool undead = false;
-    if (you_cannot_memorise(spell, undead))
-        description += "\n" + desc_cannot_memorise_reason(undead) + "\n";
+    bool form = false;
+    if (you_cannot_memorise(spell, form))
+        description += "\n" + desc_cannot_memorise_reason(form) + "\n";
 
     if (item && item->base_type == OBJ_BOOKS && in_inventory(*item)
         && you.form != TRAN_WISP)
@@ -2934,7 +2948,7 @@ static int _get_spell_description(const spell_type spell,
             return BOOK_FORGET;
         }
         else if (player_can_memorise_from_spellbook(*item)
-                 && !you_cannot_memorise(spell, undead))
+                 && !you_cannot_memorise(spell, form))
         {
             description += _("\n(M)emorise this spell.\n");
             return BOOK_MEM;
@@ -3083,6 +3097,73 @@ static string _describe_draconian(const monster_info& mi)
             description += " " + drac_role;
     }
 
+    return description;
+}
+
+static string _describe_chimera(const monster_info& mi)
+{
+    string description = "It has the head of ";
+
+    description += apply_description(DESC_A, get_monster_data(mi.base_type)->name);
+
+    monster_type part2 = get_chimera_part(&mi,2);
+    description += ", the head of ";
+    if (part2 == mi.base_type)
+    {
+        description += "another ";
+        description += apply_description(DESC_PLAIN, get_monster_data(part2)->name);
+    }
+    else
+        description += apply_description(DESC_A, get_monster_data(part2)->name);
+
+    monster_type part3 = get_chimera_part(&mi,3);
+    description += ", and the head of ";
+    if (part3 == mi.base_type || part3 == part2)
+    {
+        if (part2 == mi.base_type)
+            description += "yet ";
+        description += "another ";
+        description += apply_description(DESC_PLAIN, get_monster_data(part3)->name);
+    }
+    else
+        description += apply_description(DESC_A, get_monster_data(part3)->name);
+
+    description += ". It has the body of ";
+    description += apply_description(DESC_A, get_monster_data(mi.base_type)->name);
+
+    bool has_wings = mi.props.exists("chimera_batty") || mi.props.exists("chimera_wings");
+    if (mi.props.exists("chimera_legs"))
+    {
+        monster_type leggy_part = get_chimera_part(&mi, mi.props["chimera_legs"].get_int());
+        if (has_wings)
+            description += ", ";
+        else
+            description += ", and ";
+        description += "the legs of ";
+        description += apply_description(DESC_A, get_monster_data(leggy_part)->name);
+    }
+
+    if (has_wings)
+    {
+        monster_type wing_part = mi.props.exists("chimera_batty") ?
+            get_chimera_part(&mi, mi.props["chimera_batty"].get_int())
+            : get_chimera_part(&mi, mi.props["chimera_wings"].get_int());
+
+        switch (mons_class_flies(wing_part))
+        {
+        case FL_WINGED:
+            description += " and the wings of ";
+            break;
+        case FL_LEVITATE:
+            description += " and it hovers like ";
+            break;
+        case FL_NONE:
+            description += " and it moves like "; // Unseen horrors
+            break;
+        }
+        description += apply_description(DESC_A, get_monster_data(wing_part)->name);
+    }
+    description += ".";
     return description;
 }
 
@@ -3440,6 +3521,10 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         inf.body << _describe_demon(mi.mname, mi.fly) << "\n";
         break;
 
+    case MONS_CHIMERA:
+        inf.body << "\n" << _describe_chimera(mi) << "\n";
+        break;
+
     case MONS_PROGRAM_BUG:
         inf.body << gettext("If this monster is a \"program bug\", then it's "
                 "recommended that you save your game and reload.  Please report "
@@ -3472,10 +3557,12 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         has_stat_desc = true;
     }
 
+    bool stair_use = false;
     if (!mons_class_can_use_stairs(mi.type))
     {
         inf.body << "\n" << uppercase_first(mi.pronoun(PRONOUN_SUBJECTIVE))
                  << gettext(" is incapable of using stairs.\n");
+        stair_use = true;
     }
 
     if (mi.intel() <= I_INSECT)
@@ -3491,7 +3578,10 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
     {
         inf.body << "\n" << gettext("This monster has been summoned, and is thus only "
                        "temporary. Killing it yields no experience, nutrition "
-                       "or items.\n");
+                       "or items");
+        if (!stair_use && mi.is(MB_SUMMONED_NO_STAIRS))
+            inf.body << _(", and it is incapable of using stairs");
+        inf.body << ".\n";
     }
 
     if (mi.is(MB_PERM_SUMMON))
@@ -3500,6 +3590,13 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
                        "way, and only partially exists. Killing it yields no "
                        "experience, nutrition or items. You cannot easily "
                        "abjure it, though.\n");
+    }
+
+    if (mi.is(MB_SUMMONED_CAPPED))
+    {
+        inf.body << "\n" << "You have summoned too many monsters of this kind "
+                            "to sustain them all, and thus this one will "
+                            "shortly expire.\n";
     }
 
     if (!inf.quote.empty())

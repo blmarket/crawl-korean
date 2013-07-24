@@ -4,9 +4,6 @@
  *             spl-util.cc.
 **/
 
-#ifndef SPLDATA_H
-#define SPLDATA_H
-
 /*
 struct spell_desc
 {
@@ -1377,7 +1374,7 @@ struct spell_desc
 
 {
     SPELL_DRAGON_FORM, M_("Dragon Form"),
-     SPTYP_FIRE | SPTYP_TRANSMUTATION,
+     SPTYP_TRANSMUTATION,
      SPFLAG_HELPFUL | SPFLAG_CHAOTIC,
      7,
      200,
@@ -3089,6 +3086,162 @@ struct spell_desc
 },
 
 {
+    SPELL_AWAKEN_VINES, "Awaken Vines",
+     SPTYP_HEXES,
+     SPFLAG_AREA | SPFLAG_MONSTER,
+     6,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
+    SPELL_CONTROL_WINDS, "Control Winds",
+     SPTYP_CHARMS | SPTYP_AIR,
+     SPFLAG_AREA | SPFLAG_MONSTER,
+     6,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
+    SPELL_THORN_VOLLEY, "Volley of Thorns",
+     SPTYP_CONJURATION | SPTYP_EARTH,
+     SPFLAG_DIR_OR_TARGET,
+     4,
+     100,
+     6, 6,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
+    SPELL_WALL_OF_BRAMBLES, "Wall of Brambles",
+     SPTYP_CONJURATION | SPTYP_EARTH,
+     SPFLAG_AREA | SPFLAG_MONSTER,
+     5,
+     100,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
+    SPELL_WATERSTRIKE, "Waterstrike",
+     SPTYP_ICE,
+     SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_BATTLE | SPFLAG_MONSTER,
+     4,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
+    SPELL_HASTE_PLANTS, "Haste Plants",
+     SPTYP_CHARMS,
+     SPFLAG_AREA | SPFLAG_HELPFUL,
+     6,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
+    SPELL_WIND_BLAST, "Wind Blast",
+     SPTYP_AIR,
+     SPFLAG_AREA,
+     3,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
+    SPELL_STRIP_RESISTANCE, "Strip Resistance",
+     SPTYP_HEXES,
+     SPFLAG_DIR_OR_TARGET,
+     5,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
+    SPELL_INFUSION, "Infusion",
+     SPTYP_CHARMS,
+     SPFLAG_BATTLE,
+     1,
+     50,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     true
+},
+
+{
+    SPELL_SONG_OF_SLAYING, "Song of Slaying",
+     SPTYP_CHARMS,
+     SPFLAG_BATTLE,
+     2,
+     200,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     true
+},
+
+{
+    SPELL_SONG_OF_SHIELDING, "Song of Shielding",
+     SPTYP_CHARMS,
+     SPFLAG_BATTLE,
+     4,
+     100,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     true
+},
+
+{
+    SPELL_SPECTRAL_WEAPON, "Spectral Weapon",
+     SPTYP_HEXES | SPTYP_CHARMS,
+     SPFLAG_BATTLE,
+     3,
+     100,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     true
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
      0,
      SPFLAG_TESTING,
@@ -3100,5 +3253,3 @@ struct spell_desc
      false,
      false
 },
-
-#endif

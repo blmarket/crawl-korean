@@ -316,6 +316,10 @@ sorcerers, for it allows the gifted and resourceful to command destruction with
 ease. Feeble wizards, however, may well meet their doom when trying to read
 this opus.
 %%%%
+book of battle
+
+A book of spells used by skalds, whose battle songs grant them magical help.
+%%%%
 book of beasts
 
 A book of spells focused on the magical production of beasts, with pages made
@@ -583,8 +587,9 @@ bow:quote
 %%%%
 box of beasts
 
-A magical box containing many wild beasts. One may allow them to escape by
-opening the box's lid.
+A box filled with the bizarre leftovers of a depraved wizard's magical
+experimentations. Opening it might set loose a friendly chimera: a mythical
+hybrid composed from the parts of three separate beasts.
 %%%%
 bread ration
 
@@ -2033,7 +2038,15 @@ this unsuspecting world.
 %%%%
 rod of destruction
 
-이 마법막대는 파괴와 황폐의 주문을 담고 있다.
+This rod contains a varied set of spells of mayhem and destruction.
+%%%%
+rod of fiery destruction
+
+This rod contains spells that launch destructive fire against your enemies.
+%%%%
+rod of frigid destruction
+
+This rod contains spells that destroy your enemies with projected cold.
 %%%%
 rod of inaccuracy
 
@@ -2077,6 +2090,13 @@ sabre:quote
  Of rugged steel his savage soul was made...”
     -Albius Tibullus, _Elegies_ I, xi. ca. 25 B.C.
      trans. James Grainger, 1822.
+%%%%
+sack of spiders
+
+A woven silk bag. Something appears to be moving inside...
+
+Opening this bag will release a number of spiders friendly to your cause.
+You might need to dust off the cobwebs after, however.
 %%%%
 sacred scourge
 
@@ -2347,7 +2367,7 @@ by some kind of permanent branding is not advised. On the other hand, the
 scroll can make permanent the temporary branding of weapons obtained from some
 spells.
 
-Brands that are closely tied to one of the gods (Trog, Lugonu, Kikubaaquadgha,
+Brands that are closely tied to one of the gods (Trog, Lugonu, Kikubaaqudgha,
 the Shining One) cannot be affixed this way. Xom, on the other hand, wouldn't
 let such an opportunity for fun go to waste.
 %%%%

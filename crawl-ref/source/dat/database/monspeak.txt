@@ -2598,7 +2598,7 @@ w:50
 
 @The_monster@은(는) 말했다. "하이 엘프와 딥 엘프의 차이점을 모르겠어."
 
-@The_monster@은(는) 말했다. "그런데, 슬럿지 엘프? 그건 또 무슨 엘프 종류야?"
+@The_monster@은(는) 말했다. "그런데, 슬럿지 엘프? 그런 종족이 예전에 있긴 했던가?"
 
 @The_monster@은(는) 말했다. "참, 쟤네들 옷 색깔 한번 요란하네."
 
@@ -2829,6 +2829,18 @@ w:50
 @The_monster@은(는) 말했다. "보물창고? 쓰레기장이라고 불러야 할 것 같은데."
 
 @The_monster@은(는) 말했다. "괜히 고생하지 마, 마지막 층엔 쓰레기밖에 없더만."
+
+@The_monster@은(는) 말했다. "보물창고 관리자라는 녀석에게 룬이 어디 있냐고 물어봤는데, 그냥 바로 눈앞에 있는 문을 쾅 하고 닫아 버리더라고."
+
+@The_monster@은(는) 말했다. "그런데 난 여기 왜 온거였더라?"
+
+@The_monster@은(는) 말했다. "어떤 멍청한 놈이 보물을 지키려고 변형괴물 따위를 불러들인 거지?"
+
+@The_monster@은(는) 말했다. "대체 여긴 누가 설계한 거야? 그냥 희한한 방들이 뭉쳐져 이어져있는거에 불과하잖아."
+
+@The_monster@은(는) 말했다. "여긴 그저 '어떻게 하면 최대한 공간을 낭비할 수 있을까'를 보여주는 곳이라고 할 수 있지."
+
+@The_monster@은(는) 말했다. "나도 예전에 야크타우르스들을 여기서 만나보았지. 물론 걔들은 화살 세례로 날 환영해주더라고."
 %%%%
 Hall of Blades Donald
 
@@ -2956,6 +2968,56 @@ w:50
 @The_monster@은(는) 말했다. "여긴 참 복잡하군."
 
 @The_monster@은(는) 말했다. "미로, 퍼즐. 머리아픈 존재들이야."
+%%%%
+Forest Donald
+
+w:50
+@_generic_Donald_@
+
+@The_monster@ says, "I hate having to branch out like this."
+
+@The_monster@ says, "I asked some spriggans for directions; they got kind of evasive about it."
+
+@The_monster@ says, "I ran into some vines; they wouldn't let me leave."
+
+@The_monster@ says, "I was going to ask a faun for directions, but it got too confusing."
+
+@The_monster@ says, "Those wind drakes are really a blast. I still hate them."
+
+@The_monster@ says, "What kind of person lives in a tree, anyway?"
+
+@The_monster@ says, "What am I supposed to do with all this fruit? Make a salad?"
+
+@The_monster@ says, "Did that tree just move its branches?"
+
+@The_monster@ says, "Did that root just wiggle a little?"
+
+@The_monster@ says, "This place doesn't seem all that enchanting to me."
+
+@The_monster@ says, "I think I'm getting hay fever."
+
+@The_monster@ says, "Did you just hear a twig snapping?"
+
+@The_monster@ says, "I wish I was a lumberjack."
+
+@The_monster@ says, "How can such tiny little people be such huge pains in the neck?"
+%%%%
+Abyss Donald
+
+w:50
+@_generic_Donald_@
+
+@The_monster@ says, "But I don't want to have to go deeper!"
+
+@The_monster@ says, "What does 'eldritch' mean, anyway?"
+
+@The_monster@ says, "I keep hearing this weird shrieking in my head. I hate that."
+
+@The_monster@ says, "I've never heard of a star cursing anything."
+
+@The_monster@ says, "I've never heard of a star spawning anything."
+
+@The_monster@ says, "That wasn't a gateway out; it was a stair. I hate that."
 %%%%
 ######################################################################## GODS #
 Zin Donald
@@ -3534,6 +3596,14 @@ VISUAL:@The_monster@은(는) 손가락으로 코를 쑤셨다.
 VISUAL:@The_monster@은(는) 머리를 쥐어뜯었다.
 
 VISUAL:@The_monster@은(는) 제자리에서 우아하게 발레하듯 빙빙 돌았다.
+%%%%
+Donald killed
+
+w:100
+__NONE
+
+w:1
+@The_monster@ says, "I'm dying. I hate that."
 %%%%
 ############ DOWAN ### A vain elf caster, twin brother of Duvessa
 twin_died Dowan
@@ -4526,7 +4596,7 @@ Jory
 %%%%
 _Jory_common_
 
-w:100
+w:50
 @_Jory_silent_@
 
 @The_monster@은(는) 말했다. "날 내버려 둬!"
@@ -5691,7 +5761,7 @@ _Rupert_rare_
 ## END Rupert ##
 %%%%
 ############ SAINT ROKA ### orc warlord
-# Only used if the player is not a Hill Orc.
+# Only used if the player is not an orc.
 Saint Roka
 
 w:7
@@ -5733,7 +5803,7 @@ Saint Roka rival
 
 @The_monster@은(는) 좌절했다. "사방이 실패한 예언자 투성이군!"
 
-@The_monster@은(는) 외쳤다. "오크들이여, 잘 들어라. 이 기만자는 한낱 힐 오크에 불과하다!"
+@The_monster@은(는) 외쳤다. "오크들이여, 잘 들어라. 이 기만자는 한낱 {{ return you.race() }}에 불과하다!"
 %%%%
 # need different speech if you also worship Beogh
 related beogh Saint Roka
@@ -6602,7 +6672,7 @@ friendly orc
 w:5
 @_generic_orc_speech_@
 %%%%
-# charmed orcs, for hill orcs (not counting Beogh)
+# charmed orcs, for orcs (not counting Beogh)
 friendly related orc
 
 @default friendly related humanoid@
@@ -6715,11 +6785,19 @@ _hostile_orc_beogh_believer_speech_common_
 
 @The_monster@은(는) 투덜거렸다. "네가, 메시아라고?  메시아의 메 같아보이지도 않는군!"
 
-@The_monster@은(는) @_orc_says_to_foe_@, "힐 오크는 메시아가 되지 못한다!"
+@The_monster@은(는) @_orc_says_to_foe_@, "{{ return you.race() }}는 메시아가 되지 못한다!"
 
 @The_monster@은(는) @_orc_says_to_foe_@, "진짜 오크족이 메시아가 될 것이다!"
 
-@The_monster@은(는) @_orc_says_to_foe_@, "언덕으로나 돌아가라, 사기꾼아!"
+@The_monster@은(는) @_orc_says_to_foe_@, "{{
+    if you.race() == "Hill Orc" then
+        return "언덕으로나 돌아가라,"
+    elseif you.race() == "Lava Orc" then
+        return "잿더미 안에서 수영이나 해라,"
+    else -- shouldn't happen
+        return "지옥에나 떨어져라,"
+    end
+}} 이 사기꾼아!"
 
 @The_monster@은(는) @_shouts_@, "죽어라, @_orc_heathen_@!"
 
@@ -7162,6 +7240,26 @@ _evil_god_
 도널드
 
 도널드는 말했다. "이름을 한글로 써야 monspeak가 적용되는 버그가 아직 있군."
+%%%%
+confused zin angel
+
+@The_monster@ rambles incoherently.
+
+@The_monster@ lectures the ground at length about @_important_subject_@
+
+@The_monster@ lectures @possessive@ feet at length about @_important_subject_@
+
+VISUAL:@The_monster@ stares off into space for a moment.
+%%%%
+silenced zin angel
+
+VISUAL:@The_monster@ gestures @at_foe@ frantically.
+
+VISUAL:@The_monster@ looks angrily to the heavens.
+
+VISUAL:@The_monster@ furiously gestures all around.
+
+VISUAL:@The_monster@ scowls with righteous anger.
 %%%%
 ###############################################################################
 # Speech keys used *specifically* in (portal) vaults.

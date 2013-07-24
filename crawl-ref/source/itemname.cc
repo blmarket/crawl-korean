@@ -963,6 +963,7 @@ static const char* misc_type_name(int type, bool known)
     case MISC_STONE_OF_TREMORS:          return M_("stone of tremors");
     case MISC_QUAD_DAMAGE:               return M_("quad damage");
     case MISC_PHIAL_OF_FLOODS:           return M_("phial of floods");
+    case MISC_SACK_OF_SPIDERS:           return M_("sack of spiders");
 
     case MISC_RUNE_OF_ZOT:
     default:
@@ -1024,20 +1025,18 @@ static const char* _book_type_name(int booktype)
     case BOOK_CHANGES:                return M_("Changes");
     case BOOK_TRANSFIGURATIONS:       return M_("Transfigurations");
     case BOOK_WAR_CHANTS:             return M_("War Chants");
+    case BOOK_BATTLE:                 return M_("Battle");
     case BOOK_CLOUDS:                 return M_("Clouds");
     case BOOK_NECROMANCY:             return M_("Necromancy");
     case BOOK_CALLINGS:               return M_("Callings");
     case BOOK_MALEDICT:               return M_("Maledictions");
-    case BOOK_AIR:                    return ((!translate_flag) ? M_("Air") : "바람");
+    case BOOK_AIR:                    return M_("Air");
     case BOOK_SKY:                    return M_("the Sky");
     case BOOK_WARP:                   return M_("the Warp");
     case BOOK_ENVENOMATIONS:          return M_("Envenomations");
     case BOOK_ANNIHILATIONS:          return M_("Annihilations");
     case BOOK_UNLIFE:                 return M_("Unlife");
     case BOOK_CONTROL:                return M_("Control");
-#if TAG_MAJOR_VERSION == 34
-    case BOOK_MUTATIONS:              return M_("Morphology");
-#endif
     case BOOK_GEOMANCY:               return M_("Geomancy");
     case BOOK_EARTH:                  return M_("the Earth");
     case BOOK_WIZARDRY:               return M_("Wizardry");
@@ -1123,10 +1122,9 @@ static const char* rod_type_name(int type)
     case ROD_VENOM:           return M_("venom");
     case ROD_INACCURACY:      return M_("inaccuracy");
 
-    case ROD_DESTRUCTION_I:
-    case ROD_DESTRUCTION_II:
-    case ROD_DESTRUCTION_III:
-                              return M_("destruction");
+    case ROD_FIERY_DESTRUCTION:  return M_("fiery destruction");
+    case ROD_FRIGID_DESTRUCTION: return M_("frigid destruction");
+    case ROD_DESTRUCTION:        return M_("destruction");
 
     default: return "bugginess";
     }
@@ -1990,32 +1988,6 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
     // One plural to rule them all.
     if (need_plural && quantity > 1 && !basename && !qualname)
         buff.str(pluralise(((!translate_flag) ? PLU_DEFAULT : PLU_MISC), buff.str()));
-
-    // Disambiguation.
-    if (!terse && !basename && !dbname && know_type
-        && !is_artefact(*this))
-    {
-        switch (base_type)
-        {
-        case OBJ_RODS:
-            switch (item_typ)
-            {
-            case ROD_DESTRUCTION_I:
-                buff << check_gettext(M_(" [fire]"));
-                break;
-            case ROD_DESTRUCTION_II:
-                buff << check_gettext(M_(" [ice]"));
-                break;
-            case ROD_DESTRUCTION_III:
-                buff << check_gettext(M_(" [lightning,fireball,iron]"));
-                break;
-            }
-            break;
-
-        default:
-            break;
-        }
-    }
 
     // Rod charges.
     if (base_type == OBJ_RODS && know_type && know_pluses
@@ -3181,7 +3153,8 @@ bool is_dangerous_item(const item_def &item, bool temp)
 
 static bool _invisibility_is_useless(const bool temp)
 {
-    return (temp ? you.backlit(true, true, false)
+    // If you're Corona'd or a TSO-ite, this is always useless.
+    return (temp ? you.backlit(true)
                  : you.haloed() && you.religion == GOD_SHINING_ONE);
 
 }
@@ -3257,14 +3230,14 @@ bool is_useless_item(const item_def &item, bool temp)
         return !can_wear_armour(item, false, true);
 
     case OBJ_SCROLLS:
+        if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
+            return true;
+
         if (!item_type_known(item))
             return false;
 
         // A bad item is always useless.
         if (is_bad_item(item, temp))
-            return true;
-
-        if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
             return true;
 
         switch (item.sub_type)

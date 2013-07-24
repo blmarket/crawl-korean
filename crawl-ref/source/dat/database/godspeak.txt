@@ -546,8 +546,8 @@ Beogh idol follower
 
 베오그는 분노했다, "눈에는 눈, 이에는 이..."
 %%%%
-# an unbelieving hill orc has destroyed an idol
-Beogh idol hill orc
+# an unbelieving orc has destroyed an idol
+Beogh idol orc
 
 베오그의 목소리가 울려퍼졌다. "이단자는, 죽음뿐이다!"
 

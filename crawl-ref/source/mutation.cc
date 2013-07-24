@@ -563,7 +563,7 @@ string describe_mutations(bool center_title)
     case SP_LAVA_ORC:
     {
         have_any = true;
-        std::string col = "darkgrey";
+        string col = "darkgrey";
 
         col = (temperature_effect(LORC_STONESKIN)) ? "lightgrey" : "darkgrey";
         result += "<" + col + ">당신의 피부는 암석처럼 단단하다.</" + col + ">\n";
@@ -752,7 +752,7 @@ static const string _vampire_Ascreen_footer = (
     "을 통해, 돌연변이 상태 화면과, 배고픔 수치에 따른\n" // " to toggle between mutations and properties depending on your\n"
     "특징 변화 화면을 전화할 수 있다.\n"); // "hunger status.\n");
 
-static const std::string _lava_orc_Ascreen_footer = (
+static const string _lava_orc_Ascreen_footer = (
 #ifndef USE_TILE_LOCAL
     "'<w>!</w>' 키"
 #else
@@ -866,29 +866,29 @@ static void _display_temperature()
     clrscr();
     cgotoxy(1,1);
 
-    std::string result;
+    string result;
 
-    std::string title = "체온 변화에 따른 효과";
+    string title = "체온 변화에 따른 효과";
 
     // center title
     int offset = 39 - strwidth(title) / 2;
     if (offset < 0) offset = 0;
 
-    result += std::string(offset, ' ');
+    result += string(offset, ' ');
 
     result += "<white>";
     result += title;
     result += "</white>\n\n";
 
     const int lines = TEMP_MAX + 1; // 15 lines plus one for off-by-one.
-    std::string column[lines];
+    string column[lines];
 
     for (int t = 1; t <= TEMP_MAX; t++)  // lines
     {
-        std::string text;
-        std::ostringstream ostr;
+        string text;
+        ostringstream ostr;
 
-        std::string colourname = temperature_string(t);
+        string colourname = temperature_string(t);
 #define F(x) stringize_glyph(dchar_glyph(DCHAR_FRAME_##x))
         if (t == TEMP_MAX)
             text = "  " + F(TL) + F(HORIZ) + "MAX" + F(HORIZ) + F(HORIZ) + F(TR);
@@ -1731,11 +1731,6 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         }
         break;
 
-    case MUT_ACUTE_VISION:
-        // We might have to turn autopickup back on again.
-        autotoggle_autopickup(false);
-        break;
-
     case MUT_NIGHTSTALKER:
         update_vision_range();
         break;
@@ -1750,6 +1745,13 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
 
     default:
         break;
+    }
+
+    // We might have to turn autopickup back on again.
+    if (mutat == MUT_ACUTE_VISION
+        || (mutat == MUT_ANTENNAE && you.mutation[mutat] >= 3))
+    {
+        autotoggle_autopickup(false);
     }
 
     // Amusement value will be 12 * (11-rarity) * Xom's-sense-of-humor.

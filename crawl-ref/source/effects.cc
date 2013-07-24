@@ -626,8 +626,8 @@ void direct_effect(monster* source, spell_type spell,
             simple_monster_message(def, gettext(" is struck by the twisting air!"));
         else
         {
-            if (you.flight_mode())
-                mpr(gettext("The air twists around and violently strikes you in flight!"));
+            if (you.flight_mode() || djinni_floats())
+                mpr(_("The air twists around and violently strikes you in flight!"));
             else
                 mpr(gettext("The air twists around and strikes you!"));
         }
@@ -643,6 +643,35 @@ void direct_effect(monster* source, spell_type spell,
         // Previous method of damage calculation (in line with player
         // airstrike) had absurd variance.
         damage_taken = defender->apply_ac(random2avg(damage_taken, 3));
+        break;
+
+    case SPELL_WATERSTRIKE:
+        if (feat_is_water(grd(defender->pos())))
+        {
+            if (def && you.can_see(def))
+            {
+                if (def->flight_mode())
+                    mprf("The water rises up and strikes %s", def->name(DESC_THE).c_str());
+                else
+                    mprf("The water swirls and strikes %s", def->name(DESC_THE).c_str());
+            }
+            else if (!def)
+            {
+                if (you.flight_mode())
+                    mpr("The water rises up and strikes you!");
+                else
+                    mpr("The water swirls around and strikes you!");
+            }
+
+            pbolt.name       = "waterstrike";
+            pbolt.flavour    = BEAM_WATER;
+            pbolt.aux_source = "by the raging water";
+
+            damage_taken     = roll_dice(3, 8 + source->hit_dice);
+
+            damage_taken = defender->beam_resists(pbolt, damage_taken, false);
+            damage_taken = defender->apply_ac(damage_taken);
+        }
         break;
 
     case SPELL_BRAIN_FEED:
@@ -905,6 +934,7 @@ static bool _follows_orders(monster* mon)
     return (mon->friendly()
             && mon->type != MONS_GIANT_SPORE
             && mon->type != MONS_BATTLESPHERE
+            && mon->type != MONS_SPECTRAL_WEAPON
             && !mon->berserk()
             && !mon->is_projectile()
             && !mon->has_ench(ENCH_HAUNTING));
@@ -1264,10 +1294,11 @@ static void _hell_effects()
     string msg = getMiscString("hell_effect");
     if (msg.empty())
         msg = "Something hellishly buggy happens.";
-    msg_channel_type chan = MSGCH_PLAIN;
-    strip_channel_prefix(msg, chan);
-    mpr(msg.c_str(), chan);
-    if (chan == MSGCH_SOUND)
+    bool loud = starts_with(msg, "SOUND:");
+    if (loud)
+        msg.erase(0, 6);
+    mpr(msg.c_str(), MSGCH_HELL_EFFECT);
+    if (loud)
         noisy(15, you.pos());
 
     spschool_flag_type which_miscast = SPTYP_RANDOM;
@@ -2395,6 +2426,21 @@ static void _catchup_monster_moves(monster* mon, int turns)
     // Summoned monsters might have disappeared.
     if (!mon->alive())
         return;
+
+    // Expire friendly summons
+    if (mon->friendly() && mon->is_summoned() && !mon->is_perm_summoned())
+    {
+        // You might still see them disappear if you were quick
+        if (turns > 2)
+            monster_die(mon, KILL_DISMISSED, NON_MONSTER);
+        else
+        {
+            mon_enchant abj  = mon->get_ench(ENCH_ABJ);
+            abj.duration = 0;
+            mon->update_ench(abj);
+        }
+        return;
+    }
 
     // Don't move non-land or stationary monsters around.
     if (mons_primary_habitat(mon) != HT_LAND

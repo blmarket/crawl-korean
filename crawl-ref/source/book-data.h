@@ -61,7 +61,7 @@
     SPELL_BOLT_OF_FIRE,
     SPELL_DELAYED_FIREBALL,
     SPELL_RING_OF_FLAMES,
-    SPELL_DRAGON_FORM,
+    SPELL_NO_SPELL,
     SPELL_NO_SPELL,
 },
 
@@ -174,7 +174,18 @@
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
 },
-
+#if TAG_MAJOR_VERSION > 34
+{   // Book of Battle
+    SPELL_INFUSION,
+    SPELL_SHROUD_OF_GOLUBRIA,
+    SPELL_SONG_OF_SLAYING,
+    SPELL_SPECTRAL_WEAPON,
+    SPELL_REGENERATION,
+    SPELL_SONG_OF_SHIELDING,
+    SPELL_NO_SPELL,
+    SPELL_NO_SPELL,
+},
+#endif
 {   // Book of Clouds
     SPELL_MEPHITIC_CLOUD,
     SPELL_CONJURE_FLAME,
@@ -287,13 +298,13 @@
 },
 
 #if TAG_MAJOR_VERSION == 34
-{   // Book of Morphology
-    SPELL_STICKS_TO_SNAKES,
-    SPELL_PETRIFY,
-    SPELL_POLYMORPH,
-    SPELL_IGNITE_POISON,
-    SPELL_NO_SPELL,
-    SPELL_NO_SPELL,
+{   // Book of Battle (replacing Morphology)
+    SPELL_INFUSION,
+    SPELL_SHROUD_OF_GOLUBRIA,
+    SPELL_SONG_OF_SLAYING,
+    SPELL_SPECTRAL_WEAPON,
+    SPELL_REGENERATION,
+    SPELL_SONG_OF_SHIELDING,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
 },
@@ -501,7 +512,7 @@
     SPELL_NO_SPELL,
 },
 
-{   // Rod of destruction (fire)
+{   // Rod of fiery destruction
     SPELL_THROW_FLAME,
     SPELL_FIREBALL,
     SPELL_BOLT_OF_FIRE,
@@ -512,7 +523,7 @@
     SPELL_NO_SPELL,
 },
 
-{   // Rod of destruction (ice)
+{   // Rod of frigid destruction
     SPELL_THROW_FROST,
     SPELL_THROW_ICICLE,
     SPELL_FREEZING_CLOUD,

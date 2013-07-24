@@ -1223,7 +1223,7 @@ static void _finish_delay(const delay_queue_item &delay)
                      mitm[delay.parm1].name(true, DESC_THE).c_str());
 
                 if (god_hates_cannibalism(you.religion)
-                    && is_player_same_species(item.mon_type))
+                    && is_player_same_genus(item.mon_type))
                 {
                     simple_god_message(gettext(" expects more respect for your"
                                        " departed relatives."));

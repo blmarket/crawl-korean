@@ -2168,7 +2168,19 @@ unsigned int item_value(item_def item, bool ident)
             break;
 
         case MISC_BOTTLED_EFREET:
+        case MISC_SACK_OF_SPIDERS:
             valued += 400;
+            break;
+
+        case MISC_FAN_OF_GALES:
+        case MISC_STONE_OF_TREMORS:
+        case MISC_PHIAL_OF_FLOODS:
+        case MISC_LAMP_OF_FIRE:
+            valued += 1000;
+            break;
+
+        case MISC_BOX_OF_BEASTS:
+            valued += 500;
             break;
 
 #if TAG_MAJOR_VERSION == 34
@@ -2419,6 +2431,8 @@ static string _shop_type_name(shop_type type) // 가게이름은 그냥 한글�
             return "양조장";
         case SHOP_GENERAL:
             return "잡화점";
+        case SHOP_MISCELLANY:
+            return "종합";
         default:
             return "버그 가게";
     }

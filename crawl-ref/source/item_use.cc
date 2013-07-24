@@ -2409,7 +2409,7 @@ static bool _vorpalise_weapon(bool already_known)
 
     case SPWPN_DRAINING:
         mprf(_("%s thirsts for the lives of mortals!"), itname.c_str());
-        drain_exp(true, NON_MONSTER, "draining affixation"); // 메모
+        drain_exp(true, 100);
         break;
 
     case SPWPN_VENOM:
@@ -3098,7 +3098,7 @@ void read_scroll(int slot)
         // XXX Because some checks in blink() are made before player get to
         // choose target location it is possible "abuse" scrolls' free
         // cancelling to get some normally hidden information (i.e. presence
-        // of (unidentified) -TELE gear).
+        // of (unidentified) -Tele gear).
         if (!alreadyknown)
         {
             mpr(pre_succ_msg.c_str());

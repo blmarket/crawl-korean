@@ -454,8 +454,8 @@ static string n_names(const string &name, int n, monster_type mon_type)
 
 		const unsigned int not_found = (unsigned int) -1;
 
-		if(is_player_same_species(mon_type))
-			return name + " " + buf + "명";
+		//if(is_player_same_species(mon_type)) 130724 : 버전업이 되면서 이 함수가 사라진듯. 일단 임시 주석처리
+		//	return name + " " + buf + "명";
 
 		if(name.find("식물") != not_found || name.find("버섯") != not_found || name.find("발리스토") != not_found || name.find("석상") != not_found || name.find("풀숲") != not_found ||
 		   name.find("은상") != not_found || name.find("얼음상") != not_found || name.find("수정상") != not_found || name.find("소금") != not_found)

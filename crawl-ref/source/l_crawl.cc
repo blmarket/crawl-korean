@@ -656,7 +656,9 @@ static int crawl_article_a(lua_State *ls)
     return 1;
 }
 
-LUARET1(crawl_game_started, boolean, crawl_state.need_save)
+LUARET1(crawl_game_started, boolean, crawl_state.need_save
+                                     || crawl_state.map_stat_gen
+                                     || crawl_state.test)
 LUARET1(crawl_stat_gain_prompt, boolean, crawl_state.stat_gain_prompt)
 LUARET1(crawl_random2, number, random2(luaL_checkint(ls, 1)))
 LUARET1(crawl_one_chance_in, boolean, one_chance_in(luaL_checkint(ls, 1)))
@@ -832,6 +834,7 @@ LUAWRAP(crawl_endgame, screen_end_game(luaL_checkstring(ls, 1)))
 LUAWRAP(crawl_tutorial_hunger, set_tutorial_hunger(luaL_checkint(ls, 1)))
 LUAWRAP(crawl_tutorial_skill, set_tutorial_skill(luaL_checkstring(ls, 1), luaL_checkint(ls, 2)))
 LUAWRAP(crawl_tutorial_hint, tutorial_init_hint(luaL_checkstring(ls, 1)))
+LUAWRAP(crawl_print_hint, print_hint(luaL_checkstring(ls, 1)))
 
 static int crawl_random_element(lua_State *ls)
 {
@@ -1220,6 +1223,7 @@ static const struct luaL_reg crawl_dlib[] =
 { "tutorial_hunger", crawl_tutorial_hunger },
 { "tutorial_skill",  crawl_tutorial_skill },
 { "tutorial_hint",   crawl_tutorial_hint },
+{ "print_hint", crawl_print_hint },
 { "mark_game_won", _crawl_mark_game_won },
 { "hints_type", crawl_hints_type },
 

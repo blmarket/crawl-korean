@@ -1003,6 +1003,10 @@ static void _get_status_lights(vector<status_light>& out)
         DUR_WEAK,
         DUR_DIMENSION_ANCHOR,
         STATUS_BEOGH,
+        DUR_SPIRIT_HOWL,
+        DUR_INFUSION,
+        DUR_SONG_OF_SLAYING,
+        DUR_SONG_OF_SHIELDING,
     };
 
     status_info inf;
@@ -1418,32 +1422,20 @@ static string _get_monster_name(const monster_info& mi, int count, bool fullname
 {
     string desc = "";
 
-    bool adj = false;
-    if (mi.attitude == ATT_FRIENDLY)
-    {
-        desc += "friendly ";
-        adj = true;
-    }
-    else if (mi.attitude != ATT_HOSTILE)
-    {
-        desc += "neutral ";
-        adj = true;
-    }
+    const char * const adj = mi.attitude == ATT_FRIENDLY ? "friendly"
+                           : mi.attitude == ATT_HOSTILE  ? nullptr
+                                                         : "neutral";
 
     string monpane_desc;
     int col;
-    mi.to_string(count, monpane_desc, col, fullname);
+    mi.to_string(count, monpane_desc, col, fullname, adj);
 
 #ifndef KR
     if (count == 1) 
     {
         if (!mi.is(MB_NAME_THE))
-        {
-            desc = ((!adj && is_vowel(monpane_desc[0])) ? "an "
-                                                        : "a ")
-                   + desc;
-        }
-        else if (adj)
+            desc = (is_vowel(monpane_desc[0]) ? "an " : "a ") + desc;
+        else if (adj || !mi.is(MB_NAME_UNQUALIFIED))
             desc = "the " + desc;
     } 
 #endif
@@ -2492,6 +2484,7 @@ static string _status_mut_abilities(int sw)
         DUR_RETCHING,
         DUR_WEAK,
         DUR_DIMENSION_ANCHOR,
+        DUR_SPIRIT_HOWL,
     };
 
     status_info inf;

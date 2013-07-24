@@ -20,6 +20,7 @@
 #include "godconduct.h"
 #include "hints.h"
 #include "item_use.h"
+#include "libutil.h"
 #include "message.h"
 #include "misc.h"
 #include "mutation.h"
@@ -286,20 +287,25 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         {
             // You can't turn invisible while haloed or glowing
             // naturally, but identify the effect anyway.
-            mpr(gettext("You briefly turn translucent."));
-
-            // And also cancel corona (for whatever good that will do).
-            you.duration[DUR_CORONA] = 0;
+            mpr(_("You briefly turn translucent."));
             return true;
         }
-
-        if (get_contamination_level() > 1)
+        else if (you.backlit())
         {
+            vector<string> afflictions;
+            if (get_contamination_level() > 1)
+                afflictions.push_back("magical contamination");
+            if (you.duration[DUR_CORONA])
+                afflictions.push_back("corona");
+            if (you.duration[DUR_LIQUID_FLAMES])
+                afflictions.push_back("liquid flames");
+
             mprf(MSGCH_DURATION,
-                 gettext("You become %stransparent, but the glow from your "
-                 "magical contamination prevents you from becoming "
+                 _("You become %stransparent, but the glow from your "
+                 "%s prevents you from becoming "
                  "completely invisible."),
-                 you.duration[DUR_INVIS] ? pgettext("potion", "more ") : "");
+                 you.duration[DUR_INVIS] ? pgettext("potion","more ") : "",
+                 comma_separated_line(afflictions.begin(), afflictions.end()).c_str());
         }
         else
         {
@@ -307,9 +313,6 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
                                          : gettext("You fade further into invisibility."),
                 MSGCH_DURATION);
         }
-
-        // Invisibility cancels corona.
-        you.duration[DUR_CORONA] = 0;
 
         // Now multiple invisiblity casts aren't as good. -- bwr
         if (!you.duration[DUR_INVIS])
@@ -436,9 +439,9 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         {
             mpr(_("You feel fantastic!"));
             did_god_conduct(DID_DELIBERATE_MUTATING, 10, was_known);
-        } else {
-            mpr(_("You feel fantastic for a moment."));
         }
+        else
+            mpr(_("You feel fantastic for a moment."));
         learned_something_new(HINT_YOU_MUTATED);
         break;
 

@@ -550,7 +550,7 @@ static int _silence_range(int dur)
 
 int player::silence_radius2() const
 {
-    return _silence_range(you.duration[DUR_SILENCE]);
+    return _silence_range(duration[DUR_SILENCE]);
 }
 
 int monster::silence_radius2() const
@@ -598,11 +598,11 @@ int player::halo_radius2() const
 {
     int size = -1;
 
-    if (you.religion == GOD_SHINING_ONE && you.piety >= piety_breakpoint(0)
-        && !you.penance[GOD_SHINING_ONE])
+    if (religion == GOD_SHINING_ONE && piety >= piety_breakpoint(0)
+        && !penance[GOD_SHINING_ONE])
     {
         // Preserve the middle of old radii.
-        const int r = you.piety - 10;
+        const int r = piety - 10;
         // The cap is 64, just less than the LOS of 65.
         size = min(LOS_RADIUS*LOS_RADIUS, r * r / 400);
     }
@@ -640,16 +640,10 @@ int monster::halo_radius2() const
         return 32;
     case MONS_SERAPH:
         return 50;
-    case MONS_PEARL_DRAGON:
-        return 5;
     case MONS_OPHAN:
         return 64; // highest rank among sentient ones
-    case MONS_PHOENIX:
-        return 10;
     case MONS_SHEDU:
         return 10;
-    case MONS_APIS:
-        return 4;
     case MONS_PALADIN: // If a paladin finds the mace of brilliance
                        // it needs a larger halo
         return max(4, size);  // mere humans
@@ -658,7 +652,7 @@ int monster::halo_radius2() const
     case MONS_HOLY_SWINE:
         return 1;  // only notionally holy
     default:
-        return 4;
+        return -1;
     }
 }
 
@@ -668,7 +662,7 @@ int monster::halo_radius2() const
 
 int player::liquefying_radius2() const
 {
-    return _silence_range(you.duration[DUR_LIQUEFYING]);
+    return _silence_range(duration[DUR_LIQUEFYING]);
 }
 
 int monster::liquefying_radius2() const
@@ -847,7 +841,7 @@ int player::soul_aura_radius2() const
 // Player radius
 int player::heat_radius2() const
 {
-    if (you.species != SP_LAVA_ORC)
+    if (species != SP_LAVA_ORC)
         return -1;
 
     if (!temperature_effect(LORC_HEAT_AURA))

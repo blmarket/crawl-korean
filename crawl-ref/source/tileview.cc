@@ -191,18 +191,24 @@ void tile_default_flv(branch_type br, tile_flavour &flv)
         return;
 
     case BRANCH_ABYSS:
-        flv.floor = TILE_FLOOR_NERVES;
+        flv.floor = tile_dngn_coloured(TILE_FLOOR_NERVES, env.floor_colour);
         switch (random2(6))
         {
         default:
-        case 0: flv.wall = TILE_WALL_ABYSS; break;
+        case 0:
         case 1:
         case 2:
-        case 3: flv.wall = TILE_WALL_PEBBLE
-                + random2(15) * (TILE_WALL_PEBBLE_BLUE - TILE_WALL_PEBBLE_RED);
-                break;
-        case 4: flv.wall = TILE_WALL_HALL; break;
-        case 5: flv.wall = TILE_WALL_UNDEAD; break;
+            flv.wall = tile_dngn_coloured(TILE_WALL_ABYSS, env.rock_colour);
+            break;
+        case 3:
+            flv.wall = tile_dngn_coloured(TILE_WALL_PEBBLE, env.rock_colour);
+            break;
+        case 4:
+            flv.wall = tile_dngn_coloured(TILE_WALL_HALL, env.rock_colour);
+            break;
+        case 5:
+            flv.wall = tile_dngn_coloured(TILE_WALL_UNDEAD, env.rock_colour);
+            break;
         }
         return;
 
@@ -976,6 +982,12 @@ void tile_draw_map_cell(const coord_def& gc, bool foreground_only)
     if (!foreground_only)
         env.tile_bk_bg(gc) = _get_floor_bg(gc);
 
+    if (you.see_cell(gc))
+    {
+        env.tile_fg(grid2show(gc)) = 0;
+        env.tile_cloud(grid2show(gc)) = 0;
+    }
+
     const map_cell& cell = env.map_knowledge(gc);
 
     if (cell.invisible_monster())
@@ -1199,6 +1211,12 @@ void apply_variations(const tile_flavour &flv, tileidx_t *bg,
         *bg = flv.floor;
     else if (orig == TILE_WALL_NORMAL)
         *bg = flv.wall;
+    else if (orig == TILE_DNGN_STONE_WALL)
+    {
+        *bg = _pick_random_dngn_tile(tile_dngn_coloured(orig,
+                                                        env.grid_colours(gc)),
+                                     flv.special);
+    }
     else if ((orig == TILE_DNGN_CLOSED_DOOR || orig == TILE_DNGN_OPEN_DOOR
               || orig == TILE_DNGN_RUNED_DOOR
               || orig == TILE_DNGN_SEALED_DOOR)
