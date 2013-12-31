@@ -327,15 +327,15 @@ string Note::describe(bool when, bool where, bool what) const
                    << " 권능을 얻음."; 
             break;
         case NOTE_GET_MUTATION:
-            result << "변이를 얻음: " 
-                   << mutation_name(static_cast<mutation_type>(first),
+            result << "변이를 얻음: "
+                   << mutation_desc(static_cast<mutation_type>(first),
                                     second == 0 ? 1 : second);
             if (!name.empty())
                 result << " [" << name << "]";
             break;
         case NOTE_LOSE_MUTATION:
-            result << "변이를 잃음: " 
-                   << mutation_name(static_cast<mutation_type>(first),
+            result << "변이를 잃음: "
+                   << mutation_desc(static_cast<mutation_type>(first),
                                     second == 3 ? 3 : second+1);
             if (!name.empty())
                 result << " [" << name << "]";

@@ -63,7 +63,7 @@ public:
 
   FixedVector<int8_t, NUM_STATS> stat_loss;
   FixedVector<int8_t, NUM_STATS> base_stats;
-  FixedVector<int, NUM_STATS> stat_zero;
+  FixedVector<uint8_t, NUM_STATS> stat_zero;
 
   int hunger;
   int disease;
@@ -291,7 +291,6 @@ public:
   // A list of allies awaiting an active recall
   vector<mid_t> recall_list;
 
-
   // -------------------
   // Non-saved UI state:
   // -------------------
@@ -419,6 +418,8 @@ public:
     int max_dex() const;
 
     bool in_water() const;
+    bool in_lava() const;
+    bool in_liquid() const;
     bool can_swim(bool permanently = false) const;
     int visible_igrd(const coord_def&) const;
     bool can_cling_to_walls() const;
@@ -565,8 +566,10 @@ public:
     bool has_lifeforce() const;
     bool can_mutate() const;
     bool can_safely_mutate() const;
+    bool is_lifeless_undead() const;
     bool can_polymorph() const;
     bool can_bleed(bool allow_tran = true) const;
+    bool is_stationary() const;
     bool malmutate(const string &reason);
     bool polymorph(int pow);
     void backlight();
@@ -741,10 +744,10 @@ public:
     bool has_usable_tentacle() const;
 
 protected:
-    void _removed_beholder();
+    void _removed_beholder(bool quiet = false);
     bool _possible_beholder(const monster* mon) const;
 
-    void _removed_fearmonger();
+    void _removed_fearmonger(bool quiet = false);
     bool _possible_fearmonger(const monster* mon) const;
 
 };
@@ -798,7 +801,9 @@ bool player_in_connected_branch(void);
 bool player_in_hell(void);
 
 static inline bool player_in_branch(int branch)
-{ return you.where_are_you == branch; };
+{
+    return you.where_are_you == branch;
+};
 
 bool berserk_check_wielded_weapon(void);
 bool player_equip_unrand_effect(int unrand_index);
@@ -811,7 +816,10 @@ bool player_is_shapechanged(void);
 bool is_effectively_light_armour(const item_def *item);
 bool player_effectively_in_light_armour();
 
-bool player_under_penance(void);
+static inline int player_under_penance(god_type god = you.religion)
+{
+    return you.penance[god];
+}
 
 int burden_change(void);
 
@@ -933,11 +941,12 @@ bool enough_mp(int minimum, bool suppress_msg, bool include_items = true);
 bool enough_zp(int minimum, bool suppress_msg);
 
 void dec_hp(int hp_loss, bool fatal, const char *aux = NULL);
-void dec_mp(int mp_loss);
+void dec_mp(int mp_loss, bool silent = false);
 void drain_mp(int mp_loss);
 
-void inc_mp(int mp_gain);
+void inc_mp(int mp_gain, bool silent = false);
 void inc_hp(int hp_gain);
+void flush_mp();
 
 void rot_hp(int hp_loss);
 void unrot_hp(int hp_recovered);
@@ -981,7 +990,7 @@ bool haste_player(int turns, bool rageext = false);
 void dec_haste_player(int delay);
 void fly_player(int pow, bool already_flying = false);
 void float_player();
-bool land_player();
+bool land_player(bool quiet = false);
 bool is_hovering();
 bool djinni_floats();
 

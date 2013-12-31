@@ -186,11 +186,16 @@ void turn_corpse_into_chunks(item_def &item, bool bloodspatter,
     item.quantity  = 1 + random2(max_chunks);
     item.quantity  = stepdown_value(item.quantity, 4, 4, 12, 12);
 
+    bool wants_for_spells = you.has_spell(SPELL_SIMULACRUM)
+                            || you.has_spell(SPELL_SUBLIMATION_OF_BLOOD);
     // Don't mark it as dropped if we are forcing autopickup of chunks.
-    if (is_bad_food(item) && you.force_autopickup[OBJ_FOOD][FOOD_CHUNK] <= 0)
+    if (you.force_autopickup[OBJ_FOOD][FOOD_CHUNK] <= 0
+        && is_bad_food(item) && !wants_for_spells)
+    {
         item.flags |= ISFLAG_DROPPED;
+    }
     else if (you.species != SP_VAMPIRE)
-        item.flags &= ~(ISFLAG_THROWN | ISFLAG_DROPPED);
+        clear_item_pickup_flags(item);
 
     // Happens after the corpse has been butchered.
     if (make_hide)
@@ -307,6 +312,36 @@ static void _compare_blood_quantity(item_def &stack, int timer_size)
         // sanity measure
         stack.quantity = timer_size;
     }
+}
+
+static void _init_coagulated_blood(item_def &stack, int count, item_def &old,
+                                   vector<int> &age_timer)
+{
+    stack.base_type = OBJ_POTIONS;
+    stack.sub_type  = POT_BLOOD_COAGULATED;
+    stack.quantity  = count;
+    stack.plus      = 0;
+    stack.plus2     = 0;
+    stack.special   = 0;
+    stack.flags     = old.flags & (ISFLAG_DROPPED | ISFLAG_THROWN
+                                   | ISFLAG_NO_PICKUP | ISFLAG_SUMMONED
+                                   | ISFLAG_DROPPED_BY_ALLY);
+    stack.inscription = old.inscription;
+    item_colour(stack);
+
+    CrawlHashTable &props_new = stack.props;
+    props_new["timer"].new_vector(SV_INT, SFLAG_CONST_TYPE);
+    CrawlVector &timer_new = props_new["timer"].get_vector();
+
+    int val;
+    while (!age_timer.empty())
+    {
+        val = age_timer[age_timer.size() - 1];
+        age_timer.pop_back();
+        timer_new.push_back(val);
+    }
+    ASSERT(timer_new.size() == count);
+    props_new.assert_validity();
 }
 
 void maybe_coagulate_blood_potions_floor(int obj)
@@ -445,28 +480,7 @@ void maybe_coagulate_blood_potions_floor(int obj)
         return;
 
     item_def &item = mitm[o];
-    item.base_type = OBJ_POTIONS;
-    item.sub_type  = POT_BLOOD_COAGULATED;
-    item.quantity  = coag_count;
-    item.plus      = 0;
-    item.plus2     = 0;
-    item.special   = 0;
-    item.flags     = 0;
-    item_colour(item);
-
-    CrawlHashTable &props_new = item.props;
-    props_new["timer"].new_vector(SV_INT, SFLAG_CONST_TYPE);
-    CrawlVector &timer_new = props_new["timer"].get_vector();
-
-    int val;
-    while (!age_timer.empty())
-    {
-        val = age_timer[age_timer.size() - 1];
-        age_timer.pop_back();
-        timer_new.push_back(val);
-    }
-    ASSERT(timer_new.size() == coag_count);
-    props_new.assert_validity();
+    _init_coagulated_blood(item, coag_count, blood, age_timer);
 
     if (blood.held_by_monster())
         move_item_to_grid(&o, blood.holding_monster()->pos());
@@ -491,8 +505,7 @@ static string _get_desc_quantity(const int quant, const int total)
         return pgettext("potion_rot", "Some of your");
 }
 
-// Prints messages for blood potions coagulating in inventory (coagulate = true)
-// or whenever potions are cursed into potions of decay (coagulate = false).
+// Prints messages for blood potions coagulating or rotting in inventory.
 static void _potion_stack_changed_message(item_def &potion, int num_changed,
                                           string verb)
 {
@@ -507,7 +520,8 @@ static void _potion_stack_changed_message(item_def &potion, int num_changed,
          verb.c_str());
 }
 
-// Returns true if "equipment weighs less" message needed.
+// Returns true if the total number of potions in inventory decreased,
+// in which case burden_change() will need to be called.
 // Also handles coagulation messages.
 bool maybe_coagulate_blood_potions_inv(item_def &blood)
 {
@@ -685,33 +699,10 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     {
         item_def &item   = you.inv[freeslot];
         item.clear();
-
         item.link        = freeslot;
         item.slot        = index_to_letter(item.link);
-        item.base_type   = OBJ_POTIONS;
-        item.sub_type    = POT_BLOOD_COAGULATED;
-        item.quantity    = coag_count;
-        item.plus        = 0;
-        item.plus2       = 0;
-        item.special     = 0;
-        item.flags       = (ISFLAG_KNOW_TYPE & ISFLAG_BEEN_IN_INV);
         item.pos.set(-1, -1);
-        item_colour(item);
-
-        CrawlHashTable &props_new = item.props;
-        props_new["timer"].new_vector(SV_INT, SFLAG_CONST_TYPE);
-        CrawlVector &timer_new = props_new["timer"].get_vector();
-
-        int val;
-        while (!age_timer.empty())
-        {
-            val = age_timer[age_timer.size() - 1];
-            age_timer.pop_back();
-            timer_new.push_back(val);
-        }
-
-        ASSERT(timer_new.size() == coag_count);
-        props_new.assert_validity();
+        _init_coagulated_blood(item, coag_count, blood, age_timer);
 
         blood.quantity -= coag_count + rot_count;
         _compare_blood_quantity(blood, timer.size());
@@ -769,31 +760,8 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     o = get_mitm_slot();
     if (o == NON_ITEM)
         return false;
+    _init_coagulated_blood(mitm[o], coag_count, blood, age_timer);
 
-    // These values are common to all: {dlb}
-    mitm[o].base_type = OBJ_POTIONS;
-    mitm[o].sub_type  = POT_BLOOD_COAGULATED;
-    mitm[o].quantity  = coag_count;
-    mitm[o].plus      = 0;
-    mitm[o].plus2     = 0;
-    mitm[o].special   = 0;
-    mitm[o].flags     = (ISFLAG_KNOW_TYPE & ISFLAG_BEEN_IN_INV);
-    item_colour(mitm[o]);
-
-    CrawlHashTable &props_new = mitm[o].props;
-    props_new["timer"].new_vector(SV_INT, SFLAG_CONST_TYPE);
-    CrawlVector &timer_new = props_new["timer"].get_vector();
-
-    int val;
-    while (!age_timer.empty())
-    {
-        val = age_timer[age_timer.size() - 1];
-        age_timer.pop_back();
-        timer_new.push_back(val);
-    }
-
-    ASSERT(timer_new.size() == coag_count);
-    props_new.assert_validity();
     move_item_to_grid(&o, you.pos());
 
     if (!dec_inv_item_quantity(blood.link, coag_count + rot_count))
@@ -964,7 +932,7 @@ void turn_corpse_into_blood_potions(item_def &item)
     item.base_type = OBJ_POTIONS;
     item.sub_type  = POT_BLOOD;
     item_colour(item);
-    item.flags    &= ~(ISFLAG_THROWN | ISFLAG_DROPPED);
+    clear_item_pickup_flags(item);
 
     item.quantity = num_blood_potions_from_corpse(mons_class);
 
@@ -1250,11 +1218,11 @@ void search_around()
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    int base_skill = you.skill(SK_TRAPS, 100);
+    int base_skill = you.experience_level * 100 / 3;
     int skill = (2/(1+exp(-(base_skill+120)/325.0))-1) * 225
                 + (base_skill/200.0) + 15;
 
-    if (you.religion == GOD_ASHENZARI && !player_under_penance())
+    if (you_worship(GOD_ASHENZARI) && !player_under_penance())
         skill += you.piety * 2;
 
      if (you.duration[DUR_SWIFTNESS])
@@ -1300,7 +1268,6 @@ void search_around()
             mprf(_("You found %s trap!"),
                  _(ptrap->name(DESC_PLAIN).c_str()));
             learned_something_new(HINT_SEEN_TRAP, *ri);
-            practise(EX_TRAP_FOUND);
         }
     }
 }
@@ -1415,7 +1382,7 @@ bool go_berserk(bool intentional, bool potion)
         mpr(_("Finesse? Hah! Time to rip out guts!"));
     }
 
-    if (you.religion == GOD_CHEIBRIADOS)
+    if (you_worship(GOD_CHEIBRIADOS))
     {
         // Che makes berserk not speed you up.
         // Unintentional would be forgiven "just this once" every time.
@@ -1474,7 +1441,7 @@ bool go_berserk(bool intentional, bool potion)
 // assumed that this is the case.
 static bool _mons_has_path_to_player(const monster* mon, bool want_move = false)
 {
-    if (mons_is_stationary(mon) && !mons_is_tentacle(mon->type))
+    if (mon->is_stationary() && !mons_is_tentacle(mon->type))
     {
         int dist = grid_distance(you.pos(), mon->pos());
         if (want_move)
@@ -2006,9 +1973,9 @@ void timeout_terrain_changes(int duration, bool force)
     }
 
     if (num_seen[TERRAIN_CHANGE_DOOR_SEAL] > 1)
-        mpr(_("The seals upon the doors fade away."));
+        mpr(_("The runic seals fade away."));
     else if (num_seen[TERRAIN_CHANGE_DOOR_SEAL] > 0)
-        mpr(_("The seal upon the door fades away."));
+        mpr(_("The runic seal fades away."));
 }
 
 void bring_to_safety()
@@ -2103,6 +2070,7 @@ void revive()
     you.attribute[ATTR_DIVINE_DEATH_CHANNEL] = 0;
     you.attribute[ATTR_INVIS_UNCANCELLABLE] = 0;
     you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 0;
+    you.attribute[ATTR_XP_DRAIN] = 0;
     if (you.duration[DUR_SCRYING])
         you.xray_vision = false;
 
@@ -2275,7 +2243,7 @@ bool bad_attack(const monster *mon, string& adj, string& suffix)
 
     if (mon->friendly())
     {
-        if (you.religion == GOD_OKAWARU)
+        if (you_worship(GOD_OKAWARU))
         {
             adj = gettext("your ally the ");
 
@@ -2289,7 +2257,7 @@ bool bad_attack(const monster *mon, string& adj, string& suffix)
     }
 
     if (is_unchivalric_attack(&you, mon)
-        && you.religion == GOD_SHINING_ONE
+        && you_worship(GOD_SHINING_ONE)
         && !tso_unchivalric_attack_safe_monster(mon))
     {
         adj += gettext("helpless ");
@@ -2299,7 +2267,7 @@ bool bad_attack(const monster *mon, string& adj, string& suffix)
     else if (mon->wont_attack())
         adj += gettext("non-hostile ");
 
-    if (you.religion == GOD_JIYVA && mons_is_slime(mon)
+    if (you_worship(GOD_JIYVA) && mons_is_slime(mon)
         && !(mon->is_shapeshifter() && (mon->flags & MF_KNOWN_SHIFTER)))
     {
         return true;
@@ -2421,29 +2389,6 @@ bool stop_attack_prompt(targetter &hitfunc, string verb,
         canned_msg(MSG_OK);
         return true;
     }
-}
-
-bool is_orckind(const actor *act)
-{
-    if (mons_genus(act->mons_species()) == MONS_ORC)
-        return true;
-
-    if (act->is_monster())
-    {
-        const monster* mon = act->as_monster();
-        if (mons_is_zombified(mon)
-            && mons_genus(mon->base_monster) == MONS_ORC)
-        {
-            return true;
-        }
-        if (mons_is_ghost_demon(mon->type)
-            && (player_genus(GENPC_ORCISH, mon->ghost->species)))
-        {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 bool is_dragonkind(const actor *act)
@@ -2618,6 +2563,10 @@ void maybe_id_resist(beam_type flavour)
 
     case BEAM_ELECTRICITY:
         _maybe_id_jewel(NUM_JEWELLERY, NUM_JEWELLERY, ARTP_ELECTRICITY);
+        break;
+
+    case BEAM_ACID:
+        _maybe_id_jewel(NUM_JEWELLERY, AMU_RESIST_CORROSION);
         break;
 
     case BEAM_POISON:

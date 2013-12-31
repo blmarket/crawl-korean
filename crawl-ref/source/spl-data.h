@@ -99,19 +99,6 @@ struct spell_desc
 },
 
 {
-    SPELL_STRIKING, M_("Striking"),
-     0,
-     SPFLAG_DIR_OR_TARGET | SPFLAG_BATTLE, // rod of striking
-     1,
-     50,
-     5, 5,
-     0,
-     NULL,
-     true,
-     false
-},
-
-{
     SPELL_CONJURE_FLAME, M_("Conjure Flame"),
      SPTYP_CONJURATION | SPTYP_FIRE,
      SPFLAG_GRID | SPFLAG_NOT_SELF,
@@ -909,6 +896,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_FRENZY, M_("Frenzy"),
      SPTYP_CHARMS,
@@ -921,7 +909,7 @@ struct spell_desc
      false,
      false
 },
-
+#endif
 
 {
     SPELL_DISPEL_UNDEAD, M_("Dispel Undead"),
@@ -1915,7 +1903,7 @@ struct spell_desc
      SPTYP_CONJURATION | SPTYP_HEXES,
      SPFLAG_GRID | SPFLAG_AREA | SPFLAG_NOT_SELF,
      5,
-     100,
+     200,
      5, 5,
      0,
      NULL,
@@ -2057,7 +2045,7 @@ struct spell_desc
 },
 
 {
-    SPELL_SUMMON_BEAST, M_("Summon Beast"),
+    SPELL_SUMMON_HELL_BEAST, M_("Summon Hell Beast"),
      SPTYP_SUMMONING,
      SPFLAG_UNHOLY | SPFLAG_MONSTER,
      4,
@@ -2083,7 +2071,7 @@ struct spell_desc
 },
 
 {
-    SPELL_POISON_SPLASH, M_("Poison Splash"),
+    SPELL_SPIT_POISON, M_("Spit Poison"),
      SPTYP_POISON,
      SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_INNATE | SPFLAG_NOISY,
      2,
@@ -2148,7 +2136,7 @@ struct spell_desc
 },
 
 {
-    SPELL_MIASMA, M_("Miasma"),
+    SPELL_MIASMA_BREATH, M_("Miasma Breath"),
      SPTYP_CONJURATION,
      SPFLAG_DIR_OR_TARGET | SPFLAG_UNCLEAN | SPFLAG_MONSTER,
      6,
@@ -2213,7 +2201,7 @@ struct spell_desc
 },
 
 {
-    SPELL_ACID_SPLASH, M_("Acid Splash"),
+    SPELL_SPIT_ACID, M_("Spit Acid"),
      SPTYP_CONJURATION,
      SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_INNATE | SPFLAG_NOISY,
      5,
@@ -2460,6 +2448,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_SUMMON_RAKSHASA, M_("Summon Rakshasa"),
      SPTYP_SUMMONING,
@@ -2472,6 +2461,7 @@ struct spell_desc
      false,
      false
 },
+#endif
 
 {
     SPELL_MISLEAD, M_("Mislead"),
@@ -2604,8 +2594,8 @@ struct spell_desc
 },
 
 {
-    SPELL_SUMMON_CANIFORMS, M_("Summon Caniforms"),
-     SPTYP_SUMMONING,
+    SPELL_DRUIDS_CALL, M_("Druid's Call"),
+     SPTYP_CHARMS,
      SPFLAG_MONSTER,
      6,
      0,
@@ -2708,7 +2698,7 @@ struct spell_desc
 },
 
 {
-    SPELL_MIRROR_DAMAGE, M_("Mirror Damage"),
+    SPELL_INJURY_MIRROR, M_("Injury Mirror"),
      SPTYP_NONE,
      SPFLAG_DIR_OR_TARGET | SPFLAG_HELPFUL,
      4,
@@ -2786,9 +2776,9 @@ struct spell_desc
 },
 
 {
-    SPELL_MELEE, M_("melee"),
+    SPELL_MELEE, M_("Melee"),
      0,
-     SPFLAG_TESTING,
+     SPFLAG_BATTLE,
      1,
      0,
      -1, -1,
@@ -2971,9 +2961,9 @@ struct spell_desc
     SPELL_FORCE_LANCE, M_("Force Lance"),
      SPTYP_CONJURATION,
      SPFLAG_DIR_OR_TARGET,
-     2,
-     50,
-     3, 3,
+     5,
+     100,
+     4, 4,
      0,
      NULL,
      true,
@@ -3239,6 +3229,58 @@ struct spell_desc
      NULL,
      false,
      true
+},
+
+{
+    SPELL_SUMMON_VERMIN, "Summon Vermin",
+     SPTYP_SUMMONING,
+     SPFLAG_MONSTER,
+     5,
+     0,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
+    SPELL_MALIGN_OFFERING, "Malign Offering",
+     SPTYP_NECROMANCY,
+     SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
+     5,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
+    SPELL_SEARING_RAY, "Searing Ray",
+     SPTYP_CONJURATION,
+     SPFLAG_DIR_OR_TARGET,
+     2,
+     50,
+     4, 4,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
+    SPELL_DISCORD, "Discord",
+     SPTYP_HEXES,
+     SPFLAG_AREA | SPFLAG_HASTY,
+     8,
+     200,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     false
 },
 
 {

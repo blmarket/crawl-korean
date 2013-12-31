@@ -13,8 +13,10 @@ misc/cursor CURSOR
 %sdir player/base
 human_f HUMAN
 human_m
-human_dark_f
-human_dark_m
+human2_f
+human2_m
+human3_f
+human3_m
 elf_m ELF
 elf_f
 deep_elf_f DEEP_ELF
@@ -68,7 +70,10 @@ octopode2
 octopode3
 octopode4
 octopode5
-djinni DJINNI
+%rim 0
+djinni_f DJINNI
+djinni_m
+%rim 1
 
 # draconians
 draconian_f DRACONIAN DRACONIAN_FIRST
@@ -124,14 +129,16 @@ tengu_winged_f
 tengu_winged_m
 tengu_wingless_brown_f
 tengu_wingless_brown_m
-merfolk_m MERFOLK
-merfolk_f
-merfolk_water_m MERFOLK_WATER
-merfolk_water_f
+merfolk_f MERFOLK
+merfolk_m
+merfolk_water_f MERFOLK_WATER
+merfolk_water_m
 vampire_f VAMPIRE
 vampire_m
 deep_dwarf_m DEEP_DWARF
 deep_dwarf_f
+gargoyle_m GARGOYLE
+gargoyle_f
 %sdir player/felids
 %rim 0
 cat1 FELID
@@ -428,6 +435,7 @@ vanhel1 VANHEL
 maxwell MAXWELL
 lears_chain_mail LEARS_CHAIN_MAIL
 faerie_dragon_armour FAERIE_DRAGON_ARMOUR
+moon_troll_leather_armour MOON_TROLL_LEATHER_ARMOUR
 %end_ctg
 
 ### Arms
@@ -592,8 +600,6 @@ hammer_two HAMMER2
 flail_stick FLAIL_STICK
 flail_ball FLAIL
 flail_ball2
-flail_spike SPIKED_FLAIL
-flail_spike2
 flail_great GREAT_FLAIL
 flail_great2
 flail_stick_slant FLAIL_STICK_SLANT
@@ -867,6 +873,7 @@ short_black SHORT_BLACK
 short_red SHORT_RED
 short_yellow SHORT_YELLOW
 short_white SHORT_WHITE
+short_brown SHORT_BROWN
 long_black LONG_BLACK
 long_red LONG_RED
 long_yellow LONG_YELLOW
@@ -879,6 +886,16 @@ elf_black ELF_BLACK
 elf_red ELF_RED
 elf_yellow ELF_YELLOW
 elf_white ELF_WHITE
+elf_brown ELF_BROWN
+curly_yellow CURLY_YELLOW
+full_brown FULL_BROWN
+mountain_man MOUNTAIN_MAN
+part_blue PART_BLUE
+part2_red PART2_RED
+ribbons_black RIBBONS_BLACK
+hightail HIGHTAIL
+queue QUEUE
+headband HEADBAND
 aragorn ARAGORN
 arwen ARWEN
 boromir BOROMIR
@@ -890,12 +907,24 @@ sam SAM
 pigtail_red PIGTAIL_RED
 pigtails_brown PIGTAILS_BROWN
 pigtails_yellow PIGTAILS_YELLOW
+pigtails_green PIGTAILS_GREEN
 ponytail_yellow PONYTAIL_YELLOW
 knot_red KNOT_RED
 brown1 BROWN1
 brown2 BROWN2
 green GREEN
 tengu_comb TENGU_COMB
+spriggan1 SPRIGGAN1
+spriggan2 SPRIGGAN2
+spriggan3 SPRIGGAN3
+hightails_brown HIGHTAILS_BROWN
+topknot TOPKNOT
+topknot2 TOPKNOT2
+sweep SWEEP
+chopsticks CHOPSTICKS
+troll TROLL
+djinn1 DJINN1
+djinn2 DJINN2
 %end_ctg
 
 ###Beard
@@ -932,7 +961,10 @@ stubble_brown STUBBLE_BROWN
 stubble_green STUBBLE_GREEN
 stubble_red STUBBLE_RED
 stubble_white STUBBLE_WHITE
+muttonchops_green MUTTONCHOPS_GREEN
+bushy_green BUSHY_GREEN
 pj PJ
+wizard WIZARD
 %end_ctg
 
 ###Helms

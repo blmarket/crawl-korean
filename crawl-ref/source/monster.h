@@ -54,6 +54,7 @@ public:
     monster_type  base_monster;        // zombie base monster, draconian colour
     unsigned int  number;              // #heads (hydra), etc.
     int           colour;
+    mid_t         summoner;
 
     int foe_memory;                    // how long to 'remember' foe x,y
                                        // once they go out of sight.
@@ -296,15 +297,18 @@ public:
     int  skill(skill_type skill, int scale = 1, bool real = false) const;
 
     void attacking(actor *other);
+    bool can_go_frenzy() const;
     bool can_go_berserk() const;
     void go_berserk(bool intentional, bool potion = false);
-    void go_frenzy();
+    bool go_frenzy(actor *source);
     bool berserk() const;
+    bool berserk_or_insane() const;
     bool has_lifeforce() const;
     bool can_mutate() const;
     bool can_safely_mutate() const;
     bool can_polymorph() const;
     bool can_bleed(bool allow_tran = true) const;
+    bool is_stationary() const;
     bool malmutate(const string &reason);
     bool polymorph(int pow);
     void banish(actor *agent, const string &who = "");
@@ -512,7 +516,7 @@ private:
     void id_if_worn(mon_inv_type mslot, object_class_type base_type,
                     int sub_type) const;
 
-    bool decay_enchantment(const mon_enchant &me, bool decay_degree = true);
+    bool decay_enchantment(enchant_type en, bool decay_degree = true);
 
     bool wants_weapon(const item_def &item) const;
     bool wants_armour(const item_def &item) const;

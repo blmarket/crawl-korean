@@ -1102,6 +1102,28 @@ MAP
    .....
 ENDMAP
 
+NAME:    okawaru_dwarf
+TAGS:    uniq_altar_okawaru temple_overflow_1 temple_overflow_okawaru
+TAGS:    no_monster_gen no_wall_fixup
+DEPTH:   7-12
+COLOUR:  1 = yellow, ' = yellow, x = white
+MONS:    dwarf
+FTILE:   1'xO = floor_sandstone
+RTILE:   x = wall_tomb
+KFEAT:   _ = altar_okawaru
+: interest_check(_G)
+MAP
+.........
+.xxxxxxx.
+.x1'_'1x.
+.x'''''x.
+.x'x'x'x.
+.xGx'xGx.
+.xxx'xxx.
+....'....
+ENDMAP
+
+
 ### Sif Muna overflow altars ##################################################
 
 NAME:   lemuel_blue_sif_altar
@@ -1159,10 +1181,11 @@ TAGS:   no_item_gen no_pool_fixup no_monster_gen
 TAGS:   temple_overflow_1 temple_overflow_sif_muna uniq_altar_sif_muna
 KPROP:  1d = no_rtele_into
 KFEAT:  _ = altar_sif_muna
-ITEM:   randbook owner:Sif_Muna numspells:1 slevels:1
+KFEAT:  d = escape_hatch_down
+KITEM:  d = randbook owner:Sif_Muna numspells:1 slevels:1
 MONS:   orc wizard
-COLOUR: .@+1deG = blue
-FTILE:  .@+1deG_ = floor_marble
+COLOUR: .@+1G = blue
+FTILE:  .@+1G_ = floor_marble
 : interest_check(_G)
 MAP
 xxxxxxxxx
@@ -1454,7 +1477,7 @@ ENDMAP
 ### Xom overflow altars #######################################################
 
 NAME:   tgw_xom
-DEPTH:  D:2-27
+DEPTH:  D:2-
 TAGS:   no_item_gen no_monster gen temple_overflow_1 temple_overflow_xom
 TAGS:   uniq_altar_xom
 KFEAT:  _ = altar_xom
@@ -1698,7 +1721,7 @@ ENDMAP
 
 NAME:   zin_angel
 TAGS:   no_item_gen no_monster_gen temple_overflow_1 temple_overflow_zin decor
-DEPTH:  D:2-27
+DEPTH:  D:2-
 KFEAT:  _ = altar_zin
 KPROP:  1 = no_rtele_into
 COLOUR: G = lightgray
@@ -1924,7 +1947,7 @@ ENDMAP
 # they get tags temple_overflow_N and temple_overflow_<god>.
 
 NAME:    good_gods_temple_1
-DEPTH:   D:2-27, Lair
+DEPTH:   D:2-, Lair
 TAGS:    temple_overflow_3 temple_overflow_elyvilon
 TAGS:    temple_overflow_zin temple_overflow_the_shining_one
 TAGS:    no_monster_gen no_trap_gen uniq_good_god_temple
@@ -1949,7 +1972,7 @@ tt...1...tt
 ENDMAP
 
 NAME:    good_gods_mini_temple
-DEPTH:   D:2-27, Lair
+DEPTH:   D:2-, Lair
 TAGS:    temple_overflow_3 temple_overflow_elyvilon
 TAGS:    temple_overflow_zin temple_overflow_the_shining_one
 TAGS:    no_monster_gen no_trap_gen no_pool_fixup uniq_good_god_temple
@@ -2472,6 +2495,26 @@ ccB.+.T.+.Bcc
       @
 ENDMAP
 
+NAME:   gammafunk_temple_overflow_claw
+TAGS:   temple_overflow_generic_3
+SUBST:  l : lw
+KMASK:  lw = no_monster_gen
+MAP
+  ...........
+ ..cc..c..cc..
+..cc..ccc..cc..
+.ccc..ccc..ccc.
+.ccc.ccccc.ccc.
+.ccccccGcccccc.
+.ccGB..B..BGcc.
+..ccl.....lcc..
+..ccll...llcc..
+ ..ccll.llcc..
+  ..ccl.lcc..
+   ..cc+cc..
+    ...@...
+ENDMAP
+
 NAME:   grunt_temple_overflow_cloverleaf
 TAGS:   temple_overflow_generic_4 transparent
 SUBST:  T : T U:1 V:1
@@ -2491,6 +2534,25 @@ c..B..c.c..B..c
 c.G.G.c.c.G.G.c
 cc...cc.cc...cc
  ccccc.@.ccccc
+ENDMAP
+
+NAME: nicolae_overflow_quartered_altars
+TAGS: temple_overflow_generic_4
+SHUFFLE: fgh/ijk, pq/rs
+SUBST: pqi = ., rk = c, s = +, z : cm, j : GTt
+CLEAR: fgh
+MAP
+  ffghgff
+ @.ccccc.@
+f.qp.c.pq.f
+fcp..z..pcf
+gc..BcB..cg
+hcczccczcch
+gc..BcB..cg
+fcp..z..pcf
+f.qp.c.pq.f
+ @.ccccc.@
+  ffghgff
 ENDMAP
 
 NAME:   minmay_overflow_temple_star_hex
@@ -2660,4 +2722,50 @@ G.c.c.c.c.Bc
 G.c.c.c.c.Bc
 cBcBcBcBcBcc
 cccccccccccc
+ENDMAP
+
+NAME: nicolae_overflow_hidden_temple
+TAGS: temple_overflow_generic_5 temple_overflow_generic_4 temple_overflow_generic_3 \
+      temple_overflow_generic_2 temple_overflow_generic_1 no_monster_gen
+{{
+  local altarcount = 1
+  if is_validating() then
+    altarcount = 5
+  end
+  local params = dgn.map_parameters()
+  if params ~= nil then
+    local tag = unpack(params)
+    if tag ~= nil then
+      -- temple_overflow_generic_ is 24 characters
+      altarcount = string.sub(tag, 25)
+    end
+  end
+  if altarcount == "1" then
+    subst("c = B")
+    subst("abde = G")
+  elseif altarcount == "2" then
+    subst("bd = B")
+    subst("ace = G")
+  elseif altarcount == "3" then
+    shuffle("ae/bd")
+    subst("cbd = B")
+    subst("ae = G")
+  elseif altarcount == "4" then
+    subst("abde = B")
+    subst("c = G")
+  else
+    subst("abcde = B")
+  end
+}}
+SUBST: } = })]
+MAP
+xxxxxxxxxxxxx
+xxxxaxxxbxxxx
+xxG...G...Gxx
+xx.........xx
+x}.........cx
+xx.........xx
+xxG...G...Gxx
+xxxxexxxdxxxx
+xxxxxxxxxxxxx
 ENDMAP

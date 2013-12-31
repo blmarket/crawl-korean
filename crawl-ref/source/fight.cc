@@ -16,6 +16,7 @@
 #include "coordit.h"
 #include "delay.h"
 #include "env.h"
+#include "fineff.h"
 #include "hints.h"
 #include "invent.h"
 #include "itemprop.h"
@@ -51,8 +52,9 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
     {
         ASSERT(!crawl_state.game_is_arena());
         // Friendly and good neutral monsters won't attack unless confused.
-        if (attacker->as_monster()->wont_attack() &&
-            !mons_is_confused(attacker->as_monster()))
+        if (attacker->as_monster()->wont_attack()
+            && !mons_is_confused(attacker->as_monster())
+            && !attacker->as_monster()->has_ench(ENCH_INSANE))
         {
             return false;
         }
@@ -144,7 +146,9 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
             return false;
 
         // Monster went away?
-        if (!defender->alive() || defender->pos() != pos)
+        if (!defender->alive()
+            || defender->pos() != pos
+            || defender->is_banished())
         {
             if (attacker == defender
                || !attacker->as_monster()->has_multitargetting())
@@ -194,6 +198,8 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
             effective_attack_number = melee_attk.effective_attack_number;
         else if (did_hit && !(*did_hit))
             *did_hit = melee_attk.did_hit;
+
+        fire_final_effects();
     }
 
     // A spectral weapon attacks whenever the player does
@@ -326,7 +332,7 @@ int resist_adjust_damage(actor *defender, beam_type flavour,
 
     if (res > 0)
     {
-        if ((mons && res >= 3) || res > 3)
+        if (((mons || flavour == BEAM_NEG) && res >= 3) || res > 3)
             resistible = 0;
         else
         {
@@ -340,6 +346,8 @@ int resist_adjust_damage(actor *defender, beam_type flavour,
             // effective one for monsters.
             if (mons)
                 resistible /= 1 + bonus_res + res * res;
+            else if (flavour == BEAM_NEG)
+                resistible /= res * 2;
             else
                 resistible /= resist_fraction(res, bonus_res);
         }
@@ -464,4 +472,17 @@ void attack_cleave_targets(actor* attacker, list<actor*> &targets,
         }
         targets.pop_front();
     }
+}
+
+int finesse_adjust_delay(int delay)
+{
+    if (you.duration[DUR_FINESSE])
+    {
+        ASSERT(!you.duration[DUR_BERSERK]);
+        // Need to undo haste by hand.
+        if (you.duration[DUR_HASTE])
+            delay = haste_mul(delay);
+        delay = div_rand_round(delay, 2);
+    }
+    return delay;
 }

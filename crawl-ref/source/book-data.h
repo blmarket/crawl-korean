@@ -1,4 +1,4 @@
-{   // Minor Magic
+{   // Book of Minor Magic
     SPELL_MAGIC_DART,
     SPELL_BLINK,
     SPELL_CALL_IMP,
@@ -11,7 +11,7 @@
 
 {   // Book of Conjurations
     SPELL_MAGIC_DART,
-    SPELL_FORCE_LANCE,
+    SPELL_SEARING_RAY,
     SPELL_DAZZLING_SPRAY,
     SPELL_ISKENDERUNS_MYSTIC_BLAST,
     SPELL_BATTLESPHERE,
@@ -93,7 +93,7 @@
     SPELL_TUKIMAS_DANCE,
     SPELL_DEFLECT_MISSILES,
     SPELL_HASTE,
-    SPELL_NO_SPELL,
+    SPELL_DISCORD,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
 },
@@ -335,7 +335,7 @@
 {   // Book of Wizardry
     SPELL_SUMMON_ELEMENTAL,
     SPELL_AGONY,
-    SPELL_LIGHTNING_BOLT,
+    SPELL_FORCE_LANCE,
     SPELL_FIREBALL,
     SPELL_HASTE,
     SPELL_INVISIBILITY,
@@ -347,7 +347,7 @@
     SPELL_ISKENDERUNS_MYSTIC_BLAST,
     SPELL_VENOM_BOLT,
     SPELL_BOLT_OF_MAGMA,
-    SPELL_POISONOUS_CLOUD,
+    SPELL_FULMINANT_PRISM,
     SPELL_IRON_SHOT,
     SPELL_IOOD,
     SPELL_NO_SPELL,
@@ -400,7 +400,7 @@
     SPELL_NO_SPELL,
 },
 
-{   // Tome of the Dragon
+{   // Book of the Dragon
     SPELL_FLY,
     SPELL_CAUSE_FEAR,
     SPELL_BOLT_OF_FIRE,
@@ -477,7 +477,7 @@
     SPELL_NO_SPELL,
 },
 
-{   // Necronomicon - Kikubaaqudgha special
+{   // Necronomicon
     SPELL_BORGNJORS_REVIVIFICATION,
     SPELL_HAUNT,
     SPELL_DEATHS_DOOR,
@@ -579,7 +579,7 @@
 },
 
 {   // Rod of striking
-    SPELL_STRIKING,
+    SPELL_MELEE,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,

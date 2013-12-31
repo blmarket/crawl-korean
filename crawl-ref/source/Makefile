@@ -202,8 +202,8 @@ ifneq (,$(findstring MINGW,$(uname_S)))
 		BUILD_SDLIMAGE = YesPlease
 		BUILD_LIBPNG = YesPlease
 	endif
-	ifeq ($(shell gcc -v -static-libstdc++ 2>&1 | grep 'unrecognized option'),)
-		EXTRA_LIBS += -static-libgcc -static-libstdc++
+	ifeq ($(shell gcc -v -static -static-libstdc++ 2>&1 | grep 'unrecognized option'),)
+		EXTRA_LIBS += -static -static-libgcc -static-libstdc++
 	endif
 	COPY_FONTS = yes
 endif
@@ -453,6 +453,7 @@ ifdef BUILD_UNIVERSAL
 # [ds] 10.4 SDK g++-4.0 + x86_64 runs into SDL compile issues.
 CFLAGS_ARCH := -arch i386 -arch ppc -faltivec
 CFLAGS_DEPCC_ARCH := -arch i386
+NO_INLINE_DEPGEN := YesPlease
 else
 CFLAGS_ARCH := -arch $(MARCH)
 endif
@@ -468,8 +469,9 @@ CXX += -gcc-name=gcc-$(GCC_VER) -gxx-name=g++-$(GCC_VER)
 endif
 
 ifndef CROSSHOST
-HOSTCC = $(CC)
-HOSTCXX = $(CXX)
+# Don't need a universal build of host tools, so use DEPCC.
+HOSTCC = $(DEPCC)
+HOSTCXX = $(DEPCXX)
 export HOSTCC
 export HOSTCXX
 endif
@@ -540,7 +542,7 @@ else
   ifneq (,$(shell $(GXX) --version|grep 'g++.*4\.2\.'))
     # OS X uses a buggy ancient version of gcc without fixes from even
     # subsequent point releases of 4.2.
-    CFOPTIMIZE := -O1
+    CFOPTIMIZE := -O0
   else
     CFOPTIMIZE := -O2
   endif
@@ -976,6 +978,10 @@ CFWARN := -wd383,810,869,981,1418 -we14,193,304
 CFWARN_L :=
 endif
 
+ifeq (,$(shell echo 'int main(){return 1;}'|$(GXX) -x c++ - -o /dev/null -fuse-ld=gold 2>&1))
+  LDFLAGS += -fuse-ld=gold
+endif
+
 LDFLAGS += $(CFOPTIMIZE) $(CFOPTIMIZE_L)
 
 ifdef REPORT
@@ -1092,8 +1098,8 @@ LIBS += $(CONTRIB_LIBS) $(EXTRA_LIBS)
 DOC_BASE        := ../docs
 DOC_TEMPLATES   := $(DOC_BASE)/template
 GENERATED_DOCS  := $(DOC_BASE)/aptitudes.txt $(DOC_BASE)/FAQ.html $(DOC_BASE)/crawl_manual.txt
-GENERATED_HEADERS := art-enum.h config.h #the rest are private
-GENERATED_FILES := $(GENERATED_HEADERS) art-data.h mon-mst.h mi-enum.h \
+GENERATED_HEADERS := art-enum.h config.h mon-mst.h #the rest are private
+GENERATED_FILES := $(GENERATED_HEADERS) art-data.h mi-enum.h \
                    $(RLTILES)/dc-unrand.txt build.h compflag.h dat/dlua/tags.lua \
                    cmd-name.h
 

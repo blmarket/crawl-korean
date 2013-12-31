@@ -145,7 +145,9 @@ bool feat_is_travelable_stair(dungeon_feature_type feat)
     case DNGN_ENTER_GEHENNA:
     case DNGN_ENTER_COCYTUS:
     case DNGN_ENTER_TARTARUS:
+#if TAG_MAJOR_VERSION == 34
     case DNGN_ENTER_DWARVEN_HALL:
+#endif
     case DNGN_ENTER_ORCISH_MINES:
     case DNGN_ENTER_LAIR:
     case DNGN_ENTER_SLIME_PITS:
@@ -161,7 +163,9 @@ bool feat_is_travelable_stair(dungeon_feature_type feat)
     case DNGN_ENTER_SHOALS:
     case DNGN_ENTER_SPIDER_NEST:
     case DNGN_ENTER_FOREST:
+#if TAG_MAJOR_VERSION == 34
     case DNGN_RETURN_FROM_DWARVEN_HALL:
+#endif
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_SLIME_PITS:
@@ -234,7 +238,9 @@ command_type feat_stair_direction(dungeon_feature_type feat)
     case DNGN_STONE_STAIRS_UP_III:
     case DNGN_ESCAPE_HATCH_UP:
     case DNGN_EXIT_DUNGEON:
+#if TAG_MAJOR_VERSION == 34
     case DNGN_RETURN_FROM_DWARVEN_HALL:
+#endif
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_SLIME_PITS:
@@ -273,7 +279,9 @@ command_type feat_stair_direction(dungeon_feature_type feat)
     case DNGN_ENTER_PANDEMONIUM:
     case DNGN_EXIT_PANDEMONIUM:
     case DNGN_TRANSIT_PANDEMONIUM:
+#if TAG_MAJOR_VERSION == 34
     case DNGN_ENTER_DWARVEN_HALL:
+#endif
     case DNGN_ENTER_ORCISH_MINES:
     case DNGN_ENTER_LAIR:
     case DNGN_ENTER_SLIME_PITS:
@@ -407,7 +415,7 @@ bool feat_is_altar(dungeon_feature_type grid)
 bool feat_is_player_altar(dungeon_feature_type grid)
 {
     // An ugly hack, but that's what religion.cc does.
-    return (you.religion != GOD_NO_GOD
+    return (!you_worship(GOD_NO_GOD)
             && feat_altar_god(grid) == you.religion);
 }
 
@@ -715,8 +723,9 @@ bool is_valid_border_feat(dungeon_feature_type feat)
 // Other features can be defined as mimic in vaults.
 bool is_valid_mimic_feat(dungeon_feature_type feat)
 {
-    // Don't risk trapping the player inside a portal vault.
-    if (feat == DNGN_EXIT_PORTAL_VAULT)
+    // Don't risk trapping the player inside a portal vault, don't destroy
+    // runed doors either.
+    if (feat == DNGN_EXIT_PORTAL_VAULT || feat == DNGN_RUNED_DOOR)
         return false;
 
     if (feat_is_portal(feat) || feat_is_gate(feat))
@@ -1598,14 +1607,20 @@ static const char *dngn_feature_names[] =
 "teleporter", "enter_portal_vault", "exit_portal_vault",
 "expired_portal",
 
-"enter_dwarven_hall", "enter_orcish_mines", "enter_lair",
+#if TAG_MAJOR_VERSION == 34
+"enter_dwarven_hall",
+#endif
+"enter_orcish_mines", "enter_lair",
 "enter_slime_pits", "enter_vaults", "enter_crypt",
 "enter_hall_of_blades", "enter_zot", "enter_temple",
 "enter_snake_pit", "enter_elven_halls", "enter_tomb",
 "enter_swamp", "enter_shoals", "enter_spider_nest",
 "enter_forest", "",
 
-"return_from_dwarven_hall", "return_from_orcish_mines",
+#if TAG_MAJOR_VERSION == 34
+"return_from_dwarven_hall",
+#endif
+"return_from_orcish_mines",
 "return_from_lair", "return_from_slime_pits",
 "return_from_vaults", "return_from_crypt",
 "return_from_hall_of_blades", "return_from_zot",
@@ -1632,6 +1647,9 @@ static const char *dngn_feature_names[] =
 "abyssal_stair",
 "badly_sealed_door",
 #endif
+
+"sealed_stair_up",
+"sealed_stair_down",
 };
 
 dungeon_feature_type dungeon_feature_by_name(const string &name)
@@ -1939,6 +1957,10 @@ bool revert_terrain_change(coord_def pos, terrain_change_type ctype)
         }
     }
 
+    // Don't revert opened sealed doors.
+    if (feat_is_door(newfeat) && grd(pos) == DNGN_OPEN_DOOR)
+        newfeat = DNGN_UNSEEN;
+
     if (newfeat != DNGN_UNSEEN)
     {
         dungeon_terrain_changed(pos, newfeat, true, false, true);
@@ -1976,7 +1998,7 @@ bool plant_forbidden_at(const coord_def &p, bool connectivity_only)
             else if (last >= 0 && next < 0)
             {
                 // Found a maybe-disconnected traversable cell.  This is only
-                // acceptible if it might connect up at the end.
+                // acceptable if it might connect up at the end.
                 if (first == 0)
                     next = i;
                 else

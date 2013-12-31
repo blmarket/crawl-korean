@@ -590,8 +590,7 @@ void destroy_item(int dest, bool never_created)
 static void _handle_gone_item(const item_def &item)
 {
     if (player_in_branch(BRANCH_ABYSS)
-        && place_branch(item.orig_place) == BRANCH_ABYSS
-        && !(item.flags & ISFLAG_BEEN_IN_INV))
+        && place_branch(item.orig_place) == BRANCH_ABYSS)
     {
         if (is_unrandom_artefact(item))
             set_unique_item_status(item, UNIQ_LOST_IN_ABYSS);
@@ -910,7 +909,7 @@ void pickup_menu(int item_link)
                 int num_to_take = selected[i].quantity;
                 const bool take_all = (num_to_take == mitm[j].quantity);
                 iflags_t oldflags = mitm[j].flags;
-                mitm[j].flags &= ~(ISFLAG_THROWN | ISFLAG_DROPPED);
+                clear_item_pickup_flags(mitm[j]);
                 int result = move_item_to_player(j, num_to_take);
 
                 // If we cleared any flags on the items, but the pickup was
@@ -1229,7 +1228,7 @@ bool pickup_single_item(int link, int qty)
         qty = item->quantity;
 
     iflags_t oldflags = item->flags;
-    item->flags &= ~(ISFLAG_THROWN | ISFLAG_DROPPED);
+    clear_item_pickup_flags(*item);
     int num = move_item_to_player(link, qty);
     if (item->defined())
         item->flags = oldflags;
@@ -1331,7 +1330,7 @@ void pickup(bool partial_quantity)
             {
                 int num_to_take = mitm[o].quantity;
                 const iflags_t old_flags(mitm[o].flags);
-                mitm[o].flags &= ~(ISFLAG_THROWN | ISFLAG_DROPPED);
+                clear_item_pickup_flags(mitm[o]);
                 int result = move_item_to_player(o, num_to_take);
 
                 if (result == 0 || result == -1)
@@ -1519,7 +1518,7 @@ int find_free_slot(const item_def &i)
     }
 
     // Either searchforward is true, or search backwards failed and
-    // we re-try searching the oposite direction.
+    // we re-try searching the opposite direction.
 
     int badslot = -1;
     // Return first free slot
@@ -1548,7 +1547,7 @@ static void _got_gold(item_def& item, int quant, bool quiet)
 {
     you.attribute[ATTR_GOLD_FOUND] += quant;
 
-    if (you.religion == GOD_ZIN && !(item.flags & ISFLAG_THROWN))
+    if (you_worship(GOD_ZIN) && !(item.flags & ISFLAG_THROWN))
         quant -= zin_tithe(item, quant, quiet);
     if (quant <= 0)
         return;
@@ -1767,7 +1766,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
         mpr(_("The lords of Pandemonium are not amused. Beware!"), MSGCH_WARN);
 
-        if (you.religion == GOD_CHEIBRIADOS)
+        if (you_worship(GOD_CHEIBRIADOS))
             simple_god_message(_(" tells them not to hurry."));
 
         mpr(_("Now all you have to do is get back out of the dungeon!"), MSGCH_ORB);
@@ -1863,6 +1862,11 @@ void mark_items_non_visit_at(const coord_def &pos)
             mitm[item].flags |= ISFLAG_DROPPED;
         item = mitm[item].link;
     }
+}
+
+void clear_item_pickup_flags(item_def &item)
+{
+    item.flags &= ~(ISFLAG_THROWN | ISFLAG_DROPPED | ISFLAG_NO_PICKUP);
 }
 
 // Moves mitm[obj] to p... will modify the value of obj to
@@ -2086,7 +2090,7 @@ bool move_top_item(const coord_def &pos, const coord_def &dest)
     dungeon_events.fire_position_event(
         dgn_event(DET_ITEM_MOVED, pos, 0, item, -1, dest), pos);
 
-    // Now move the item to its new possition...
+    // Now move the item to its new position...
     move_item_to_grid(&item, dest);
 
     return true;
@@ -2779,7 +2783,7 @@ static bool _interesting_explore_pickup(const item_def& item)
         return _item_different_than_inv(item, _similar_jewellery);
 
     case OBJ_FOOD:
-        if (you.religion == GOD_FEDHAS && is_fruit(item))
+        if (you_worship(GOD_FEDHAS) && is_fruit(item))
             return true;
 
         if (is_inedible(item))
@@ -2897,7 +2901,7 @@ static void _do_autopickup()
             if ((iflags & ISFLAG_THROWN))
                 learned_something_new(HINT_AUTOPICKUP_THROWN);
 
-            mitm[o].flags &= ~(ISFLAG_THROWN | ISFLAG_DROPPED);
+            clear_item_pickup_flags(mitm[o]);
 
             const int result = move_item_to_player(o, num_to_take);
 
@@ -3228,7 +3232,7 @@ bool item_def::is_greedy_sacrificeable() const
     if (!god_likes_items(you.religion, true))
         return false;
 
-    if (you.religion == GOD_NEMELEX_XOBEH
+    if (you_worship(GOD_NEMELEX_XOBEH)
         && !check_nemelex_sacrificing_item_type(*this)
         || flags & (ISFLAG_DROPPED | ISFLAG_THROWN)
         || item_is_stationary(*this))
@@ -3497,7 +3501,7 @@ bool get_item_by_name(item_def *item, char* specs,
 
         if (item->base_type == OBJ_UNASSIGNED)
         {
-            // Rune or deck creation canceled, clean up item->
+            // Rune or deck creation cancelled, clean up item->
             return false;
         }
     }
@@ -3746,6 +3750,10 @@ void move_items(const coord_def r, const coord_def p)
     ASSERT_IN_BOUNDS(p);
 
     int it = igrd(r);
+
+    if (it == NON_ITEM)
+        return;
+
     while (it != NON_ITEM)
     {
         mitm[it].pos.x = p.x;
@@ -4140,13 +4148,6 @@ void corrode_item(item_def &item, actor *holder)
         return;
     }
 
-    how_rusty--;
-
-    if (item.base_type == OBJ_WEAPONS)
-        item.plus2 = how_rusty;
-    else
-        item.plus  = how_rusty;
-
     if (holder && holder->is_player())
     {
         mprf(_("The acid corrodes %s!"), item.name(true, DESC_YOUR).c_str());
@@ -4172,4 +4173,11 @@ void corrode_item(item_def &item, actor *holder)
                  item.name(true, DESC_PLAIN).c_str());
         }
     }
+
+    how_rusty--;
+
+    if (item.base_type == OBJ_WEAPONS)
+        item.plus2 = how_rusty;
+    else
+        item.plus  = how_rusty;
 }

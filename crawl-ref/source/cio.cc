@@ -144,20 +144,26 @@ static void wrapcprintf(int wrapcol, const char *s, ...)
     string buf = vmake_stringf(s, args);
     va_end(args);
 
+    const GotoRegion region = get_cursor_region();
+    const int max_y = cgetsize(region).y;
     while (!buf.empty())
     {
-        int x = wherex(), y = wherey();
+        const coord_def pos = cgetpos(region);
 
-        int avail = wrapcol - x + 1;
+        const int avail = wrapcol - pos.x + 1;
         if (avail > 0)
             cprintf("%s", wordwrap_line(buf, avail).c_str());
+
+        // No room for more lines, quit now.
+        if (pos.y >= max_y)
+            break;
         if (!buf.empty())
-            cgotoxy(1, y + 1);
+            cgotoxy(1, pos.y + 1, region);
     }
 }
 
-int cancelable_get_line(char *buf, int len, input_history *mh,
-                        int (*keyproc)(int &ch))
+int cancellable_get_line(char *buf, int len, input_history *mh,
+                        int (*keyproc)(int &ch), const string &fill)
 {
     flush_prev_message();
 
@@ -166,7 +172,7 @@ int cancelable_get_line(char *buf, int len, input_history *mh,
     reader.set_input_history(mh);
     reader.set_keyproc(keyproc);
 
-    return reader.read_line();
+    return reader.read_line(fill);
 }
 
 
@@ -267,10 +273,6 @@ void line_reader::cursorto(int ncx)
     {
         // There's no space left in the region, so we scroll it.
         // XXX: cscroll only implemented for GOTO_MSG.
-        // XXX: wrapcprintf works in GOTO_SCREEN; in particular
-        //      it wraps to the screen's first column, so this
-        //      won't work for regions that don't start at the
-        //      left edge.
         cscroll(diff, region);
         start.y -= diff;
         y -= diff;
@@ -290,10 +292,21 @@ static void _webtiles_abort_get_line()
 }
 #endif
 
+int line_reader::read_line(const string &prefill)
+{
+    strncpy(buffer, prefill.c_str(), bufsz);
+    // Just in case it was too long.
+    buffer[bufsz - 1] = '\0';
+    return read_line(false);
+}
+
 int line_reader::read_line(bool clear_previous)
 {
     if (bufsz <= 0)
         return false;
+
+    if (clear_previous)
+        *buffer = 0;
 
 #ifdef USE_TILE_WEB
     if (!tiles.is_in_crt_menu())
@@ -303,15 +316,15 @@ int line_reader::read_line(bool clear_previous)
         tiles.json_write_string("msg", "get_line");
         if (!tag.empty())
             tiles.json_write_string("tag", tag);
+        tiles.json_write_string("prefill", buffer);
+        tiles.json_write_int("maxlen", (int) bufsz - 1);
+        tiles.json_write_int("size", (int) min(bufsz - 1, strlen(buffer) + 15));
         tiles.json_close_object();
         tiles.finish_message();
     }
 #endif
 
     cursor_control con(true);
-
-    if (clear_previous)
-        *buffer = 0;
 
     region = get_cursor_region();
     start = cgetpos(region);

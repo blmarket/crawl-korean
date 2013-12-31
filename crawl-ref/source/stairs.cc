@@ -31,6 +31,7 @@
 #include "output.h"
 #include "place.h"
 #include "random.h"
+#include "religion.h"
 #include "spl-clouds.h"
 #include "spl-damage.h"
 #include "spl-other.h"
@@ -671,8 +672,8 @@ void down_stairs(dungeon_feature_type force_stair)
     }
 
     // Only check the current position for a legal stair traverse.
-    // If it's a known shaft that we're taking, then we're already good.
-    if (!known_shaft && !_check_stairs(stair_find, true))
+    // If it's a shaft that we're taking, then we're already good.
+    if (!shaft && !_check_stairs(stair_find, true))
         return;
 
     if (_stair_moves_pre(stair_find))
@@ -706,6 +707,8 @@ void down_stairs(dungeon_feature_type force_stair)
             mark_milestone("shaft", // "fell down a shaft to "
                                     _(short_place_name(shaft_dest).c_str()) + std::string("내 구덩이 함정에 빠짐.")); // + short_place_name(shaft_dest) + ".");
         }
+
+        handle_items_on_shaft(you.pos(), false);
 
         if (!you.flight_mode() || force_stair)
             mpr(_("You fall through a shaft!"));
@@ -742,7 +745,7 @@ void down_stairs(dungeon_feature_type force_stair)
 
         ASSERT(runes.size() >= 3);
 
-        random_shuffle(runes.begin(), runes.end());
+        shuffle_array(runes);
         mprf(_("You insert the %s rune into the lock."), rune_type_name(runes[0]));
 #ifdef USE_TILE_LOCAL
         tiles.add_overlay(you.pos(), tileidx_zap(GREEN));
@@ -778,6 +781,7 @@ void down_stairs(dungeon_feature_type force_stair)
 
     // Magical level changes (Portal, Banishment) need this.
     clear_trapping_net();
+    end_searing_ray();
 
     // Markers might be deleted when removing portals.
     const string dst = env.markers.property_at(you.pos(), MAT_ANY, "dst");
@@ -908,8 +912,8 @@ void down_stairs(dungeon_feature_type force_stair)
         if (!force_stair)
             mpr(gettext("You enter the Abyss!"));
 
-        mpr(gettext("To return, you must find a gate leading back."));
-        if (you.religion == GOD_CHEIBRIADOS)
+        mpr(_("To return, you must find a gate leading back."));
+        if (you_worship(GOD_CHEIBRIADOS))
         {
             mpr(gettext("You feel Cheibriados slowing down the madness of this place."),
                 MSGCH_GOD, GOD_CHEIBRIADOS);
@@ -931,9 +935,7 @@ void down_stairs(dungeon_feature_type force_stair)
         break;
 
     default:
-        if (shaft)
-            handle_items_on_shaft(you.pos(), false);
-        else
+        if (!shaft)
             _climb_message(stair_find, false, old_level.branch);
         break;
     }
@@ -1064,13 +1066,13 @@ static void _update_level_state()
 
     vector<coord_def> golub = find_golubria_on_level();
     if (!golub.empty())
-        env.level_state += LSTATE_GOLUBRIA;
+        env.level_state |= LSTATE_GOLUBRIA;
 
     if (_any_glowing_mold())
-        env.level_state += LSTATE_GLOW_MOLD;
+        env.level_state |= LSTATE_GLOW_MOLD;
     for (monster_iterator mon_it; mon_it; ++mon_it)
         if (mons_allows_beogh(*mon_it))
-            env.level_state += LSTATE_BEOGH;
+            env.level_state |= LSTATE_BEOGH;
 
     env.orb_pos = orb_position();
     if (player_has_orb())

@@ -163,7 +163,7 @@ static void _jobs_stat_init(job_type which_job)
     case JOB_BERSERKER:         s =  9; i = -1; d =  4; hp = 15; mp = 0; break;
     case JOB_GLADIATOR:         s =  7; i =  0; d =  5; hp = 14; mp = 0; break;
 
-    case JOB_SKALD:             s =  4; i =  4; d =  4; hp = 13; mp = 2; break;
+    case JOB_SKALD:             s =  4; i =  4; d =  4; hp = 12; mp = 3; break;
     case JOB_CHAOS_KNIGHT:      s =  4; i =  4; d =  4; hp = 13; mp = 1; break;
     case JOB_DEATH_KNIGHT:      s =  5; i =  3; d =  4; hp = 13; mp = 2; break;
     case JOB_ABYSSAL_KNIGHT:    s =  4; i =  4; d =  4; hp = 13; mp = 1; break;
@@ -241,10 +241,14 @@ static void _give_bonus_items()
     _newgame_give_item(OBJ_SCROLLS, SCR_BLINKING);
 }
 
+void autopickup_starting_ammo(missile_type missile)
+{
+    if (Options.autopickup_starting_ammo)
+        you.force_autopickup[OBJ_MISSILES][missile] = 1;
+}
+
 void give_basic_mutations(species_type speci)
 {
-    // We should switch over to a size-based system
-    // for the fast/slow metabolism when we get around to it.
     switch (speci)
     {
     case SP_LAVA_ORC:
@@ -308,13 +312,12 @@ void give_basic_mutations(species_type speci)
         break;
     case SP_GARGOYLE:
         you.mutation[MUT_PETRIFICATION_RESISTANCE]   = 1;
-        you.mutation[MUT_TRAMPLE_RESISTANCE]         = 1;
-        you.mutation[MUT_CLING]                      = 1;
         you.mutation[MUT_NEGATIVE_ENERGY_RESISTANCE] = 1;
-        you.mutation[MUT_COLD_RESISTANCE]            = 1;
+        you.mutation[MUT_SHOCK_RESISTANCE]           = 1;
         you.mutation[MUT_FANGS]                      = 1;
         you.mutation[MUT_TALONS]                     = 2;
         you.mutation[MUT_SLOW_METABOLISM]            = 1;
+        you.mutation[MUT_UNBREATHING]                = 1;
         break;
     case SP_TENGU:
         you.mutation[MUT_BEAK]   = 1;
@@ -348,6 +351,9 @@ void give_basic_mutations(species_type speci)
     case SP_OCTOPODE:
         you.mutation[MUT_CAMOUFLAGE]      = 1;
         you.mutation[MUT_GELATINOUS_BODY] = 1;
+        break;
+    case SP_DJINNI:
+        you.mutation[MUT_NEGATIVE_ENERGY_RESISTANCE] = 3;
         break;
     default:
         break;
@@ -427,10 +433,21 @@ void newgame_make_item(int slot, equipment_type eqslot,
     // If the character is restricted in wearing armour of equipment
     // slot eqslot, hand out replacement instead.
     if (item.base_type == OBJ_ARMOUR && replacement != -1
-        && !can_wear_armour(item, false, true))
+        && !can_wear_armour(item, false, false))
     {
         item.sub_type = replacement;
     }
+    if (eqslot == EQ_WEAPON && replacement != -1
+        && !can_wield(&item, false, false))
+    {
+        item.sub_type = replacement;
+    }
+
+    if (item.base_type == OBJ_ARMOUR && !can_wear_armour(item, false, false))
+        return;
+
+    if (eqslot == EQ_WEAPON && !can_wield(&item, false, false))
+        return;
 
     if (eqslot != EQ_NONE && you.equip[eqslot] == -1)
         you.equip[eqslot] = slot;
@@ -462,21 +479,22 @@ static void _update_weapon(const newgame_def& ng)
     case WPN_ROCKS:
         newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_LARGE_ROCK, -1, 4 + plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 2);
+        autopickup_starting_ammo(MI_LARGE_ROCK);
         break;
     case WPN_JAVELINS:
         newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_JAVELIN, -1, 5 + plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 2);
+        autopickup_starting_ammo(MI_JAVELIN);
         break;
     case WPN_DARTS:
         newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 20 + 10 * plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 2);
+        autopickup_starting_ammo(MI_DART);
         break;
     case WPN_BOW:
         newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_BOW, -1, 1, plus, plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 20);
-
-        // Autopickup ammo
-        you.force_autopickup[OBJ_MISSILES][MI_ARROW] = 1;
+        autopickup_starting_ammo(MI_ARROW);
 
         // Wield the bow instead.
         you.equip[EQ_WEAPON] = 1;
@@ -484,9 +502,7 @@ static void _update_weapon(const newgame_def& ng)
     case WPN_CROSSBOW:
         newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_CROSSBOW, -1, 1, plus, plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_BOLT, -1, 20);
-
-        // Autopickup ammo
-        you.force_autopickup[OBJ_MISSILES][MI_BOLT] = 1;
+        autopickup_starting_ammo(MI_BOLT);
 
         // Wield the crossbow instead.
         you.equip[EQ_WEAPON] = 1;
@@ -494,9 +510,7 @@ static void _update_weapon(const newgame_def& ng)
     case WPN_SLING:
         newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_SLING, -1, 1, plus, plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_SLING_BULLET, -1, 20);
-
-        // Autopickup ammo
-        you.force_autopickup[OBJ_MISSILES][MI_SLING_BULLET] = 1;
+        autopickup_starting_ammo(MI_SLING_BULLET);
 
         // Wield the sling instead.
         you.equip[EQ_WEAPON] = 1;
@@ -818,9 +832,6 @@ static void _give_items_skills(const newgame_def& ng)
         newgame_make_item(2, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_ROBE);
         newgame_make_item(3, EQ_NONE, OBJ_BOOKS, BOOK_CHANGES);
 
-        // keep picking up sticks
-        you.force_autopickup[OBJ_MISSILES][MI_ARROW] = 1;
-
         you.skills[SK_FIGHTING]       = 1;
         you.skills[SK_UNARMED_COMBAT] = 3;
         you.skills[SK_DODGING]        = 2;
@@ -868,7 +879,7 @@ static void _give_items_skills(const newgame_def& ng)
         newgame_make_item(3, EQ_NONE, OBJ_BOOKS, BOOK_GEOMANCY);
 
         // sandblast goes through a lot of stones
-        you.force_autopickup[OBJ_MISSILES][MI_STONE] = 1;
+        autopickup_starting_ammo(MI_STONE);
 
         you.skills[SK_TRANSMUTATIONS] = 1;
         you.skills[SK_EARTH_MAGIC]    = 3;
@@ -900,9 +911,7 @@ static void _give_items_skills(const newgame_def& ng)
         set_item_ego_type(you.inv[4], OBJ_MISSILES, SPMSL_POISONED);
         newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 2);
         set_item_ego_type(you.inv[5], OBJ_MISSILES, SPMSL_CURARE);
-
-        // Autopickup ammo
-        you.force_autopickup[OBJ_MISSILES][MI_NEEDLE] = 1;
+        autopickup_starting_ammo(MI_NEEDLE);
 
         if (you.species == SP_OGRE || you.species == SP_TROLL)
             you.inv[0].sub_type = WPN_CLUB;
@@ -928,8 +937,7 @@ static void _give_items_skills(const newgame_def& ng)
         // This is meant to match the En/As start change-up, but Trolls have
         // claws, so they don't get a starting melee weapon (see above).
         // The +1 is meant to make this less sucky; it could be a better
-        // base type, but whips don't seem very hunter-ish and hammers are
-        // used almost nowhere.
+        // base type, but whips don't seem very hunter-ish.
         if (you.species == SP_OGRE)
         {
             you.inv[0].sub_type = WPN_CLUB;
@@ -975,7 +983,6 @@ static void _give_items_skills(const newgame_def& ng)
 
         // Skills
         you.skills[SK_EVOCATIONS]  = 3;
-        you.skills[SK_TRAPS]       = 2;
         you.skills[SK_DODGING]     = 2;
         you.skills[SK_FIGHTING]    = 1;
         weap_skill                 = 1;
@@ -990,14 +997,9 @@ static void _give_items_skills(const newgame_def& ng)
     if (you.species == SP_DEEP_DWARF)
         newgame_make_item(-1, EQ_NONE, OBJ_WANDS, WAND_HEAL_WOUNDS, -1, 1, 5);
 
-    // Zotdef: everyone gets a bonus two potions of curing, plus two
-    // free levels in Traps & Doors so they can replace old traps with
-    // better ones.
+    // Zotdef: everyone gets bonus two potions of curing.
     if (crawl_state.game_is_zotdef())
-    {
         newgame_make_item(-1, EQ_NONE, OBJ_POTIONS, POT_CURING, -1, 2);
-        you.skills[SK_TRAPS] += 2;
-    }
 
     if (weap_skill)
     {
@@ -1018,11 +1020,11 @@ static void _give_items_skills(const newgame_def& ng)
         you.skills[SK_SHIELDS] = 0;
     }
 
-    if (you.religion != GOD_NO_GOD)
+    if (!you_worship(GOD_NO_GOD))
     {
         you.worshipped[you.religion] = 1;
         set_god_ability_slots();
-        if (you.religion != GOD_XOM)
+        if (!you_worship(GOD_XOM))
             you.piety_max[you.religion] = you.piety;
     }
 }
@@ -1359,9 +1361,6 @@ static void _setup_generic(const newgame_def& ng)
     for (int i = 0; i < ENDOFPACK; ++i)
         if (you.inv[i].defined())
         {
-            // XXX: Why is this here? Elsewhere it's only ever used for runes.
-            you.inv[i].flags |= ISFLAG_BEEN_IN_INV;
-
             // Identify all items in pack.
             set_ident_type(you.inv[i], ID_KNOWN_TYPE);
             set_ident_flags(you.inv[i], ISFLAG_IDENT_MASK);
@@ -1387,7 +1386,6 @@ static void _setup_generic(const newgame_def& ng)
 
         // There's little sense in training these skills in ZotDef
         you.train[SK_STEALTH] = 0;
-        you.train[SK_TRAPS]   = 0;
     }
 
     // If the item in slot 'a' is a throwable weapon like a dagger,

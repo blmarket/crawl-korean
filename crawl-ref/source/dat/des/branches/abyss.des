@@ -28,7 +28,7 @@ end
 # 1/3 chance to appear on D:21-27, and guaranteed on D:25.
 NAME: abyss_entry
 TAGS: extra allow_dup can_overwrite replace_portal transparent
-DEPTH: D:21-27
+DEPTH: D:21-
 CHANCE: 100% (D:25), 3333
 : if you.where() == 'D:25' then
 KFEAT: O = enter_abyss no_mimic
@@ -257,7 +257,6 @@ NAME:    hangedman_abyss_feature_spike
 TAGS:    abyss extra no_item_gen no_pool_fixup allow_dup
 MONS:    fungus, plant, bush
 ITEM:    stone q:1, large rock q:1
-KFEAT:   ^ : known dart trap / known needle trap / known blade trap
 KFEAT:   A : stone_arch w:99 / abandoned_shop w:1
 KFEAT:   - = altar_lugonu
 KMASK:   wWl = no_monster_gen
@@ -270,7 +269,7 @@ SUBST:   f = A, g = C, h = T, i = U, j = V
 SUBST:   o = t, p = G, q = w, r = W, s = l
 SUBST:   J = x, K = c, L = v, MN = m, O = 1, P = 2, Q = 3, RS = b
 SUBST:   - = -----A
-SHUFFLE: AACCTTUUVYYdeefghi^, tGGwWlI, xxccvvbbmm+123
+SHUFFLE: AACCTTUUVYYdeefghi, tGGwWlI, xxccvvbbmm+123
 : dgn.delayed_decay(_G, 'f', 'human skeleton')
 : dgn.delayed_decay(_G, 'g', 'elf skeleton')
 : dgn.delayed_decay(_G, 'h', 'dwarf skeleton')
@@ -411,7 +410,7 @@ NSUBST:  M : 1:+ / 2 = mmm+ / * = m:19 +:1
 MAP
    ''' '''
   'MmM+MmM'
- 'MmAA.BBMM'
+ 'MmAA.BBmM'
 'MmA..2..BmM'
 'mA.2.4.2.Bm'
 'MA..1G1..BM'
@@ -788,7 +787,7 @@ MONS:    thrashing horror / ancient zyme w:5 / very ugly thing / \
          wretched star w:5 / air elemental
 MONS:    draconian shifter w:5 / shadow demon w:5 / lich / \
          profane servitor w:5 / lorocyproca / deep elf demonologist / \
-         deep elf sorcerer / unborn deep dwarf
+         deep elf sorcerer / unborn
 MONS:    bone dragon / tentacled starspawn / starcursed mass / \
          apocalypse crab / place:Blade / tentacled monstrosity / \
          glowing shapeshifter
@@ -1271,6 +1270,116 @@ MAP
  ...xm+mx...
   .........
     ..@..
+ENDMAP
+
+####
+NAME:   grunt_abyss_rune_wretched_hive
+TAGS:   abyss_rune patrolling
+MONS:   killer bee, wretched star
+ITEM:   royal jelly q:1 w:1 / honeycomb q:1 / nothing w:189
+KMONS:  O = queen bee
+KITEM:  O = abyssal rune of Zot
+NSUBST: 1 = 3:2 / *:1.
+COLOUR: a = yellow
+TILE:   a = wall_wax
+KFEAT:  a = x
+MAP
+          xxxxxxx
+        xxxaaaaaxxxx
+      xxxxaaaOaaaaxxx
+    xxxaaaad1a1daaaxxx
+   xxaa.aa.1d1d1.aaaaxxx
+  xxaa.a...a...a...aaaaxx
+ xxaa1aaa1aaa1aaa1aaa1aaxx
+xxaad.dad.dad.dad.dad.daaxx
+xaa.dad.dad.dad.dad.dad.aax
+xaa1aaa1aaa1aaa1aaa1aaa1aaxx
+xad.dad.dad.dad.dad.dad.d.ax
+aadad.dad.dad.dad.dad.dad.aa
+..aaa1aaa1aaa1aaa1aaa1aaa...
+ ..a...a...a...a...a...a...
+   .....................
+        ............
+            .@..
+ENDMAP
+
+####
+# Perhaps part of the Elven Halls was devoured in a twisted experiment?
+NAME:    grunt_abyss_rune_sword_and_sorcery
+TAGS:    abyss_rune patrolling
+MONS:    tengu reaver, deep elf blademaster, deep elf sorcerer
+SHUFFLE: 123
+RTILE:   x = wall_hall
+COLOUR:  x = elven_brick
+FTILE:   -+UO123 = floor_hall
+KITEM:   O = abyssal rune of Zot
+KFEAT:   - = floor
+MAP
+    .......
+ ...xxxxxxx.
+.xxxxcccccx.
+.x--2c3--cx.
+.+1U-+-O1cx.
+.x--3c2--cx.
+.xxxxcccccx.
+ ...xxxxxxx.
+    .......
+ENDMAP
+
+####
+NAME: nicolae_abyss_rune_more_like_crabyss
+TAGS: abyss_rune transparent
+SHUFFLE: O1/01/Pw
+KITEM: OP = abyssal rune of Zot
+KMONS: O = apocalypse crab / nothing
+KMONS: 1P = apocalypse crab
+KMONS: 2 = fire crab
+KFEAT: O1Pw = W
+MAP
+  ...........
+  .cc.....cc.
+....c.ccc.c....
+.ccccccOcccccc.
+...ccWWWWWcc...
+.ccc1WWWWW1ccc.
+...cWWWWWWWc...
+.cccccWWWccccc.
+....cc...cc....
+ ..cc.....cc..
+ ..c.......c..
+ .ccc.....ccc.
+ .c2.......2c.
+ .ccc.....ccc.
+ .............
+ENDMAP
+
+
+NAME: nicolae_abyss_rune_star_stuff
+TAGS: abyss_rune no_monster_gen
+NSUBST: s = 2:1 / 2:2 / 2:3
+SHUFFLE: AaBbDdEeFf/BbDdEeFfAa/DdEeFfAaBb/EeFfAaBbDd/FfAaBbDdEe
+NSUBST: FAB : 1:O / *:.
+SUBST: a = +, DE = ., bdef = c
+KITEM: O = abyssal rune of zot
+KMONS: 1 = starcursed mass
+KMONS: 2 = wretched star
+KMONS: 3 = tentacled starspawn
+SUBST: c = cccxbv
+MAP
+      ccc
+    cccBccc
+   ec..s..cf
+ ccc...c...ccc
+cc....c.c....cc
+cA...........Dc
+c..sc.....cs..c
+cc..c..s..c..cc
+ d...........a
+ c...c...c...c
+ cc..cc.cc..cc
+  c.s.....s.c
+  cF.......Ec
+  cccccbccccc
 ENDMAP
 
 ###############################################################################
@@ -1943,4 +2052,102 @@ xl.......lx
 ll.......ll
  ..........
   ...@....
+ENDMAP
+
+NAME:   bh_abyss_negative_1
+TAGS:   abyss allow_dup decor
+MAP
+....      ....
+.....     .....
+.....     .....
+.....     .....
+ .....   .....
+    .......
+     .....
+     .....
+     .....
+    .......
+ .....   .....
+.....     .....
+.....     .....
+.....     .....
+ ....      ....
+ENDMAP
+
+NAME:   bh_abyss_negative_2
+TAGS:   abyss allow_dup decor
+MAP
+  .......
+ .... ....
+....   ....
+.. .. .. ..
+.   ...   .
+.. .. .. ..
+....   ....
+ .... ....
+  .......
+ENDMAP
+
+NAME:   bh_abyss_negative_3
+TAGS:   abyss allow_dup decor
+MAP
+....   ....   ....   ....
+ ....   ....   ....   ....
+  ...    ...    ...    ...
+ ....   ....   ....   ....
+ ...    ...    ...    ...
+ ....   ....   ....   ....
+  ....   ....   ....   ....
+ENDMAP
+
+NAME:   bh_abyss_negative_4
+TAGS:   abyss allow_dup decor
+MAP
+...    ...    ...    ...
+ ...    ...    ...    ...
+  ...    ...    ...    ..
+   ...    ...    ...    .
+    ...    ...    ...
+.    ...    ...    ...
+..    ...    ...    ...
+...    ...    ...    ...
+ ...    ...    ...    ...
+ENDMAP
+
+NAME:   bh_abyss_negative_5
+TAGS:   abyss allow_dup decor
+MAP
+................
+................
+..            ..
+..            ..
+..  ........  ..
+..  ........  ..
+..  ..    ..  ..
+..  .. .. ..  ..
+..  .. .. ..  ..
+..  ..    ..  ..
+..  ........  ..
+..  ........  ..
+..            ..
+..            ..
+................
+................
+ENDMAP
+
+NAME:   bh_abyss_negative_6
+TAGS:   abyss allow_dup decor
+MAP
+ ..........
+............
+............
+.....  .....
+....    ....
+...      ...
+...      ...
+....    ....
+.....  .....
+............
+............
+ ..........
 ENDMAP

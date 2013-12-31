@@ -72,7 +72,7 @@ public:
                                         int killernum = -1) = 0;
 
     virtual void set_position(const coord_def &c);
-    virtual const coord_def& pos() const { return position; }
+    const coord_def& pos() const { return position; }
 
     virtual bool self_destructs() { return false; }
 
@@ -198,6 +198,7 @@ public:
     virtual bool can_safely_mutate() const = 0;
     virtual bool can_polymorph() const = 0;
     virtual bool can_bleed(bool allow_tran = true) const = 0;
+    virtual bool is_stationary() const = 0;
     virtual bool malmutate(const string &reason) = 0;
     virtual bool polymorph(int pow) = 0;
     virtual bool drain_exp(actor *agent, bool quiet = false, int pow = 15) = 0;
@@ -430,11 +431,13 @@ public:
     virtual bool has_usable_tentacle() const = 0;
     virtual int constriction_damage() const = 0;
 
+    // Be careful using this, as it doesn't keep the constrictor in sync.
+    void clear_constricted();
+
     string describe_props() const;
 
 
 protected:
-    void clear_constricted();
     void end_constriction(constricting_t::iterator i, bool intentional,
                           bool quiet);
 

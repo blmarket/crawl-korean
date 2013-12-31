@@ -667,7 +667,7 @@ static void _sdump_location(dump_params &par)
 static void _sdump_religion(dump_params &par)
 {
     string &text(par.text);
-    if (you.religion != GOD_NO_GOD)
+    if (!you_worship(GOD_NO_GOD))
     {
         if (par.se)
             text += make_stringf(gettext("You worshipped %s."), gettext(god_name(you.religion).c_str())); // "You worshipped ";
@@ -676,7 +676,7 @@ static void _sdump_religion(dump_params &par)
         //text += _(god_name(you.religion).c_str());
         text += ".\n";
 
-        if (you.religion != GOD_XOM)
+        if (!you_worship(GOD_XOM))
         {
             if (!player_under_penance())
             {
@@ -1467,7 +1467,8 @@ static bool _write_dump(const string &fname, dump_params &par, bool quiet)
 void display_notes()
 {
     formatted_scroller scr;
-    scr.set_flags(MF_START_AT_END);
+    scr.set_flags(MF_START_AT_END | MF_ALWAYS_SHOW_MORE);
+    scr.set_more();
     scr.set_tag("notes");
     scr.set_highlighter(new MenuHighlighter);
     scr.set_title(new MenuEntry(_("Turn   | Place    | Note")));

@@ -65,68 +65,18 @@ und getragen als primitive Ausrüstung. Es bietet einfachen Schutz gegen
 Schaden, doch da es niemals gegerbt wurde, verbreitet es einen leichten Geruch
 nach faulendem Fleisch.
 %%%%
-animal skin:quote
-
-„Er hat edlen Mudjokivis getötet.
- der Haut hat er ihn Fausthandschuhe,
- Gemacht sie mit der Pelz-Seite innen,
- Gemacht sie mit der Hautseite draußen gemacht.
- Er, um die warme Seite innen,
- Gestellt die Innenhautseite draußen zu bekommen;
- Er, um die kalte Seite draußen,
- Gestellt die warme Seitenpelz-Seite innen zu bekommen.
- Deshalb hat er die Pelz-Seite innen,
- gebracht, Warum er die Hautseite draußen,
- gebracht hat, Warum er sie innen draußen gedreht hat.“
-    -Anonym, in der _A-Parodie-Anthologie von Wells _, p.  120. 1904.
-%%%%
 apple
 
 Eine köstliche und kräftig rote Frucht – säuerlich auf der Zunge.
-%%%%
-apple:quote
-
-„MINERVA war die Göttin des Verstands, aber bei einer Gelegenheit hat sie eine
-sehr dumme Sache gemacht; sie ist in Konkurrenz mit Juno und Venus für den
-Preis der Schönheit eingetreten. Es ist so geschehen: An der Hochzeit von
-Peleus und Thetis wurden alle Götter mit Ausnahme von Eris oder Dissonanz
-eingeladen. Wütend gemacht bei ihrem Ausschluss hat die Göttin einen goldenen
-Apfel unter den Gästen, mit der Inschrift, ‚Für das schönste geworfen.‘“
-   -Thomas Bulfinch, _Bulfinch's Mythologie _, ch.. XXVII. a. 1855.
 %%%%
 apricot
 
 Eine saftige Gelb-Orangene Frucht, Prunus armeniaca.
 %%%%
-apricot:quote
-
-„Aprikose Ratafia
-  Das wird zwei Wege, nämlich entweder durch das Aufgießen der Aprikose-Kürzung
-in Stücken in Kognak seit einem Tag oder zwei, und dann den Übergang ihm von
-thro' die abfließende Tasche und das Stellen in den üblichen Zutaten gemacht;
-oder die Aprikosen boil'd in Weißem Wein, und dadurch Mittel leichter clarify'd
-das Hinzufügen einer gleichen Menge von Kognak und eines Viertels eines Pfundes
-Zucker zu jeder Quart, mit Zimt, Nelken, Muskatblüte und Kernen der Aprikosen
-sein können. Nachdem alle Zutaten acht oder zehn Tage aufgegossen haben, soll
-der Geistige Getränk strain'd wieder sein und in Flaschen und so behalten
-stellen.“
-    -Charles Carter, _The Compleat City und Landkoch: Oder, Accomplish'd
-haus-wife_. 1732.
-%%%%
 arrow
 
 Ein langschaftiges Projektil, hergestellt, um mit einem Bogen oder Langbogen
 verschossen zu werden, mit Federn an einem Ende und einer Spitze am anderen.
-%%%%
-arrow:quote
-
-„Ich habe in einem Saal einen Pfeil gesehen, der den Weg anspitzt, und ich habe
-gedacht, dass dieses harmlose Symbol einmal ein Ding von Eisen gewesen war, hat
-eine unvermeidliche und tödliche Kugel, die das Fleisch von Männern und Löwen
-durchstoßen hat und die Sonne an Thermopylae bewölkt hat und Harald Sigurdarson
-sechs Fuß der englischen Erde für immer gegeben.“
-    -Jorge Luis Borges, _Mutations_. 1960.
-     trans. Mildred Boyle
 %%%%
 banana
 
@@ -137,32 +87,10 @@ bardiche
 
 Eine lange Stange mit einer enormen, spaltenden Klinge an einem Ende.
 %%%%
-bardiche:quote
-
-„Die Republik unterstützt immer siebentausend oder achttausend regelmäßige
-Truppen an den Grenzen, um die Einfälle der Tataren zu verhindern. Der König
-unterstützt diese Truppen nicht; er bezahlt nur Heydukes, Semelles und
-Janizaries. Die zuerst erwähnten werden ins Blau, mit großen Knöpfen und
-Tellern von Dose angekleidet, und ließen Häubchen gefühlter auf ihre Köpfe
-machen. Sie haben firelocks, und der bardiche, den sie sagen, ist eine sehr
-gute Waffe.“
-    -John Pinkerton, _A Allgemeine Sammlung der Besten und Interessantesten
-Reisen und des Reisens in allen Teilen der Welt, von denen viele jetzt der
-erste ins Englisch übersetzte sind. Verdaut auf einem Neuen Plan_. 1808.
-%%%%
 battleaxe
 
 Eine große zweihändige Kriegsaxt mit einem beachtlichen Doppelkopf, gemacht für
 die Benutzung im Kampf durch erfahrene Krieger.
-%%%%
-battleaxe:quote
-
-„Auf Carian Münzen, tatsächlich des ziemlich späten Datums, hat der labrys, der
-auf seinem langen einer Säule ähnlichen Griff mit zwei abhängigen Leisten
-aufgestellt ist, viel das Äußere eines Kultimages.“
-    -Herr Arthur John Evans, „Baum von Mycenaean und Säule-Kult und seine
-mittelmeerischen Beziehungen,“ _Journal von hellenischem Studies_ XXI, p. 109.
-1901.
 %%%%
 beef jerky
 
@@ -204,50 +132,10 @@ Ein langes, leichtes Rohr, offen an beiden Enden, durch die verschiedene Arten
 von Nadeln, angetrieben durch Atemluftstöße, auf Gegner geschossen werden
 können. Es macht kaum Geräusche.
 %%%%
-blowgun:quote
-
-„Entlang den Oberen Caiary-Uaupes Blasrohren werden von den Stämmen einer
-Vielfalt der Palme (Iriartea setigera Martius) gemacht... Der Inder wählt zwei
-Stämme solcher Größen aus, die das kleinere innerhalb des größeren genau passen
-wird. Nachdem diese Stämme sorgfältig ausgetrocknet worden sind und die
-Quintessenz mit einer langen Stange beseitigt, wird die langweilige
-Angelegenheit glatt durch die Zeichnung hin und her dadurch eines kleinen
-Bündels von Baumfarn-Wurzeln gemacht. Der kleinere Stamm wird dann ins größere
-eingefügt, so dass man dienen wird, um jede Gekrümmtkeit zu korrigieren, die im
-anderen bestehen kann. Das Holzmundstück wird dann an ein Ende geeignet, und
-ungefähr drei und eine Hälfte von Füßen davon, ein Zahn eines Ebers wird der
-Pistole durch eine gummiartige Substanz für einen Anblick befestigt. Über die
-Außenseite die Schöpfer-Winde spiralförmig ist ein Streifen des dunklen
-glänzenden Rindes eines Kriechers, der ihm einen dekorativen Schluss und sein
-Blasrohr gibt, abgeschlossen.  „Die Pfeile sind von zehn bis vierzehn Zoll
-langen, und von der Dicke eines gewöhnlichen Lucifer-Matchs. Diejenigen der
-Inder des Caiary-Uaupes werden vom midrib eines Palmzweigs oder von den
-dornigen Prozessen von Patawa (Enocarpus Batawa) gemacht, der zu einem Punkt an
-einem Ende und Wunde in der Nähe von anderem mit einer feinen Sorte von wilder
-Baumwolle geschärft ist, die in einer Schote auf einen großen Baum (Bombax
-ceiba) wächst. Diese Masse von Baumwolle ist gerade groß genug, um die Tube zu
-füllen, wenn der Pfeil darin freundlich gedrückt wird. Der Punkt wird in Gift
-getaucht, hat erlaubt zu trocknen, und hat bis gut angestrichen,
-wiedereingetaucht. Die genaue Zusammensetzung dieses Giftes ist unbekannt, und
-ändert sich wahrscheinlich in verschiedenen Gegenden; aber es würde scheinen,
-dass die Hauptzutat immer der Saft eines Werks von Strychnos ist. Es ist unter
-verschiedenen Stämmen durch viele Namen bekannt; solcher als Curari, Ourari,
-Urari und Woorali.“
-    -c.w. Mead, _The amerikanische Museum-Zeitschrift _, vol. VIII. 1908.
-%%%%
 bolt
 
 Ein Metallprojektil. Es ist kürzer als ein Pfeil und zum verschießen mit einer
 Armbrust vorgesehen.
-%%%%
-bolt:quote
-
-„In der Mitte unseres letzten Angriffs, der hätte das Tor sicher und gegeben
-wir Paris und tatsächlich Frankreich getragen, wurde Joan durch einen
-Armbrust-Bolzen niedergeschlagen, und unsere Männer wichen sofort und fast in
-einer Panik — dafür zurück wie waren sie ohne sie? Sie war die Armee selbst.“
-    -Zeichen Twain, _Personal Erinnerungen von Joan of Arc, durch den Sieur
-Louis de Conte _, Buch II, Junge. 40 „Verrat Überwindet Joan“. 1896.
 %%%%
 book of air
 
@@ -271,6 +159,11 @@ Zauberer suchen nach diesem Buch, denn es ermöglicht den Beschenkten und
 Erfinderischen die Kontrolle über Zerstörung mit der Leichtigkeit eines
 Augenzwinkerns. Schwache Zauberer werden allerdings ihrem Tod entgegensehen,
 wenn sie versuchen, dieses Werk zu lesen.
+%%%%
+book of battle
+
+Ein Buch mit Zaubersprüchen die von Skalden genutzt wurden, dessen Kampflieder
+gewährten ihnen magische Hilfe.
 %%%%
 book of beasts
 
@@ -564,31 +457,9 @@ Ein rundes Stück Holz mit einer Sehne, zum Schießen von Pfeilen. Es verursacht
 guten Schaden im Kampf, und ein fähiger Benutzer kann es sehr wirksam
 verwenden.
 %%%%
-bow:quote
-
-„Sie sind die Bögen, von denen Ihre Kinder weil lebende Pfeile hervor gesandt
-werden.“
-    -Khalil Ghibran, _The Hellseher _, „Auf Kindern“. 1923.
-%%%%
-box of beasts
-
-Eine magische Box, welche viele wilde Bestien enthält. Man kann sie ausbrechen
-lassen, indem man den Deckel der Box öffnet.
-%%%%
 bread ration
 
 Eine sättigende Mahlzeit aus abgestandenem, aber herzhaftem Brot.
-%%%%
-bread ration:quote
-
-„Es wird weiter berichtet, dass in den Provinzen [Caesar] Bankette ständig in
-zwei Speisesälen gegeben hat, in von dem einem sich seine Offiziere oder
-griechische Begleiter, in den anderen römischen Bürgern und dem
-ausgezeichneteren vom provincials beim Tisch zurückgelehnt haben. Er war im
-Management seines Haushalts, in kleinen Sachen sowie in denjenigen der größeren
-Wichtigkeit so pedantisch und streng, dass er seinen Bäcker in Eisen gebracht
-hat, um ihm mit einer Art von Brot und seinen Gästen mit einem anderen...“
-    -Suetonius, _De Vita Caesarum, Divus Iulius_ zu dienen. 110 CE.
 %%%%
 broad axe
 
@@ -597,36 +468,12 @@ halbmondförmigen Kopf einzelnen mit Halmen verbessert. Es kann schmerzliche
 Wunden zufügen, aber ist beschwerlich, um mit gerade ein zu manövrieren,
 reichen wegen seiner Länge und Gewichts.
 %%%%
-broad axe:quote
-
-„Waffe, wohl geformt, nackt, blass!
- Kopf von den gezogenen Därmen der Mutter!
- Bewaldetes Fleisch und Metallknochen! Glied nur ein und Lippe nur ein!
- Grau-blaues Blatt durch die angebaute rote Hitze! Stiel, der von einem kleinen
-gesäten Samen erzeugt ist!
- Ruhe des Grases mitten in und auf,
- um lean'd zu sein, und sich darauf zu neigen.“
-    -Walt Whitman, _Song der Breiten Axt _, l. 1-6. 1867.
-%%%%
 buckler
 
 Ein kleines Stück von Holz und Metall, um auf einem Arm für die Verteidigung
 festgeschnallt zu werden. Es ist etwas beschwerlich, um, und ohne ein bisschen
 Ausbildung zu halten, verlangsamt ein bisschen die Rate, an der ein Krieger
 angreift.
-%%%%
-buckler:quote
-
-„Lassen Sie, wer sich ihres Mutes im Feld rühmen wird,
- finde ich nur wenig Sicherheit von meinem Schild.
- Natur, nicht Ehre, Gesetz müssen wir folgen:
- hat Das mich mein nutzloses Schild wegwerfen lassen,
- Und durch einen vernünftigen Flug und Gerissenheit sparen
- Ein Leben, welche Tapferkeit nicht vom Grab gekonnt hat.
- Ein besserer Rundschild kann ich bald wiedergewinnen;
- Aber wer kann ein anderes Leben wieder bekommen?“
-    -Archilochos. 7. Cent. B.C.
-     trans. William H. Goodwin, 1878.
 %%%%
 cap
 
@@ -650,18 +497,6 @@ choko
 
 Eine fast geschmackslose grüne Frucht, die an einer Kletterpflanze wächst.
 %%%%
-choko:quote
-
-„Ich sollte nicht versäumen, ein Gemüse zu nennen, das Herr Yates auf unserem
-Tisch gelegt hat, und zu dem er unsere Aufmerksamkeit gelenkt hat. Es war der
-Tchu-tchu (Sechium edule) genannt auch von den Leuten _pepinella_. Es ist ein
-kleiner Kürbis sehr viel wie Gemüseknochenmark; ein Samen bedeckt eine Wand mit
-seinen Implikationen.“
-    -John Overton Choules, _The Vergnügungsreise der Dampfjacht nach Norden
-Stern: Ein Bericht des Ausflugs der Partei von Herrn Vanderbilt nach England,
-Russland, Dänemark, Frankreich, Spanien, Malta, der Türkei, der Madeira, dem
-Etc_. 1854.
-%%%%
 chunk of flesh
 
 Ein Stück rohen Fleisches, gefunden im Verlies. Es wird nicht lange frisch
@@ -671,18 +506,6 @@ cloak
 
 Ein Stoffumhang.
 %%%%
-cloak:quote
-
-„O Bell meine Frau, warum dost thou flyte?
-    ist Jetzt jetzt, und war dann dann:
- Suchen jetzt die ganze Welt überall,
-    Kenntnisse von Thou nicht Clowns von Herren:
- sind Sie in Schwarzem, Grün, Gelb und Blau,
-     Bis jetzt über ihrem eigenen Grad gekleidet.
- Einmal in meinem Leben werde ich eine Ansicht vertreten;
-    Weil ich einen neuen Umhang über mich haben werde.“
-    -Anonym, „Der Alte Umhang“. Das 16. Jahrhundert.
-%%%%
 club
 
 Ein schweres Stück Holz, mit einem Platz, auf einem Ende und dem grössten Teil
@@ -690,16 +513,6 @@ seines Gewichts am anderen zu packen, es passend machend, um zu schwingen oder
 an einem Feind zu werfen. Während Klubs ziemlich primitive Waffen sind,
 jemandes Schädel mit einhauend, bleibt man ein sehr populäres und wirksames
 Mittel der Streitentschlossenheit.
-%%%%
-club:quote
-
-„Ich habe immer das westafrikanische Sprichwort geliebt: 'Sprechen Sie weich
-und tragen Sie einen großen Stock; Sie werden weit gehen. ' Wenn ich den großen
-Stock nicht getragen hätte, wäre die Organisation ich nicht zurückgeblieben,
-und wenn ich gebrüllt und, als Pankhurst und die ähnlichen unehrlichen
-gewünschten Wahnsinnigen gebraust hätte, hätte ich zehn Stimmen nicht gehabt.“
-    -Theodore Roosevelt, in einem Brief an Henry L. Sprague. Am 26. Januar
-1900.
 %%%%
 corpse
 
@@ -710,23 +523,6 @@ crossbow
 Ein Stück der Maschinerie, die verwendet wird, um Bolzen anzuzünden, der Zeit
 in Anspruch nimmt, um zu laden und zu schießen. Es richtet sehr guten Schaden
 im Kampf an.
-%%%%
-crossbow:quote
-
-„(Tell, geht mit seiner Armbrust herein)
- W. Tell:
- Mein wertvolles Juwel jetzt — mein Chiefest-Schatz —
- Ein Zeichen werde ich dich untergehen, in den der Schrei des Kummers
- nie eindringen Konnte —, aber thou durchstoßen shalt es —
- Und thou, meine vertrauensvolle Bogensehne, die so oft
- Für den Sport mir treu und so,
- gedient hat, Verlässt mich nicht in dieser Todesangst-Stunde des Bedürfnisses—
- Nur das einmal, meine eigene gute Schnur,
- wahr sein, Dass hast so häufig wing'd der scharfe shaft: —
- Für shouldst thou successless von meiner Hand fliegen,
- habe ich keine Sekunde, um danach dich zu senden.“
-    -Friedrich Schiller, _Wilhelm Tell _, IV, iii. 1804.
-     trans. Herr Theodore Martin, 1898.
 %%%%
 crystal ball of energy
 
@@ -747,27 +543,9 @@ Ein zweischneidiges kämpfendes Messer mit einem scharfen Punkt, der von fern
 geworfen werden kann. Gesehen von einigen als eine schwache Waffe des letzten
 Auswegs schätzen andere es als ein vollkommenes Werkzeug für Morde.
 %%%%
-dagger:quote
-
-„Er hat seinen Dolch gezogen, der scharf,
-   sae war, Der scharf sae war und treffen Sie sich,
- Und drave er in die Braut der Nuss-browne,
-   Der deid an seinem feit gefallen ist.
- ‚Bleiben jetzt für mich, lieben Annet,‘ er bleiben sed,
-   ‚Jetzt, mein liebes,‘ er cry'd;
- Dann strake der Dolch bis unzu seinem Herzen,
-   Und ist deid neben ihr gefallen.“
-    -englische traditionelle Ballade, „Herr Thomas und Fair Annet“, um 1650.
-%%%%
 dart
 
 Ein kleiner, pfeilartiger und spitz zulaufender Wurfgegenstand.
-%%%%
-dart:quote
-
-„Wenn er die Hand liebt, die ihm
- Ich gesandt hatte, verehrt der Wurfpfeil.“
-    -Emily Dickinson. Mitte 19. Cent.
 %%%%
 deck of changes
 
@@ -853,55 +631,17 @@ demon blade
 Eine schreckliche Waffe, geschmiedet in den Feuern der Hölle. Geführt von jenen
 mit dämonischer Natur wird sie noch um einiges tödlicher.
 %%%%
-demon blade:quote
-
-„Quemadmodum gladius neminem occidit: occidentis telum est.“
- „Ein Schwert mordet allein nicht; es ist bloß die vom Mörder verwendete
-Waffe.“
-    -Lucius Annaeus Seneca, _Epistulae Anzeige von Morales Lucilium _, Brief
-LXXXVII: Einige Argumente für das einfache Leben, l. 30. ca. 65 n. Chr.
-     trans. Richard Mott Gummere, 1917.
-%%%%
 demon trident
 
 Eine schreckliche dreizackige Waffe, geschmiedet aus Feuer und Schwefel.
-%%%%
-demon trident:quote
-
-„An diesen Wörtern ist er aufgesprungen, und hat — nicht seine Sophia — nein,
-noch ein tscherkessisches Dienstmädchen reich angeschaut und hat elegant für
-das Serail des großartigen Signiors gekleidet. Nein; ohne ein Abendkleid in
-einer Verschiebung, die etwas des rausten, und keiner der saubersten, betauten
-ebenfalls mit einem wohlriechenden effluvia, dem Erzeugen der Arbeit des Tages
-mit einer Heugabel in ihrer Hand war, hat sich Molly Seagrim genähert.“
-    -Henry Fielding, _The Geschichte von Tom Jones, einem Findelkind _, Buch V,
-ch. X. 1749.
 %%%%
 demon whip
 
 Eine schreckliche Waffe, hergestellt in den Tiefen des Infernos.
 %%%%
-demon whip:quote
-
-„Mit einem schrecklichen Schrei ist Balrog vorwärts, und sein Schatten getaucht
-unten gefallen und hat verschwunden. Aber gerade als es gefallen ist, hat es
-seine Peitsche und die Peitschenschnüre geschwungen, die gepeitscht und über
-die Knie des Zauberers lockig sind, ihn zum Rand schleppend. Er ist geschwankt,
-und, ist ergriffen eitel am Stein gefallen, und ist in den Abgrund geglitten.“
-    -J.R.R. Tolkien, _The Kameradschaft des Ring_. II, 5, „Die Brücke von
-Khazad-dûm“. 1954.
-%%%%
 dire flail
 
 Ein gestachelter Flegel mit längeren Stacheln und einem schwererem Kopf.
-%%%%
-dire flail:quote
-
-„‚Ah! ah! ah!‘ gelacht seine zwei Männer, ,wie die normannischen Bengel
-demütigt werden, wenn sie den Schädel ihres tapferen Ritters sehen, der in
-durch unseren tapferen Landsmann geschlagen ist.’“
-    -_Tales der Ritterlichkeit; oder, Risikos durch die Überschwemmung und den
-Field_. 1830.
 %%%%
 disc of storms
 
@@ -917,26 +657,10 @@ Master-Schmied als ein Witz vorgeschlagen, aber war angenehm überrascht zu
 finden, dass nicht nur der Schmied dazu fähig war, solch ein Schwert zu machen,
 aber dass die erzeugte Waffe äußerst tödlich war.
 %%%%
-double sword:quote
-
-„Oh werde ich nicht aufstehen, ich werde nicht aufstehen,
- kann ich nicht für mein Leben
- Für Sie aufstehen haben zwei lange geschlagene Schwerter
- Und ich habe nur ein Taschenmesser.
- Gut ist es wahr, dass ich zwei geschlagene Schwerter habe,
- kosten Sie mich tief im Geldbeutel
- Aber Sie werden besser ihrer
- haben, Und ich werde das schlechteste haben.“
-    -englische traditionelle Ballade, „Mattie Groves“. ca. 1600.
-%%%%
 eggplant
 
 Eine verfaulte Aubergine, die du auf Crawlentwickler werfen kannst. (Wenn du
 diese Nachricht jemals siehst ist es ein Fehler.)
-%%%%
-empty ebony casket
-
-Eine magische Box, ihre Macht wurde verbraucht.
 %%%%
 eudemon blade
 
@@ -949,15 +673,6 @@ eveningstar
 Die Stacheln dieser Art von Morgenstern sind besonders lang und ermöglichen
 ihm, gemeine Wunden zu verursachen.
 %%%%
-eveningstar:quote
-
-„Es wird gesagt, dass die bevorzugte Waffe der normannischen Priester, der,
-seine Einwände gegen das Vergießen von Blut, hatte keine Skrupel über den
-schneidigen aus der Gehirne haben.“
-    -T. M. Allison, „Der Flegel und Kindred Werkzeuge (aus einer historischen
-und literarischen Standpunkt)“, _Archaeologia Aeliana_, Third Series, vol. IV.
-Jahr 1908.
-%%%%
 executioner's axe
 
 Diese Furcht erregende Waffe ist gedeckt in getrocknetem Blut und rohen
@@ -966,41 +681,16 @@ Das enorme axehead sieht dazu ziemlich fähig aus, jedes Opfer zu zersplittern,
 das in Kollision damit fällt, und Sie fühlen sich zuversichtlich, dass ein
 einzelner Schlag genügen würde.
 %%%%
-executioner's axe:quote
-
-„Sie hat getanzt und wurde dazu gezwungen zu tanzen — um in der dunklen Nacht
-zu tanzen. Die Schuhe haben sie über den Dorn und Dornbusch fortgesetzt; sie
-hat sich gekratzt, bis sie verblutet hat; sie hat weg über das Moor zu einem
-kleinen einsamen Haus getanzt. Hier hat sie gewusst, dass der Scharfrichter
-gewohnt hat; und sie hat mit ihren Fingern an die Fensterscheiben geklopft und
-hat gerufen — ‚Kommen heraus, kommen heraus! Ich kann nicht eingehen, weil ich
-tanzen muss!‘
- Und der Scharfrichter sagte — ‚Sie wissen wahrscheinlich nicht, wer ich bin?
-Ich habe die Köpfe der schlechten Leute mit meiner Axt abgeschnitten und
-kennzeichne, wie meine Axt klingelt!‘
- ,Streichen meinen Kopf nicht aus,’ hat Karen gesagt, ‚dafür, wenn Sie, ich
-meine Sünde nicht bereuen kann. Aber streichen Sie meine Füße mit den roten
-Schuhen aus?‘
- Und dann hat sie ihre ganze Sünde bekannt, und der Scharfrichter hat ihre Füße
-mit den roten Schuhen abgeschnitten; aber die Schuhe haben weg mit den kleinen
-Füßen über die Felder und in den tiefen Wald getanzt.
- Und hat er sie ein Paar von Holzfüßen mit Krücken geschnitten, und hat sie
-einen Psalm unterrichtet, den die Verbrecher immer singen; und sie hat die Hand
-geküsst, die die Axt gehalten hatte, und über das Moor weggegangen ist.“
-    -Hans Christian Andersen, „Die Roten Schuhe“, _Nye Eventyr. Første Binden.
-Tredie Samling._. 1845.
-%%%%
 falchion
 
 Ein langes einseitiges Schwert mit einer leicht gekrümmten Klinge – das Gewicht
 ist auf den Punkt konzentriert, um seine Tödlichkeit zu erhöhen.
 %%%%
-falchion:quote
+fan of gales
 
-„Ich habe den Tag gesehen, mit meinem guten scharfen falchion
- hätte ich sie hüpfen lassen: Ich bin jetzt,
- alt, Und diese dieselben Kreuze verderben mich.“
-    -William Shakespeare, _King Lear _, V, iii. 1608.
+Ein verzauberter Fächer von wohlwollenden Luftgeistern bewohnt. Schwingen
+dieses Fächers entfesselt einen starken Windstoß um den Träger und setzt
+Geister frei die des Inhabers Feinde hinwegfegen.
 %%%%
 fire dragon armour
 
@@ -1021,62 +711,17 @@ Eine Muskatblüte mit einer kurzen Kette, die den Kopf mit dem Heft verbindet.
 Das fügt ein bisschen mehr Kraft zum Schlag auf Kosten des Komplizierens des
 Gebrauches hinzu.
 %%%%
-flail:quote
-
-„Sogar nach dem Zwingen ihres Weges, mit der großen Anstrengung und dem
-Verlust, durch diese doppelte Verteidigung, [haben sich die Deutschen] noch an
-einem Nachteil gefunden; für ihre knappe Rüstung hat ihnen ermöglicht, unter
-gleichen Bedingungen mit den ungehobelten, aber furchterregenden Waffen ihrer
-Gegner zu kämpfen. Die Böhmen wurden mit langen Eisendreschflegeln bewaffnet,
-die sie mit der erstaunlichen Kraft geschwungen haben. Sie haben selten
-gescheitert zu schlagen, und als sie so getan haben, ist der Dreschflegel durch
-den bronzenen Helm, Schädel und alle abgestürzt.“
-    -James A. Wylie, _The Geschichte des Protestantismus _, vol. Ich, Buch 3,
-ch. 15 „Jon Huss und die Hussite Kriege“. 1878.
-%%%%
 giant club
 
 Ein riesiges Stück Holz, für die Hände eines Ogers geformt.
-%%%%
-giant club:quote
-
-„Damit hat der gyant ihn zugeschnallt, um,
- Inflamd mit dem scornefull Zorn und hohem disdaine,
- Und das Erheben seines schrecklichen Klubs auf hight,
- Alle zu kämpfen, die mit zerlumptem snubbes und knottie graine,
- Er Gedanke bei der ersten Begegnung bewaffnet sind, um slaine zu haben.“
-    -Edmund Spenser, _The Feenqueene _, Buch I, „Die Legende des Ritters von
-der Rote Crosse“, Gesang VIII, Strophe vii, l. 55-9. 1590.
 %%%%
 giant spiked club
 
 Ein riesiges Stück Holz mit spitzen Stacheln an einem Ende.
 %%%%
-giant spiked club:quote
-
- oni-ni-kanabō
- „oni mit einem Eisenklub mit Spitzen“
-    -japanisches Sprichwort, das überwältigende Macht anzeigt
-%%%%
 glaive
 
 Eine Stange mit einer großen und schweren Klinge an einem Ende.
-%%%%
-glaive:quote
-
-„To know the perfect length of your ſhort ſtaffe, or half Pike, Forreſt bil,
-Partiſan or Gleue, or ſuch like weapons of vantage and perfect lenghts, you
-ſhall ſtand vpright, holding the ſtaffe vpright cloſe by your body, with your
-left hãd, reaching with your right hand your ſtaffe as high as you can, and
-then allow to that length a ſpace to ſet both your hands, when you come to
-fight, wherein you may conueniently ſtrike, thrust and ward, & that is the iuſt
-length according to you ſtature. And this note, that theſe lengths will
-commonly fall out to be eight or nine foor long, and will fit, although not
-iuſt, the ſtatures of all men, without any hindrance at all vnto them in their
-fight, becauſe in any weapon wherin the hands may be remoued, and at libertie,
-to make the weapon lõger or ſhorter in fight at his pleaſure, a foot of the
-ſtaffe behind the backmost hand doth no harme.“
-    -George Silver,_Paradoxes of Defence_.1599.
 %%%%
 gold dragon armour
 
@@ -1094,17 +739,6 @@ verwendet werden kann, um ausgezeichnete Rüstung zu machen.
 gold piece
 
 Ein Stapel glänzender Goldmünzen.
-%%%%
-gold piece:quote
-
-„Hier war es, dass die Botschafter von Samnites, ihn findend, Rüben in der
-Kaminecke kochend, ihm eine Gegenwart von Gold angeboten haben; aber er hat sie
-mit diesem Ausspruch weggeschickt; dass er, der mit solch einem Abendessen
-zufrieden war, kein Bedürfnis nach Gold hatte; und das er hat es achtbarer
-vorgehabt, diejenigen zu überwinden, die das Gold besessen haben, als, das Gold
-selbst zu besitzen.“
-    -Plutarch, „Marcus Cato“, _Lives_. 75 n. Chr.
-     trans. John Dryden, 1683.
 %%%%
 grand grimoire
 
@@ -1196,6 +830,12 @@ lajatang
 
 Eine sehr seltene und extrem effektive importierte Waffe aus einem Stab mit
 halbmondförmigen Klingen an beiden Enden.
+%%%%
+lamp of fire
+
+Eine magische Lampe von wohlwollenden Feuergeistern bewohnt. Entriegeln des
+Gehäuses setzt die Geister frei, diese tanzen in Form eines Brandes auf den
+Feinden des Inhabers.
 %%%%
 lantern of shadows
 
@@ -1353,6 +993,13 @@ pearl dragon armour
 Rüstung von den perlmuttartigen Skalen eines Perle-Drachen gemacht. Es gewährt
 seinen Träger-Widerstand gegen negative Energien.
 %%%%
+pearl dragon hide
+
+Die Haut eines Perlendrachen, mit schillernden Perlmuttschuppen bedeckt. In
+seiner rohen Form bietet es nicht viel Schutz, aber mit magischen Hilfsmitteln
+kann es womöglich verwendet werden, um eine ausgezeichnete Rüstung
+herzustellen.
+%%%%
 piece of ambrosia
 
 Ein Teil von Geistesnachtfaltern produzierter fremder Substanz. Es zu
@@ -1487,6 +1134,10 @@ potion of strong poison
 
 Ein schrecklich giftiger Trank.
 %%%%
+potion of beneficial mutation
+
+Ein Trank, der dir gibt eine vermeintlich gute Mutation gibt.
+%%%%
 quad damage
 
 Eine mysteriöse Sache, die einer Rune von irgendeiner Art ähnelt. Sobald
@@ -1525,21 +1176,9 @@ ring of evasion
 Dieser Ring macht seinen Träger irgendeinen mehr oder weniger fähig dazu,
 Angriffe abhängig von seinem Grad des Entzückens zu vermeiden.
 %%%%
-ring of fire
-
-Dieser Ring bringt seinem Träger mehr im Kontakt mit den Mächten des Feuers. Er
-oder sie gewinnt Widerstand gegen die Hitze und kann Feuermagie effektiver
-verwenden, aber wird verwundbarer zu den Effekten der Kälte.
-%%%%
 ring of hunger
 
 Dieser verfluchte Ring lässt deinen Träger schneller hungern.
-%%%%
-ring of ice
-
-Dieser Ring bringt seinem Träger mehr im Kontakt mit den Mächten der Kälte und
-des Eises. Er oder sie gewinnt Widerstand gegen die Kälte und kann Eismagie
-effektiver verwenden, aber wird verwundbarer zu den Effekten des Feuers.
 %%%%
 ring of intelligence
 
@@ -1556,12 +1195,6 @@ ring of flight
 
 Dieser Ring erlaubt seinem Träger zu fliegen.
 %%%%
-ring of life protection
-
-Dieser selige Ring schützt die Lebenskraft seines Trägers von der negativen
-Energie, sie teilweise geschützt zu den abfließenden Effekten der untoten und
-necromantic Magie machend.
-%%%%
 ring of magical power
 
 Dieser Ring erhöht die Magiereserven seines Trägers.
@@ -1569,6 +1202,12 @@ Dieser Ring erhöht die Magiereserven seines Trägers.
 ring of poison resistance
 
 Dieser Ring liefert Schutz vor den Effekten von Vergiftung und Gift.
+%%%%
+ring of positive energy
+
+Dieser gesegnete Ring schützt die Lebenskraft seines Trägers vor negativer
+Energie, so dass der Träger teilweise immun gegen die Auswirkungen der
+Entleerung durch Untote und nekromantische Magie ist.
 %%%%
 ring of protection
 
@@ -1643,14 +1282,20 @@ dieser ahnungslosen Welt loslassen können.
 %%%%
 rod of destruction
 
-Diese Stange enthält Zauber der Körperverletzung und Zerstörung.
+Diese Rute enthält eine abwechslungsreiche Auswahl von Zaubern von Chaos und
+Zerstörung.
+%%%%
+rod of fiery destruction
+
+Diese Rute enthält Zaubersprüche, die zerstörerische Feuer gegen deine Feinde
+abschießen.
+%%%%
+rod of frigid destruction
+
+Diese Rute enthält Zaubersprüche, die deine Feinde mit projizierter Kälte
+zerstören.
 %%%%
 rod of inaccuracy
-
-Dieser Stab erlaubt seinem Benutzer, einen kräftigen aber äußerst ungenauen
-Energieblitz abzuschießen.
-%%%%
-rod of striking
 
 Dieser Stab erlaubt seinem Benutzer, einen kräftigen aber äußerst ungenauen
 Energieblitz abzuschießen.
@@ -1682,6 +1327,14 @@ sabre
 Obwohl ursprünglich entworfen, von einer bestiegenen Position zu hauen,
 arbeitet dieses einzeln-schneidige, ein bisschen gekrümmte kurze Schwert noch
 sehr gut in den Händen von unmontierten Kriegern.
+%%%%
+sack of spiders
+
+Eine gewebte Seidentasche. Etwas scheint sich im Inneren zu bewegen ...
+
+Öffne diese Tasche und eine Reihe von freundlich gesinnten Spinnen wird
+losgelassen. Möglicherweise musst du hiernach Spinnweben abstauben, wie auch
+immer.
 %%%%
 sacred scourge
 
@@ -1777,7 +1430,7 @@ Diese Schriftrolle verursacht große Furcht in jene welche den Leser sehen.
 %%%%
 scroll of fog
 
-Diese Schriftrolle umgibt den Leser mit einer dichten Wolke des Nebels.
+Diese Schriftrolle umgibt den Leser mit einer dichten Nebelwolke.
 %%%%
 scroll of holy word
 
@@ -1793,27 +1446,20 @@ erlauben.
 Wenn verwendet, auf einem Deck von Karten wird diese Schriftrolle auch die
 Spitzenkarte weggeben.
 %%%%
-scroll of immolation
-
-Diese Schriftrolle wird mit einer unglaublich feuergefährlichen Substanz
-behandelt, die gewaltsam explodiert, wenn die Schriftrolle geöffnet und gelesen
-wird, den Leser und irgend etwas anderes in der Nähe versengend.
-%%%%
 scroll of magic mapping
 
 Diese Schriftrolle offenbart die Umgebungen von demjenigen, der es liest.
 %%%%
 scroll of noise
 
-Diese Streich-Schriftrolle, die häufig in einen Rucksack eines Zauberers durch
-einen gewundenen Lehrling geschoben ist, verursacht ein lautes Geräusch. Es
-wird für seine Nützlichkeit nicht sonst bemerkt.
+Diese Streich-Schriftrolle, die häufig durch einen hinterhältigen Lehrling in
+den Rucksack eines Zauberers geschoben wird, verursacht einen lauten Knall.
+Ansonsten ist keine Nützlichkeit bekannt.
 %%%%
 scroll of random uselessness
 
-Es ist leicht, zur wesentlichen Nutzlosigkeit dieser Schriftrolle durch den
-Sinn des Zu-Stande-Bringens geblendet zu werden, das Sie davon bekommen zu
-veranlassen, dass es überhaupt arbeitet.
+Man wird leicht durch den Umstand geblendet das diese Schriftrolle überhaupt
+funktioniert, jedoch ist diese im wesentlichen nutzlos.
 %%%%
 scroll of recharging
 
@@ -1837,19 +1483,6 @@ Diese Schriftrolle fordert die Mächte der Dunkelheit auf, großen Schmerz jedem
 nahe gelegenen Wesen — einschließlich Ihrer zuzufügen! Das Hälften der
 Elastizität aller lebenden Wesen, obwohl nie direkt tödlich ist.
 %%%%
-scroll of vorpalise weapon
-
-Diese Schriftrolle verzaubert die ausgeübte Waffe, um es viel wirksamer beim
-Zufügen des Schadens auf den Feinden seines wielder zu machen. Dem Verwenden
-davon auf einer durch eine Art dauerhaftes Einbrennen bereits betroffenen Waffe
-wird nicht empfohlen. Andererseits kann die Schriftrolle dauerhaft das
-vorläufige Einbrennen von bei einigen Perioden erhaltenen Waffen machen.
-
-Marken, die an einen der Götter nah gebunden werden (Trog, Lugonu,
-Kikubaaquadgha, der Leuchtende) kann dieser Weg nicht angebracht werden. Xom
-würde andererseits solch eine Gelegenheit zum Spaß zur Verschwendung nicht
-gehen lassen.
-%%%%
 scroll of vulnerability
 
 Diese Schriftrolle annulliert das ganze magische Entzücken vom Leser und von
@@ -1859,18 +1492,18 @@ für zur Magie völlig geschützte Wesen nicht.
 %%%%
 scroll of silence
 
-Diese Schriftrolle beseitigt den ganzen Ton in der Nähe vom Leser. Das macht
-Lesen-Schriftrollen, Gussteil von Perioden, das Beten oder Kreischen in der
-unmöglichen Umgebung des Lesers. (Es gilt für den Leser auch natürlich. )
+Diese Schriftrolle umgibt den Leser mit Stille. Das macht das Lesen von
+Schriftrollen, Sprechen von Zaubern, das Beten oder Kreischen in der Umgebung
+des Lesers unmöglichen . (Dieses gilt für den Leser natürlich auch.)
 
 Dieses Schweigen wird Ihre Anwesenheit nicht verbergen, da seine bedrückende,
-unnatürliche Wirkung fast sicher jedes lebende Wesen alarmieren wird, dass
-etwas sehr falsch ist. Schweigen bricht mit einem Radius auf, der Hälfte der
-normalen Visionsreihe bedeckt, die dann zurückweichen wird, schließlich nur den
-Leser vor den Wirkungszeiten bedeckend.
+unnatürliche Wirkung fast sicher jedes lebende Wesen alarmieren wird dass etwas
+sehr falsch ist. Der Radius der Stille beträgt die Hälfte der normalen Sicht,
+der dann zunehmend kleiner wird und schließlich nur den Leser bedecken wird,
+bevor der Effekt endet.
 
-Zeichen, das Dämonen nicht erklingen lassen müssen, um Perioden zu werfen;
-bestimmte necromantic Vorrichtungen haben dieses Eigentum ebenso.
+Bedenke, das Dämonen keinen Ton benötigen, um Zauber zu werfen; bestimmte
+nekromantische Vorrichtungen haben ebenfalls diese Eigenschaft.
 %%%%
 scythe
 
@@ -1921,26 +1554,6 @@ befestigten Metallkopf besteht. Kürzer als anderer polearms kann es mit einer
 oder zwei Händen ausgeübt werden und ist auch leicht genug, um geworfen zu
 werden.
 %%%%
-spiked flail
-
-Ein Flegel, der durch eine längere Kette und den Zusatz von Stacheln auf dem
-Schlagkopf verbessert wurde.
-%%%%
-staff of air
-
-Dieser Personal vergrößert die Macht von Luftperioden, die durch seinen wielder
-geworfen sind, und isoliert ihn oder sie von der Elektrizität. Wenn der wielder
-in beiden Anrufungen und Luftmagie erfahren ist, können sie diejenigen
-erschüttern, die dadurch geschlagen sind.
-%%%%
-staff of cold
-
-Dieser Personal vergrößert die Macht von Eisperioden, die durch seinen wielder
-geworfen sind, und schützt ihn oder sie von den Effekten der Kälte. Wenn der
-wielder in Anrufungen erfahren ist, können sie diejenigen einfrieren, die
-dadurch geschlagen sind, noch größeren Schaden anrichtend, wenn sie auch in der
-Eismagie erfahren sind.
-%%%%
 staff of conjuration
 
 Dieser Personal vergrößert die Macht von durch seinen Besitzer geworfenen
@@ -1953,20 +1566,11 @@ wielder geworfen sind, und schützt ihn oder sie von der negativen Energie. Wenn
 der wielder in beiden Anrufungen und Geisterbeschwörung erfahren ist, können
 sie großen Schmerz jenen lebenden Seelen zufügen, die sie schlagen.
 %%%%
-staff of earth
+staff of energy
 
-Dieser Personal vergrößert die Macht von durch seinen wielder geworfenen
-Erdperioden. Wenn der wielder in Anrufungen erfahren ist, kann er diejenigen
-zerquetschen, die dadurch geschlagen sind, noch größeren Schaden anrichtend,
-wenn sie auch in der Erdmagie erfahren sind.
-%%%%
-staff of fire
-
-Dieser Personal vergrößert die Macht von Feuerperioden, die durch seinen
-wielder geworfen sind, und schützt ihn oder sie von den Effekten der Hitze und
-des Feuers. Wenn der wielder in Anrufungen erfahren ist, können sie diejenigen
-verbrennen, die dadurch geschlagen sind, noch größeren Schaden anrichtend, wenn
-sie auch in der Feuermagie erfahren sind.
+Dieser Stab erlaubt seinem Ausüber magische Energie zu steuern: Zaubern führt
+nicht mehr zu Hunger und atmosphärische Magie kann zu des Ausübers Zwecken
+kanalisiert werden.
 %%%%
 staff of poison
 
@@ -2111,11 +1715,6 @@ wand of confusion
 
 Ein magisches Gerät, das Verwirrung und Verwirrung in einem Zielwesen
 veranlasst.
-%%%%
-wand of digging
-
-Ein magisches Gerät welches Tunnel durch unbearbeiteten Felsen formt indem es
-ihn verflüssigt.
 %%%%
 wand of disintegration
 

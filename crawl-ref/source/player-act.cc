@@ -24,6 +24,7 @@
 #include "libutil.h"
 #include "misc.h"
 #include "monster.h"
+#include "spl-damage.h"
 #include "state.h"
 #include "terrain.h"
 #include "transform.h"
@@ -73,6 +74,7 @@ void player::moveto(const coord_def &c, bool clear_net)
     set_position(c);
 
     clear_far_constrictions();
+    end_searing_ray();
 }
 
 bool player::move_to_pos(const coord_def &c, bool clear_net)
@@ -471,6 +473,8 @@ string player::foot_name(bool plural, bool *can_plural) const
             str         = M_("underbelly");
             *can_plural = false;
         }
+        else if (species == SP_FELID)
+            str = "paw";
         else if (fishtail)
         {
             str         = M_("tail");
@@ -670,20 +674,11 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
         return false;
     }
 
-    if (!can_bleed(false))
+    if (is_lifeless_undead())
     {
-        // XXX: This message assumes that you're undead.
         if (verbose)
             mpr(gettext("You cannot raise a blood rage in your lifeless body."));
 
-        // or else you won't notice -- no message here
-        return false;
-    }
-
-    if (species == SP_GARGOYLE && petrifying())
-    {
-        if (verbose)
-            mpr("You cannot rage while you turn to stone.");
         return false;
     }
 
@@ -727,13 +722,12 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
 
 bool player::berserk() const
 {
-    return (duration[DUR_BERSERK]);
+    return duration[DUR_BERSERK];
 }
 
 bool player::can_cling_to_walls() const
 {
-    return (player_mutation_level(MUT_CLING)
-        || form == TRAN_SPIDER);
+    return form == TRAN_SPIDER;
 }
 
 bool player::is_web_immune() const

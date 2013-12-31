@@ -442,7 +442,7 @@ xx.xxxx.x.x
 ENDMAP
 
 NAME:   nicolae_coiled_stairwell_up
-DEPTH:  Snake:2-5
+DEPTH:  Snake:2-
 TAGS:   uniq_coiled_stairwell
 SUBST:  { = {[(<
 MAP
@@ -796,6 +796,26 @@ xx....xx..........xxx.........xxx.........xx...x
           xxxxxxx     xxxxxxx     xxxxxxx     xxxxx
 ENDMAP
 
+NAME: nicolae_snake_salamander_stairs
+DEPTH: Snake, !Snake:$
+: local level = you.depth() ; local weight = level * level
+KMONS: 1 = salamander
+SHUFFLE: ])}
+: kmons("2 = nothing w:21 / salamander w:" .. weight )
+NSUBST: l = 1 / 1:2 / 1:2l, a = 2:. / *:x, b = 2:. / *:x, c = @ / .
+SUBST: L = l.
+KPROP: 12l = no_cloud_gen
+KFEAT: 12 = l
+MAP
+ xxxxxxxxxx
+xxllllL.a.bc
+x.llllL.a.bc
+x]llllL.a.bc
+x.llllL.a.bc
+xxllllL.a.bc
+ xxxxxxxxxx
+ENDMAP
+
 ################################################################################
 # Snake endings
 ################################################################################
@@ -1133,7 +1153,7 @@ ENDMAP
 NAME:   grunt_snake_rune_serpentine_throne
 PLACE:  Snake:$
 ORIENT: north
-KMONS:  L = Lamia band
+KMONS:  L = Lamia
 KITEM:  O = serpentine rune of Zot
 KFEAT:  A = altar_okawaru / altar_makhleb / altar_trog
 MONS:   greater naga / naga warrior w:5 / naga mage w:5

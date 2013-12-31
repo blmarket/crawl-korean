@@ -128,50 +128,27 @@ static string coloured_branch(branch_type br)
     if (br < 0 || br >= NUM_BRANCHES)
         return "<lightred>Buggy buglands</lightred>";
 
-    colour_t col;
-    switch (br)
-    {
-    // These make little sense: old code used the first colour of elemental
-    // colour used for the entrance portal.
-    case BRANCH_VESTIBULE_OF_HELL: col = RED; break;
-    case BRANCH_ABYSS:             col = MAGENTA; break; // ETC_RANDOM
-    case BRANCH_PANDEMONIUM:       col = BLUE; break;
-    case BRANCH_LABYRINTH:         col = CYAN; break;
-    case BRANCH_BAILEY:            col = LIGHTRED; break;
-    case BRANCH_BAZAAR:
-    case BRANCH_WIZLAB:
-    case BRANCH_ZIGGURAT:          col = BLUE; break; // ETC_SHIMMER_BLUE
-    case BRANCH_ICE_CAVE:          col = WHITE; break;
-    case BRANCH_OSSUARY:           col = BROWN; break;
-    case BRANCH_SEWER:             col = LIGHTGREEN; break;
-    case BRANCH_TROVE:             col = BLUE; break;
-    case BRANCH_VOLCANO:           col = RED; break;
-    default:                       col = YELLOW; // shouldn't happen
-    }
-
-    const string colname = colour_to_str(col);
-    return make_stringf("<%s>%s</%s>", colname.c_str(), _(branches[br].shortname),
-                        colname.c_str());
+    return make_stringf("<yellow>%s</yellow>", _(branches[br].shortname));
 }
 
 static string shoptype_to_string(shop_type s)
 {
     switch (s)
     {
-    case SHOP_WEAPON:          return "(";
+    case SHOP_WEAPON:          return "<w>(</w>";
     case SHOP_WEAPON_ANTIQUE:  return "<yellow>(</yellow>";
-    case SHOP_ARMOUR:          return "[";
+    case SHOP_ARMOUR:          return "<w>[</w>";
     case SHOP_ARMOUR_ANTIQUE:  return "<yellow>[</yellow>";
-    case SHOP_GENERAL:         return "*";
+    case SHOP_GENERAL:         return "<w>*</w>";
     case SHOP_GENERAL_ANTIQUE: return "<yellow>*</yellow>";
-    case SHOP_JEWELLERY:       return "=";
-    case SHOP_WAND:            return "/";
-    case SHOP_BOOK:            return "+";
-    case SHOP_FOOD:            return "%";
-    case SHOP_DISTILLERY:      return "!";
-    case SHOP_SCROLL:          return "?";
-    case SHOP_MISCELLANY:            return "}";
-    default:                   return "x";
+    case SHOP_JEWELLERY:       return "<w>=</w>";
+    case SHOP_WAND:            return "<w>/</w>";
+    case SHOP_BOOK:            return "<w>+</w>";
+    case SHOP_FOOD:            return "<w>%</w>";
+    case SHOP_DISTILLERY:      return "<w>!</w>";
+    case SHOP_SCROLL:          return "<w>?</w>";
+    case SHOP_MISCELLANY:      return "<w>}</w>";
+    default:                   return "<w>x</w>";
     }
 }
 
@@ -476,12 +453,12 @@ static string _print_altars_for_gods(const vector<god_type>& gods,
         if (has_altar_been_seen)
             colour = "white";
         // Good gods don't inflict penance unless they hate your god.
-        if (you.penance[god] && (!is_good_god(god) || god_hates_your_god(god)))
+        if (player_under_penance(god) && (!is_good_god(god) || god_hates_your_god(god)))
             colour = (you.penance[god] > 10) ? "red" : "lightred";
         // Indicate good gods that you've abandoned, though.
-        else if (you.penance[god])
+        else if (player_under_penance(god))
             colour = "magenta";
-        else if (you.religion == god)
+        else if (you_worship(god))
             colour = "yellow";
         else if (god_likes_your_god(god) && has_altar_been_seen)
             colour = "brown";
@@ -507,9 +484,9 @@ static string _print_altars_for_gods(const vector<god_type>& gods,
                     break;
             case 2: disp += string(18 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 3: disp += string(13 - strwidth(_(god_name(god, false).c_str())), ' ');
+            case 3: disp += string(16 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 4: disp += string(16 - strwidth(_(god_name(god, false).c_str())), ' ');
+            case 4: disp += string(13 - strwidth(_(god_name(god, false).c_str())), ' ');
             }
     }
 
@@ -534,9 +511,11 @@ static string _get_shops(bool display)
     last_id.depth = 10000;
     map<level_pos, shop_type>::const_iterator ci_shops;
 
-    // There are at most 5 shops per level, plus 7 chars for the level
-    // name, plus 4 for the spacing; that makes a total of 17
-    // characters per shop.
+    // There are at most 5 shops per level, plus up to 8 chars for the
+    // level name, plus 4 for the spacing (3 as padding + 1 separating
+    // items from level). That makes a total of 17 characters per shop:
+    //       1...5....0....5..
+    // "D:8 *   Vaults:2 **([+   D:24 +";
     const int maxcolumn = get_number_of_cols() - 17;
     int column_count = 0;
 
@@ -552,19 +531,18 @@ static string _get_shops(bool display)
             }
             else if (column_count != 0)
             {
-                disp += "  ";
-                column_count += 2;
+                disp += "   ";
+                column_count += 3;
             }
-            disp += "<brown>";
+            disp += "<lightgrey>";
 
             const string loc = ci_shops->first.id.describe(false, true);
             disp += loc;
             column_count += strwidth(loc);
 
-            disp += ": ";
-            disp += "</brown>";
-
-            column_count += 2;
+            disp += " ";
+            disp += "</lightgrey>";
+            column_count += 1;
 
             last_id = ci_shops->first.id;
         }
@@ -605,7 +583,7 @@ static string _get_notes()
 
     if (disp.empty())
         return disp;
-    return "\n<green>Annotations</green>\n" + disp;
+    return "\n<green>Annotations:</green>\n" + disp;
 }
 
 template <typename Z, typename Key>
@@ -879,11 +857,8 @@ string get_level_annotation(level_id li, bool skip_excl, bool skip_uniq,
 
 static const string _get_coloured_level_annotation(level_id li)
 {
-    string place = "<yellow>" + li.describe();
-    place = replace_all(place, ":", "</yellow>:");
-    if (place.find("</yellow>") == string::npos)
-        place += "</yellow>";
-    int col = level_annotation_has("!", li) ? LIGHTRED : MAGENTA;
+    string place = "<yellow>" + li.describe() + "</yellow>";
+    int col = level_annotation_has("!", li) ? LIGHTRED : WHITE;
     return place + " " + get_level_annotation(li, false, false, true, col);
 }
 
@@ -918,10 +893,11 @@ void annotate_level()
 
 void do_annotate(level_id& li)
 {
-    if (!get_level_annotation(li).empty())
+    string old = get_level_annotation(li, true, true);
+    if (!old.empty())
     {
         mpr(_("Current level annotation: ") +
-            colour_string(get_level_annotation(li, true, true), LIGHTGREY),
+            colour_string(old, LIGHTGREY),
             MSGCH_PROMPT);
     }
 
@@ -929,21 +905,17 @@ void do_annotate(level_id& li)
                           + _(" (include '!' for warning): ");
 
     char buf[77];
-    if (msgwin_get_line_autohist(prompt, buf, sizeof(buf)))
-        return;
-
-    if (*buf)
-        level_annotations[li] = buf;
-    else if (get_level_annotation(li, true).empty())
+    if (msgwin_get_line_autohist(prompt, buf, sizeof(buf), old))
         canned_msg(MSG_OK);
+    else if (old == buf)
+        canned_msg(MSG_OK);
+    else if (*buf)
+        level_annotations[li] = buf;
     else
-        if (yesno(_("Really clear the annotation?"), true, 'n'))
-        {
-            mpr(_("Cleared."));
-            level_annotations.erase(li);
-        }
-        else
-            canned_msg(MSG_OK);
+    {
+        mpr(_("Cleared annotation."));
+        level_annotations.erase(li);
+    }
 }
 
 void clear_level_annotations(level_id li)

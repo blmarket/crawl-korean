@@ -7,7 +7,7 @@
 # monsters, making the player choose between pressing on towards the loot or
 # leaving the vault.
 #
-# Flavour: Mini versions of Tomb:* and otherwise crypt like.
+# Flavour: Mini versions of Tomb and otherwise crypt like.
 #
 ##############################################################################
 
@@ -24,7 +24,7 @@ function ossuary_portal(e)
       finalmsg = "모래 소리가 이제 더 이상 들려오지 않는다.",
 
       verb = '들려오는',
-      -- This is always preceeded by an article, so...
+      -- This is always preceded by an article, so...
       noisemaker = '모래 쌓이는 소리',
       ranges = {
         { 5000, '급속히 ' },  { 4000, '' },

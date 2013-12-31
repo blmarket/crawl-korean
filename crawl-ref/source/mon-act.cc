@@ -153,11 +153,8 @@ static bool _swap_monsters(monster* mover, monster* moved)
     // Can't swap with a stationary monster.
     // Although nominally stationary kraken tentacles can be swapped
     // with the main body.
-    if (mons_is_stationary(moved)
-        && !moved->is_child_tentacle())
-    {
+    if (moved->is_stationary() && !moved->is_child_tentacle())
         return false;
-    }
 
     // If the target monster is constricted it is stuck
     // and not eligible to be swapped with
@@ -265,6 +262,11 @@ static void _swim_or_move_energy(monster* mon, bool diag = false)
                       diag ? 10 : 1, diag ? 14 : 1);
 }
 
+static bool _unfriendly_or_insane(const monster* mon)
+{
+    return !mon->wont_attack() || mon->has_ench(ENCH_INSANE);
+}
+
 // Check up to eight grids in the given direction for whether there's a
 // monster of the same alignment as the given monster that happens to
 // have a ranged attack. If this is true for the first monster encountered,
@@ -287,7 +289,8 @@ static bool _ranged_allied_monster_in_dir(monster* mon, coord_def p)
         {
             // Hostile monsters of normal intelligence only move aside for
             // monsters of the same type.
-            if (mons_intel(mon) <= I_NORMAL && !mon->wont_attack()
+            if (mons_intel(mon) <= I_NORMAL
+                && _unfriendly_or_insane(mon)
                 && mons_genus(mon->type) != mons_genus(ally->type))
             {
                 return false;
@@ -321,12 +324,13 @@ static bool _allied_monster_at(monster* mon, coord_def a, coord_def b,
         if (ally == NULL)
             continue;
 
-        if (mons_is_stationary(ally) || ally->reach_range() > REACH_NONE)
+        if (ally->is_stationary() || ally->reach_range() > REACH_NONE)
             continue;
 
         // Hostile monsters of normal intelligence only move aside for
         // monsters of the same genus.
-        if (mons_intel(mon) <= I_NORMAL && !mon->wont_attack()
+        if (mons_intel(mon) <= I_NORMAL
+            && _unfriendly_or_insane(mon)
             && mons_genus(mon->type) != mons_genus(ally->type))
         {
             continue;
@@ -372,11 +376,6 @@ static bool _mon_on_interesting_grid(monster* mon)
     case DNGN_RETURN_FROM_ELVEN_HALLS:
         return mons_is_native_in_branch(mon, BRANCH_ELVEN_HALLS);
 
-    // Same for dwarves and the Dwarven Hall.
-    case DNGN_ENTER_DWARVEN_HALL:
-    case DNGN_RETURN_FROM_DWARVEN_HALL:
-        return mons_is_native_in_branch(mon, BRANCH_DWARVEN_HALL);
-
     // Spiders...
     case DNGN_ENTER_SPIDER_NEST:
         return mons_is_native_in_branch(mon, BRANCH_SPIDER_NEST);
@@ -413,12 +412,12 @@ static bool _mons_can_cast_dig(const monster* mons, bool random)
             && !(silenced(mons->pos()) || mons->has_ench(ENCH_MUTE))
             && (!mons->has_ench(ENCH_ANTIMAGIC)
                 || (random
-                    && x_chance_in_y(mons->hit_dice * BASELINE_DELAY,
-                                     mons->hit_dice * BASELINE_DELAY
+                    && x_chance_in_y(4 * BASELINE_DELAY,
+                                     4 * BASELINE_DELAY
                                      + mons->get_ench(ENCH_ANTIMAGIC).duration)
                    || (!random
-                       && mons->hit_dice * BASELINE_DELAY
-                          < mons->get_ench(ENCH_ANTIMAGIC).duration))));
+                       && 4 * BASELINE_DELAY
+                          >= mons->get_ench(ENCH_ANTIMAGIC).duration))));
 }
 
 static bool _mons_can_zap_dig(const monster* mons)
@@ -586,6 +585,7 @@ static void _handle_movement(monster* mons)
         // scared.
         if (mons->holiness() == MH_NONLIVING
             || mons->berserk()
+            || mons->has_ench(ENCH_INSANE)
             || x_chance_in_y(2, 5))
         {
             mons_stop_fleeing_from_sanctuary(mons);
@@ -656,7 +656,7 @@ static void _handle_movement(monster* mons)
         && mons_intel(mons) >= I_ANIMAL
         && coinflip()
         && !mons_is_confused(mons) && !mons->caught()
-        && !mons->berserk())
+        && !mons->berserk_or_insane())
     {
         // If the monster is moving parallel to the x or y axis, check
         // whether
@@ -676,7 +676,7 @@ static void _handle_movement(monster* mons)
                                        coord_def(-mmov.x, 0),
                                        coord_def(-mmov.x, 1))
                     || mons_intel(mons) >= I_NORMAL
-                       && !mons->wont_attack()
+                       && _unfriendly_or_insane(mons)
                        && _ranged_allied_monster_in_dir(mons,
                                                         coord_def(-mmov.x, 0))))
             {
@@ -694,7 +694,7 @@ static void _handle_movement(monster* mons)
                                        coord_def(0, -mmov.y),
                                        coord_def(1, -mmov.y))
                     || mons_intel(mons) >= I_NORMAL
-                       && !mons->wont_attack()
+                       && _unfriendly_or_insane(mons)
                        && _ranged_allied_monster_in_dir(mons,
                                                         coord_def(0, -mmov.y))))
             {
@@ -713,7 +713,7 @@ static void _handle_movement(monster* mons)
                                            coord_def(-mmov.x, 0),
                                            coord_def(-mmov.x, 1))
                         || mons_intel(mons) >= I_NORMAL
-                           && !mons->wont_attack()
+                           && _unfriendly_or_insane(mons)
                            && _ranged_allied_monster_in_dir(mons,
                                                 coord_def(-mmov.x, -mmov.y))))
                 {
@@ -725,7 +725,7 @@ static void _handle_movement(monster* mons)
                                             coord_def(0, -mmov.y),
                                             coord_def(1, -mmov.y))
                          || mons_intel(mons) >= I_NORMAL
-                            && !mons->wont_attack()
+                            && _unfriendly_or_insane(mons)
                             && _ranged_allied_monster_in_dir(mons,
                                                 coord_def(-mmov.x, -mmov.y))))
             {
@@ -836,6 +836,11 @@ static bool _handle_potion(monster* mons, bolt & beem)
     {
         const bool was_visible = you.can_see(mons);
 
+        // XXX: this is mostly to prevent a funny message order:
+        // "$foo drinks a potion. $foo wields a great mace. $foo goes berserk!"
+        if (ptype == POT_BERSERK_RAGE)
+            mons->wield_melee_weapon();
+
         // Drink the potion.
         const item_type_id_state_type id = mons->drink_potion_effect(ptype);
 
@@ -914,7 +919,7 @@ static bool _handle_reaching(monster* mons)
     if (mons->submerged())
         return false;
 
-    if (mons_aligned(mons, foe))
+    if (mons_aligned(mons, foe) && !mons->has_ench(ENCH_INSANE))
         return false;
 
     // Greatly lowered chances if the monster is fleeing or pacified and
@@ -1310,7 +1315,6 @@ static bool _handle_rod(monster *mons, bolt &beem)
     case SPELL_THROW_FROST:
         break;
 
-    case SPELL_STRIKING:
     case SPELL_FIREBALL:
         if (mons->foe_distance() < 2)
             return false;
@@ -1385,7 +1389,7 @@ static bool _handle_rod(monster *mons, bolt &beem)
     {
         _rod_fired_pre(mons);
         cast_thunderbolt(mons, power, beem.target);
-        return (_rod_fired_post(mons, rod, weapon, beem, rate, was_visible));
+        return _rod_fired_post(mons, rod, weapon, beem, rate, was_visible);
     }
     else if (zap)
     {
@@ -1580,7 +1584,7 @@ static bool _handle_throw(monster* mons, bolt & beem)
         return false;
     }
 
-    const bool archer = mons->is_archer();
+    bool archer = mons->is_archer();
 
     const bool liquefied = mons->liquefied_ground();
 
@@ -1591,12 +1595,16 @@ static bool _handle_throw(monster* mons, bolt & beem)
         || (!liquefied && one_chance_in(archer ? 9 : 5)))
         return false;
 
-    // Stabbers going in for the kill don't use ranged attacks.
     if (mons_class_flag(mons->type, M_STABBER)
-        && mons->get_foe() != NULL
-        && mons->get_foe()->incapacitated())
+        && mons->get_foe() != NULL)
     {
-        return false;
+        // Stabbers going in for the kill don't use ranged attacks.
+        if (mons->get_foe()->incapacitated())
+            return false;
+        // But assassins WILL use their blowguns in melee range, if their foe is
+        // not already incapacitated and they have useful ammo left.
+        else if (mons_has_incapacitating_ranged_attack(mons, mons->get_foe()))
+            archer = true;
     }
 
     // Don't allow offscreen throwing for now.
@@ -1789,13 +1797,6 @@ static void _pre_monster_move(monster* mons)
         }
     }
 
-    // Possibly replenish bees (1 per 10 turns, on average)
-    if (mons->type == MONS_TREANT && mons->number < 5
-        && x_chance_in_y(you.time_taken, 100))
-    {
-        mons->number++;
-    }
-
     if (mons_stores_tracking_data(mons))
     {
         actor* foe = mons->get_foe();
@@ -1862,6 +1863,8 @@ static void _pre_monster_move(monster* mons)
         mons->accum_has_constricted();
 
         _heated_area(mons);
+        if (mons->type == MONS_NO_MONSTER)
+            return;
     }
 
     // Apply monster enchantments once for every normal-speed
@@ -2040,7 +2043,7 @@ void handle_monster_move(monster* mons)
         return;
     }
 
-    if (crawl_state.disables[DIS_MON_ACT] && !mons->wont_attack())
+    if (crawl_state.disables[DIS_MON_ACT] && _unfriendly_or_insane(mons))
     {
         mons->speed_increment -= non_move_energy;
         return;
@@ -2079,7 +2082,7 @@ void handle_monster_move(monster* mons)
         // Keep neutral, charmed, summoned monsters from picking up stuff.
         // Same for friendlies if friendly_pickup is set to "none".
         if ((!mons->neutral() && !mons->has_ench(ENCH_CHARM)
-             || (you.religion == GOD_JIYVA && mons_is_slime(mons)))
+             || (you_worship(GOD_JIYVA) && mons_is_slime(mons)))
             && !mons->is_summoned() && !mons->is_perm_summoned()
             && (!mons->friendly()
                 || you.friendly_pickup != FRIENDLY_PICKUP_NONE))
@@ -2170,6 +2173,8 @@ void handle_monster_move(monster* mons)
         }
     }
     mon_nearby_ability(mons);
+    if (!mons->alive())
+        return;
 
     // XXX: A bit hacky, but stores where we WILL move, if we don't take
     //      another action instead (used for decision-making)
@@ -2180,7 +2185,7 @@ void handle_monster_move(monster* mons)
         && !mons->withdrawn()
         // Berserking monsters are limited to running up and
         // hitting their foes.
-        && !mons->berserk()
+        && !mons->berserk_or_insane()
             // Slime creatures can split while wandering or resting.
             || mons->type == MONS_SLIME_CREATURE)
     {
@@ -2274,12 +2279,16 @@ void handle_monster_move(monster* mons)
         {
             ASSERT(!crawl_state.game_is_arena());
 
-            if (!mons->wont_attack() && !mons->has_ench(ENCH_CHARM)
+            if (_unfriendly_or_insane(mons)
+                && !mons->has_ench(ENCH_CHARM)
                 && !mons->withdrawn())
             {
-                // If it steps into you, cancel other targets.
-                mons->foe = MHITYOU;
-                mons->target = you.pos();
+                if (!mons->wont_attack())
+                {
+                    // If it steps into you, cancel other targets.
+                    mons->foe = MHITYOU;
+                    mons->target = you.pos();
+                }
 
                 fight_melee(mons, &you);
 
@@ -2314,7 +2323,7 @@ void handle_monster_move(monster* mons)
         if (targ
             && targ != mons
             && mons->behaviour != BEH_WITHDRAW
-            && !mons_aligned(mons, targ)
+            && (!mons_aligned(mons, targ) || mons->has_ench(ENCH_INSANE))
             && monster_can_hit_monster(mons, targ))
         {
             // Maybe they can swap places?
@@ -2349,7 +2358,7 @@ void handle_monster_move(monster* mons)
             mons->props.erase("blocked_deadline");
         }
 
-        if (invalid_monster(mons) || mons_is_stationary(mons))
+        if (invalid_monster(mons) || mons->is_stationary())
         {
             if (mons->speed_increment == old_energy)
                 mons->speed_increment -= non_move_energy;
@@ -2585,7 +2594,7 @@ static bool _monster_eat_item(monster* mons, bool nearby)
         return false;
 
     // Friendly jellies won't eat (unless worshipping Jiyva).
-    if (mons->friendly() && you.religion != GOD_JIYVA)
+    if (mons->friendly() && !you_worship(GOD_JIYVA))
         return false;
 
     // Off-limit squares are off-limit.
@@ -2661,7 +2670,7 @@ static bool _monster_eat_item(monster* mons, bool nearby)
             shown_msg = true;
         }
 
-        if (you.religion == GOD_JIYVA)
+        if (you_worship(GOD_JIYVA))
         {
             gain = sacrifice_item_stack(*si, &js, quant);
             if (gain > PIETY_NONE)
@@ -2895,7 +2904,6 @@ static int _estimated_trap_damage(trap_type trap)
         case TRAP_ARROW: return random2(7);
         case TRAP_SPEAR: return random2(10);
         case TRAP_BOLT:  return random2(13);
-        case TRAP_GAS:   return random2(50);
         default:         return 0;
     }
 }
@@ -3098,11 +3106,10 @@ static bool _mons_can_displace(const monster* mpusher,
     // elbow past them, and the wake-up check happens downstream.
     // Monsters caught in a net also can't be pushed past.
     if (mons_is_confused(mpusher) || mons_is_confused(mpushee)
-        || mpusher->cannot_move() || mons_is_stationary(mpusher)
+        || mpusher->cannot_move() || mpusher->is_stationary()
         || mpusher->is_constricted() || mpushee->is_constricted()
         || (!_same_tentacle_parts(mpusher, mpushee)
-           && (mpushee->cannot_move()
-               || mons_is_stationary(mpushee)))
+           && (mpushee->cannot_move() || mpushee->is_stationary()))
         || mpusher->asleep() || mpushee->caught())
     {
         return false;
@@ -3305,13 +3312,14 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
             return false;
 
         if (mons_aligned(mons, targmonster)
+            && !mons->has_ench(ENCH_INSANE)
             && !_mons_can_displace(mons, targmonster))
         {
             // In Zotdef hostiles will whack other hostiles if immobile
             // - prevents plugging gaps with hostile oklobs
             if (crawl_state.game_is_zotdef())
             {
-                if (!mons_is_stationary(targmonster)
+                if (!targmonster->is_stationary()
                     || targmonster->attitude != ATT_HOSTILE)
                 {
                     return false;
@@ -3321,7 +3329,8 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
                 return false;
         }
         // Prefer to move past enemies instead of hit them, if we're retreating
-        else if (!mons_aligned(mons, targmonster)
+        else if ((!mons_aligned(mons, targmonster)
+                  || mons->has_ench(ENCH_INSANE))
                  && mons->behaviour == BEH_WITHDRAW)
         {
             return false;
@@ -3330,7 +3339,7 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
 
     // Friendlies shouldn't try to move onto the player's
     // location, if they are aiming for some other target.
-    if (mons->wont_attack()
+    if (!_unfriendly_or_insane(mons)
         && mons->foe != MHITYOU
         && (mons->foe != MHITNOT || mons->is_patrolling())
         && targ == you.pos())
@@ -3651,9 +3660,9 @@ static bool _may_cutdown(monster* mons, monster* targ)
     if (!crawl_state.game_is_zotdef())
         return false;
 
-    return (mons_is_stationary(targ)
-            || mons_class_flag(mons_base_type(targ), M_NO_EXP_GAIN)
-               && !mons_is_tentacle_or_tentacle_segment(targ->type));
+    return targ->is_stationary()
+           || mons_class_flag(mons_base_type(targ), M_NO_EXP_GAIN)
+              && !mons_is_tentacle_or_tentacle_segment(targ->type);
 }
 
 static bool _monster_move(monster* mons)
@@ -3677,7 +3686,7 @@ static bool _monster_move(monster* mons)
         if (monster_can_submerge(mons, grd(mons->pos()))
             && !can_see && !mons_is_confused(mons)
             && !mons->caught()
-            && !mons->berserk()
+            && !mons->berserk_or_insane()
             && one_chance_in(5))
         {
             mons->add_ench(ENCH_SUBMERGED);
@@ -3687,12 +3696,12 @@ static bool _monster_move(monster* mons)
     }
 
     // Berserking monsters make a lot of racket.
-    if (mons->berserk())
+    if (mons->berserk_or_insane())
     {
         int noise_level = get_shout_noise_level(mons_shouts(mons->type));
         if (noise_level > 0)
         {
-            if (you.can_see(mons))
+            if (you.can_see(mons) && mons->berserk())
             {
                 if (one_chance_in(10))
                 {
@@ -3759,8 +3768,9 @@ static bool _monster_move(monster* mons)
                 newpos = moves[i];
 
         const monster* mon2 = monster_at(newpos);
-        if (newpos == you.pos() && mons->wont_attack()
-            || (mon2 && mons->wont_attack() == mon2->wont_attack()))
+        if (!mons->has_ench(ENCH_INSANE)
+            && (newpos == you.pos() && mons->wont_attack()
+                || (mon2 && mons->wont_attack() == mon2->wont_attack())))
         {
             simple_monster_message(mons, _(" flops around on dry land!"));
             return false;
@@ -3954,10 +3964,14 @@ static bool _monster_move(monster* mons)
         // Check for attacking another monster.
         if (monster* targ = monster_at(mons->pos() + mmov))
         {
-            if (mons_aligned(mons, targ) &&
-                (!crawl_state.game_is_zotdef() || !_may_cutdown(mons, targ)))
+            if (mons_aligned(mons, targ)
+                && !mons->has_ench(ENCH_INSANE)
+                && (!crawl_state.game_is_zotdef()
+                    || !_may_cutdown(mons, targ)))
+            {
                 // Zotdef: monsters will cut down firewood
                 ret = _monster_swaps_places(mons, mmov);
+            }
             else
             {
                 fight_melee(mons, targ);
@@ -3981,13 +3995,6 @@ static bool _monster_move(monster* mons)
 
         if (mons->type == MONS_ROTTING_DEVIL || mons->type == MONS_CURSE_TOE)
             place_cloud(CLOUD_MIASMA, mons->pos(), 2 + random2(3), mons);
-
-        // Commented out, but left in as an example of gloom. {due}
-        //if (mons->type == MONS_SHADOW)
-        //{
-        //    big_cloud (CLOUD_GLOOM, mons->kill_alignment(), mons->pos(), 10 + random2(5), 2 + random2(8));
-        //}
-
     }
     else
     {
@@ -4050,7 +4057,7 @@ static void _heated_area(monster* mons)
         return;
 
     // HACK: Currently this prevents even auras not caused by lava orcs...
-    if (you.religion == GOD_BEOGH && mons->friendly() && mons->god == GOD_BEOGH)
+    if (you_worship(GOD_BEOGH) && mons->friendly() && mons->god == GOD_BEOGH)
         return;
 
     const int base_damage = random2(11);

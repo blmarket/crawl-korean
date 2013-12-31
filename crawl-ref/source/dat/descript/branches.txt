@@ -40,14 +40,6 @@ passers-by should be aware of the legendary magical prowess of this species.
 
 The Elven Halls are three levels deep.
 %%%%
-Dwarven Hall
-
-These halls of finely worked stone are the dwelling of the Deep Dwarves. Their
-fine metalworking skills allowed them to forge plenty weapons for use against
-the likes of you.
-
-It is but a single level.
-%%%%
 Lair
 
 Most adventurers find the Lair of Beasts to be an exciting change of climate.
@@ -146,18 +138,6 @@ pure death is exceedingly short.
 The Tomb is three levels deep and contains the golden rune. Its entry is either
 on Crypt:2 or Crypt:3.
 %%%%
-Tomb:quote
-
-“In the depths of every heart, there is a tomb and a dungeon, though the
-lights, the music, and revelry above may cause us to forget their existence,
-and the buried ones, or prisoners whom they hide. But sometimes, and oftenest
-at midnight, those dark receptacles are flung wide open. In an hour like this,
-when the mind has a passive sensibility, but no active strength; when the
-imagination is a mirror, imparting vividness to all ideas, without the power of
-selecting or controlling them; then pray that your grieves may slumber, and the
-brotherhood of remorse not break their chain.”
-    -Nathaniel Hawthorne, “The Haunted Mind”. 1835.
-%%%%
 Hell
 
 The hallway to the four hells is guarded by Geryon. Heroes who prove their
@@ -196,14 +176,6 @@ drain all life out of treasure-craving visitors.
 
 Tartarus is seven levels deep and contains the bone rune. It can be accessed
 via the Vestibule of Hell.
-%%%%
-Tartarus:quote
-
-“There is a drear and lonely tract of hell
- From all the common gloom removed afar:
- A flat, sad land it is, where shadows are,
- Whose lorn estate my verse may never tell.”
-    -Edward Arlington Robinson, “Supremacy”. 1897.
 %%%%
 Zot
 

@@ -389,7 +389,7 @@ bool player_can_memorise_from_spellbook(const item_def &book)
             && (you.skill(SK_SUMMONINGS) < 10
                 || you.skill(SK_SPELLCASTING) < 6))
         || (book.sub_type == BOOK_NECRONOMICON
-            && you.religion != GOD_KIKUBAAQUDGHA
+            && !you_worship(GOD_KIKUBAAQUDGHA)
             && (you.skill(SK_NECROMANCY) < 10
                 || you.skill(SK_SPELLCASTING) < 6)))
     {
@@ -548,6 +548,9 @@ bool you_cannot_memorise(spell_type spell, bool &form)
         if (rc && you.form == TRAN_LICH)
             form = true;
     }
+
+    if (you.species == SP_GARGOYLE && spell == SPELL_CURE_POISON)
+        rc = true, form = false;
 
     if (you.species == SP_DEEP_DWARF && spell == SPELL_REGENERATION)
         rc = true, form = false;
@@ -1658,7 +1661,7 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
 
         return false;
     }
-    random_shuffle(spells.begin(), spells.end());
+    shuffle_array(spells);
 
     if (num_spells > (int) spells.size())
     {

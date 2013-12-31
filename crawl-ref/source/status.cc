@@ -152,6 +152,14 @@ static duration_def duration_data[] =
       RED, P_("status","-Tele"), P_("status","cannot translocate"), N_("You are firmly anchored to this plane.") },
     { DUR_SPIRIT_HOWL, false,
       MAGENTA, P_("status","Howl"), P_("status","spirit howling"), N_("The howling of a spirit pack pursues you.") },
+    { DUR_TOXIC_RADIANCE, false,
+      MAGENTA, P_("status","Toxic"), P_("status","radiating poison"), N_("You are radiating toxic energy.")},
+    { DUR_RECITE, false,
+      WHITE, P_("status","Recite"), P_("status","reciting"), N_("You are reciting Zin's Axioms of Law.") },
+    { DUR_GRASPING_ROOTS, false,
+      BROWN, P_("status","Roots"), P_("status","grasped by roots"), N_("Your movement is impeded by grasping roots.") },
+    { DUR_FIRE_VULN, false,
+      RED, P_("status","-rF"), P_("status","fire vulnerable"), N_("You are more vulnerable to fire.") },
 };
 
 static int duration_index[NUM_DURATIONS];
@@ -176,7 +184,7 @@ static const duration_def* _lookup_duration(duration_type dur)
     if (duration_index[dur] == -1)
         return NULL;
     else
-        return (&duration_data[duration_index[dur]]);
+        return &duration_data[duration_index[dur]];
 }
 
 static void _reset_status_info(status_info* inf)
@@ -287,7 +295,7 @@ bool fill_status_info(int status, status_info* inf)
         break;
 
     case DUR_SWIFTNESS:
-        if (you.in_water() || you.liquefied_ground())
+        if (you.in_liquid())
             inf->light_colour = DARKGREY;
         break;
 
@@ -612,6 +620,38 @@ bool fill_status_info(int status, status_info* inf)
             inf->short_text   = _(M_("engulfed (cannot breathe)"));
             inf->long_text    = _("You are engulfed in water and unable to breathe.");
             inf->light_colour = RED;
+        }
+        break;
+
+    case STATUS_DRAINED:
+        if (you.attribute[ATTR_XP_DRAIN] > 250)
+        {
+            inf->light_colour = RED;
+            inf->light_text   = "Drain";
+            inf->short_text   = "very heavily drained";
+            inf->long_text    = "Your life force is very heavily drained.";
+        }
+        else if (you.attribute[ATTR_XP_DRAIN] > 100)
+        {
+            inf->light_colour = LIGHTRED;
+            inf->light_text   = "Drain";
+            inf->short_text   = "heavily drained";
+            inf->long_text    = "Your life force is heavily drained.";
+        }
+        else if (you.attribute[ATTR_XP_DRAIN])
+        {
+            inf->light_colour = YELLOW;
+            inf->light_text   = "Drain";
+            inf->short_text   = "drained";
+            inf->long_text    = "Your life force is drained.";
+        }
+        break;
+
+    case STATUS_RAY:
+        if (you.attribute[ATTR_SEARING_RAY])
+        {
+            inf->light_colour = WHITE;
+            inf->light_text   = "Ray";
         }
         break;
 

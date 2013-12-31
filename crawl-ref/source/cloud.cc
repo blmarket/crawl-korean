@@ -51,8 +51,10 @@ static int _actual_spread_rate(cloud_type type, int spread_rate)
 
     switch (type)
     {
+#if TAG_MAJOR_VERSION == 34
     case CLOUD_GLOOM:
         return 50;
+#endif
     case CLOUD_STEAM:
     case CLOUD_GREY_SMOKE:
     case CLOUD_BLACK_SMOKE:
@@ -79,7 +81,9 @@ static beam_type _cloud2beam(cloud_type flavour)
     case CLOUD_STEAM:        return BEAM_STEAM;
     case CLOUD_MIASMA:       return BEAM_MIASMA;
     case CLOUD_CHAOS:        return BEAM_CHAOS;
+#if TAG_MAJOR_VERSION == 34
     case CLOUD_GLOOM:        return BEAM_GLOOM;
+#endif
     case CLOUD_INK:          return BEAM_INK;
     case CLOUD_HOLY_FLAMES:  return BEAM_HOLY_FLAME;
     case CLOUD_PETRIFY:      return BEAM_PETRIFYING_CLOUD;
@@ -309,6 +313,10 @@ static void _handle_ghostly_flame(const cloud_struct& cloud)
     if (!x_chance_in_y(chance, you.time_taken * 600))
         return;
 
+    // No spawns in problematic places.
+    if (!monster_habitable_grid(MONS_IGUANA, grd(cloud.pos)))
+        return;
+
     monster_type basetype = random_choose_weighted(4,   MONS_ANACONDA,
                                                    6,   MONS_HYDRA,
                                                    8,   MONS_ROCK_WORM,
@@ -353,29 +361,6 @@ void manage_clouds()
         // Ink cloud doesn't appear outside of water.
         else if (cloud.type == CLOUD_INK && !feat_is_watery(grd(cloud.pos)))
             dissipate *= 40;
-        else if (cloud.type == CLOUD_GLOOM)
-        {
-            int count = 0;
-            for (adjacent_iterator ai(cloud.pos); ai; ++ai)
-            {
-                if (env.cgrid(*ai) != EMPTY_CLOUD
-                    && env.cloud[env.cgrid(*ai)].type == CLOUD_GLOOM)
-                {
-                        count++;
-                }
-            }
-
-            if (!umbraed(cloud.pos) && haloed(cloud.pos)
-                && !silenced(cloud.pos))
-            {
-                count = 0;
-            }
-
-            if (count < 4)
-                dissipate *= 50;
-            else
-                dissipate /= 20;
-        }
         else if (cloud.type == CLOUD_GHOSTLY_FLAME)
             _handle_ghostly_flame(cloud);
 
@@ -784,7 +769,7 @@ static bool _actor_cloud_immune(const actor *act, const cloud_struct &cloud)
     const bool player = act->is_player();
 
     if (!player
-        && you.religion == GOD_FEDHAS
+        && you_worship(GOD_FEDHAS)
         && fedhas_protects(act->as_monster())
         && (cloud.whose == KC_YOU || cloud.whose == KC_FRIENDLY)
         && (act->as_monster()->friendly() || act->as_monster()->neutral()))
@@ -985,7 +970,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
             }
             else if (mons->malmutate("mutagenic cloud"))
             {
-                if (you.religion == GOD_ZIN && cloud.whose == KC_YOU)
+                if (you_worship(GOD_ZIN) && cloud.whose == KC_YOU)
                     did_god_conduct(DID_DELIBERATE_MUTATING, 5 + random2(3));
                 return true;
             }
@@ -1018,7 +1003,7 @@ static int _actor_cloud_base_damage(actor *act,
 
     const int cloud_raw_base_damage =
         _cloud_base_damage(act, cloud, maximum_damage);
-    const int cloud_base_damage = (resist == MAG_IMMUNE?
+    const int cloud_base_damage = (resist == MAG_IMMUNE ?
                                    0 : cloud_raw_base_damage);
     return cloud_base_damage;
 }
@@ -1193,7 +1178,9 @@ bool is_harmless_cloud(cloud_type type)
     case CLOUD_TLOC_ENERGY:
     case CLOUD_MAGIC_TRAIL:
     case CLOUD_DUST_TRAIL:
+#if TAG_MAJOR_VERSION == 34
     case CLOUD_GLOOM:
+#endif
     case CLOUD_INK:
     case CLOUD_DEBUGGING:
         return true;
@@ -1232,7 +1219,11 @@ static const char *_terse_cloud_names[] =
     M_("flame"), M_("noxious fumes"), M_("freezing vapour"), M_("poison gas"),
     M_("black smoke"), M_("grey smoke"), M_("blue smoke"),
     M_("purple smoke"), M_("translocational energy"), M_("fire"),
-    M_("steam"), M_("gloom"), M_("ink"),
+    M_("steam"),
+#if TAG_MAJOR_VERSION == 34
+    M_("gloom"),
+#endif
+    M_("ink"),
     M_("calcifying dust"),
     M_("blessed fire"), M_("foul pestilence"), M_("thin mist"),
     M_("seething chaos"), M_("rain"), M_("mutagenic fog"), M_("magical condensation"),
@@ -1246,7 +1237,11 @@ static const char *_verbose_cloud_names[] =
     M_("roaring flames"), M_("noxious fumes"), M_("freezing vapours"), M_("poison gas"),
     M_("black smoke"), M_("grey smoke"), M_("blue smoke"),
     M_("purple smoke"), M_("translocational energy"), M_("roaring flames"),
-    M_("a cloud of scalding steam"), M_("thick gloom"), M_("ink"),
+    M_("a cloud of scalding steam"),
+#if TAG_MAJOR_VERSION == 34
+    M_("thick gloom"),
+#endif
+    M_("ink"),
     M_("calcifying dust"),
     M_("blessed fire"), M_("dark miasma"), M_("thin mist"), M_("seething chaos"), M_("the rain"),
     M_("mutagenic fog"), M_("magical condensation"), M_("raging winds"),
@@ -1413,7 +1408,9 @@ int get_cloud_colour(int cloudno)
 
     case CLOUD_PURPLE_SMOKE:
     case CLOUD_TLOC_ENERGY:
+#if TAG_MAJOR_VERSION == 34
     case CLOUD_GLOOM:
+#endif
         which_colour = MAGENTA;
         break;
 
@@ -1561,5 +1558,17 @@ void run_cloud_spreaders(int dur)
             env.markers.remove(mark);
             break;
         }
+    }
+}
+
+void fume()
+{
+    static cloud_type clouds[] =
+        { CLOUD_PURPLE_SMOKE, CLOUD_BLUE_SMOKE, CLOUD_GREY_SMOKE };
+    if (you.mutation[MUT_FUMES])
+    {
+        int level = you.mutation[MUT_FUMES];
+        if (x_chance_in_y(you.time_taken * level, 35))
+            place_cloud(clouds[bestroll(3, 2)], you.pos(), 3 + random2(4), &you, 4);
     }
 }

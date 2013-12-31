@@ -224,7 +224,7 @@ static void _exercise_spell(spell_type spell, bool success)
     if (conj && !x_chance_in_y(skillcount, 4))
         return;
 
-    random_shuffle(disc.begin(), disc.end());
+    shuffle_array(disc);
 
     for (unsigned int k = 0; k < disc.size(); ++k)
     {
@@ -401,37 +401,6 @@ void practise(exer_type ex, int param1)
     case EX_DID_MISCAST:
         _exercise_spell(static_cast<spell_type>(param1),
                         ex == EX_DID_CAST);
-        break;
-
-    case EX_TRAP_FOUND:
-        exercise(SK_TRAPS, 1 + random2(2));
-        break;
-
-    case EX_TRAP_PASSIVE:
-        exercise(SK_TRAPS, 3);
-        break;
-
-    case EX_TRAP_TRIGGER:
-        exercise(SK_TRAPS, 1 + random2(2));
-        break;
-
-    case EX_TRAP_DISARM:
-        // param1 == you.absdepth0
-        exercise(SK_TRAPS, 1 + random2(5) + param1 / 5);
-        break;
-
-    case EX_TRAP_DISARM_FAIL:
-        // param1 == you.absdepth0
-        exercise(SK_TRAPS, 1 + random2(param1 / 5));
-        break;
-
-    case EX_TRAP_DISARM_TRIGGER:
-        if (coinflip())
-            exercise(SK_TRAPS, 1);
-        break;
-
-    case EX_REMOVE_NET:
-        exercise(SK_TRAPS, 1);
         break;
 
     case EX_SHIELD_BLOCK:

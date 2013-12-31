@@ -1645,6 +1645,11 @@ _real_weapon_name_
 육지거북이
 
 독수리의 눈_SUFFIX_
+
+지옥써레
+
+# Sigmund's sword
+그램
 %%%%
 _joke_weapon_name_
 

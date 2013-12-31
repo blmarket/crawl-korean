@@ -44,6 +44,7 @@
 #include "religion.h"
 #include "stairs.h"
 #include "stash.h"
+#include "state.h"
 #include "stuff.h"
 #include "tags.h"
 #include "terrain.h"
@@ -251,11 +252,8 @@ bool feat_is_traversable_now(dungeon_feature_type grid, bool try_fallback)
         }
 
         // You can't open doors in bat form.
-        if ((grid == DNGN_CLOSED_DOOR || grid == DNGN_RUNED_DOOR)
-            && !try_fallback)
-        {
+        if (grid == DNGN_CLOSED_DOOR || grid == DNGN_RUNED_DOOR)
             return player_can_open_doors() || you.form == TRAN_JELLY;
-        }
     }
 
     return feat_is_traversable(grid, try_fallback);
@@ -427,12 +425,19 @@ static bool _is_travelsafe_square(const coord_def& c, bool ignore_hostile,
     // Also make note of what's displayed on the level map for
     // plant/fungus checks.
     const map_cell& levelmap_cell = env.map_knowledge(c);
+    const monster_info *minfo = levelmap_cell.monsterinfo();
+
+    // Can't swap with monsters caught in nets
+    if (minfo && minfo->attitude >= ATT_STRICT_NEUTRAL
+        && (minfo->is(MB_CAUGHT) || minfo->is(MB_WEBBED)) && !try_fallback)
+    {
+        return false;
+    }
 
     // Travel will not voluntarily cross squares blocked by immobile
     // monsters.
     if (!ignore_danger && !ignore_hostile)
     {
-        const monster_info *minfo = levelmap_cell.monsterinfo();
         if (minfo && _monster_blocks_travel(minfo))
             return false;
     }
@@ -482,7 +487,7 @@ static bool _is_safe_move(const coord_def& c)
         // unless worshipping Fedhas.
         if (you.can_see(mon)
             && mons_class_flag(mon->type, M_NO_EXP_GAIN)
-            && mons_is_stationary(mon)
+            && mon->is_stationary()
             && !fedhas_passthrough(mon)
             && !travel_kill_monster(mon->type))
         {
@@ -593,6 +598,8 @@ static void _userdef_run_stoprunning_hook(void)
 #ifdef CLUA_BINDINGS
     if (you.running)
         clua.callfn("ch_stop_running", "s", _run_mode_name(you.running));
+#else
+    UNUSED(_run_mode_name);
 #endif
 }
 
@@ -734,9 +741,15 @@ static void _explore_find_target_square()
     if (whereto.x || whereto.y)
     {
         // Make sure this is a square that is reachable, since we asked
-        // travel_pathfind to give us even unreachable squares.
-        if (travel_point_distance[whereto.x][whereto.y] <= 0)
+        // travel_pathfind to give us even unreachable squares.  The
+        // player's starting position may in some cases not have its
+        // travel_point_distance set, but we know it's reachable, since
+        // we're there.
+        if (travel_point_distance[whereto.x][whereto.y] <= 0
+            && whereto != you.pos())
+        {
             whereto.reset();
+        }
     }
 
     if (whereto.x || whereto.y)
@@ -1289,11 +1302,16 @@ coord_def travel_pathfind::pathfind(run_mode_type rmode, bool fallback_explore)
 
     if (runmode == RMODE_CONNECTIVITY)
         ignore_player_traversability = true;
-    else if (runmode == RMODE_EXPLORE_GREEDY)
-    {
-        autopickup = can_autopickup();
-        sacrifice = god_likes_items(you.religion, true);
-        need_for_greed = (autopickup || sacrifice);
+    else {
+        ASSERTM(crawl_state.need_save,
+                "Pathfind with mode %d without a game?", runmode);
+
+        if (runmode == RMODE_EXPLORE_GREEDY)
+        {
+            autopickup = can_autopickup();
+            sacrifice = god_likes_items(you.religion, true);
+            need_for_greed = (autopickup || sacrifice);
+        }
     }
 
     if (!ls && (annotate_map || need_for_greed))
@@ -2199,9 +2217,9 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
         case '\n': case '\r':
             return ID_REPEAT;
         case '<':
-            return (allow_updown? ID_UP : ID_CANCEL);
+            return (allow_updown ? ID_UP : ID_CANCEL);
         case '>':
-            return (allow_updown? ID_DOWN : ID_CANCEL);
+            return (allow_updown ? ID_DOWN : ID_CANCEL);
         case CONTROL('P'):
             {
                 const branch_type parent = _find_parent_branch(curr.branch);
@@ -2431,7 +2449,7 @@ static travel_target _prompt_travel_depth(const level_id &id,
 
         char buf[100];
         const int response =
-            cancelable_get_line(buf, sizeof buf, NULL, _travel_depth_keyfilter);
+            cancellable_get_line(buf, sizeof buf, NULL, _travel_depth_keyfilter);
 
         if (!response)
             return _parse_travel_target(buf, target);
@@ -2551,9 +2569,6 @@ static void _start_translevel_travel()
 
 void start_translevel_travel(const travel_target &pos)
 {
-    if (!i_feel_safe(true, true))
-        return;
-
     if (!can_travel_to(pos.p.id))
     {
         if (!can_travel_interlevel())
@@ -2598,20 +2613,20 @@ void start_translevel_travel(const travel_target &pos)
     }
 
     trans_travel_dest = _get_trans_travel_dest(level_target);
-    _start_translevel_travel();
-}
 
-static void _start_translevel_travel_prompt()
-{
     if (!i_feel_safe(true, true))
         return;
-
     if (you.confused())
     {
         canned_msg(MSG_TOO_CONFUSED);
         return;
     }
 
+    _start_translevel_travel();
+}
+
+static void _start_translevel_travel_prompt()
+{
     // Update information for this level. We need it even for the prompts, so
     // we can't wait to confirm that the user chose to initiate travel.
     travel_cache.get_level_info(level_id::current()).update();
@@ -2968,9 +2983,6 @@ void start_travel(const coord_def& p)
     if (p == you.pos())
         return;
 
-    if (!i_feel_safe(true, true))
-        return;
-
     // Can we even travel to this square?
     if (!in_bounds(p))
         return;
@@ -2987,6 +2999,14 @@ void start_travel(const coord_def& p)
 
     if (!can_travel_interlevel())
     {
+        if (!i_feel_safe(true, true))
+            return;
+        if (you.confused())
+        {
+            canned_msg(MSG_TOO_CONFUSED);
+            return;
+        }
+
         // Start running
         you.running = RMODE_TRAVEL;
         _start_running();
@@ -3006,7 +3026,7 @@ void start_explore(bool grab_items)
     // Forget interrupted butchering.
     maybe_clear_weapon_swap();
 
-    you.running = (grab_items? RMODE_EXPLORE_GREEDY : RMODE_EXPLORE);
+    you.running = (grab_items ? RMODE_EXPLORE_GREEDY : RMODE_EXPLORE);
 
     if (you.running == RMODE_EXPLORE_GREEDY && god_likes_items(you.religion, true))
     {
@@ -3225,7 +3245,7 @@ string stair_info::describe() const
         return make_stringf(" (-> %s@(%d,%d)%s%s)", lp.id.describe().c_str(),
                              lp.pos.x, lp.pos.y,
                              guessed_pos? " guess" : "",
-                             type == PLACEHOLDER? " placeholder" : "");
+                             type == PLACEHOLDER ? " placeholder" : "");
     }
     else if (destination.id.is_valid())
         return make_stringf(" (->%s (?))", destination.id.describe().c_str());

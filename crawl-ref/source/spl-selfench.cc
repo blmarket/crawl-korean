@@ -16,6 +16,8 @@
 #include "libutil.h"
 #include "message.h"
 #include "misc.h"
+#include "options.h"
+#include "religion.h"
 #include "shout.h"
 #include "spl-cast.h"
 #include "spl-transloc.h"
@@ -28,7 +30,7 @@ int allowed_deaths_door_hp(void)
 {
     int hp = you.skill(SK_NECROMANCY) / 2;
 
-    if (you.religion == GOD_KIKUBAAQUDGHA && !player_under_penance())
+    if (you_worship(GOD_KIKUBAAQUDGHA) && !player_under_penance())
         hp += you.piety / 15;
 
     return max(hp, 1);
@@ -192,18 +194,6 @@ spret_type cast_swiftness(int power, bool fail)
         return SPRET_ABORT;
     }
 
-    if (you.in_water())
-    {
-        mpr("물에서 거품이 일었다!");
-        return SPRET_ABORT;
-    }
-
-    if (you.liquefied_ground())
-    {
-        mpr("액화된 땅에서 거품이 일었다!");
-        return SPRET_ABORT;
-    }
-
     if (!you.duration[DUR_SWIFTNESS] && player_movement_speed() <= 6)
     {
         mpr("당신은 지금보다 더 빨라질 수 없다.");//mpr("You can't move any more quickly.");
@@ -212,10 +202,20 @@ spret_type cast_swiftness(int power, bool fail)
 
     fail_check();
 
+    if (you.in_liquid())
+    {
+        // Hint that the player won't be faster until they leave the liquid.
+        mprf("%s에서 거품이 일었다!", you.in_water() ? "물"
+                            : you.in_lava()  ? "용암"
+                                             : "액화된 지면");
+    }
+
     // [dshaligram] Removed the on-your-feet bit.  Sounds odd when
     // you're flying, for instance.
     you.increase_duration(DUR_SWIFTNESS, 20 + random2(power), 100,
-                          "당신은 민첩해짐을 느꼈다.");//"You feel quick.");
+                          you.in_liquid()
+                              ? "몸이 민첩해질 수 있다는 느낌을 받았다."
+                              : "몸이 민첩해진 느낌이다.");
     did_god_conduct(DID_HASTY, 8, true);
 
     return SPRET_SUCCESS;
@@ -233,6 +233,12 @@ spret_type cast_fly(int power, bool fail)
     {
         mpr("이런 작은 마법은 중력으로부터 당신을 당길 수 없다!", MSGCH_WARN);//mpr("Such puny magic can't pull you from the ground!", MSGCH_WARN);
         return SPRET_ABORT;//그런 후잡한 마법으로는 레다쨩의 마법을 벗어날 수 없다능! by 군발트
+    }
+
+    if (you.duration[DUR_GRASPING_ROOTS])
+    {
+        mpr("The grasping roots prevent you from becoming airborne.", MSGCH_WARN);
+        return SPRET_ABORT;
     }
 
     fail_check();
@@ -281,11 +287,14 @@ int cast_selective_amnesia(string *pre_msg)
     int slot;
 
     // Pick a spell to forget.
+    mpr("어느 마법을 잊을 것인가 ([?*] 목록 [ESC] 종료)? ", MSGCH_PROMPT);
+    keyin = Options.auto_list
+            ? list_spells(false, false, false, "Forget which spell?")
+            : get_ch();
+    redraw_screen();
+
     while (true)
     {
-        mpr("어느 마법을 기억에서 지울 것인가 ([?*] 목록 [ESC] 취소)? ", MSGCH_PROMPT);//mpr("Forget which spell ([?*] list [ESC] exit)? ", MSGCH_PROMPT);
-        keyin = get_ch();
-
         if (key_is_escape(keyin))
         {
             canned_msg(MSG_OK);
@@ -294,13 +303,14 @@ int cast_selective_amnesia(string *pre_msg)
 
         if (keyin == '?' || keyin == '*')
         {
-            keyin = list_spells(false, false, false);
+            keyin = list_spells(false, false, false, "어느 마법을 잊을 것인가?");
             redraw_screen();
         }
 
         if (!isaalpha(keyin))
         {
             mesclr();
+            keyin = get_ch();
             continue;
         }
 
@@ -308,7 +318,11 @@ int cast_selective_amnesia(string *pre_msg)
         slot = get_spell_slot_by_letter(keyin);
 
         if (spell == SPELL_NO_SPELL)
-            mpr("당신은 그 마법을 모른다");//mpr("You don't know that spell.");
+        {
+            mpr("당신은 그 마법을 모른다.");
+            mpr("어느 마법을 잊을 것인가 ([?*] 목록 [ESC] 종료)? ", MSGCH_PROMPT);
+            keyin = get_ch();
+        }
         else
             break;
     }
@@ -316,15 +330,7 @@ int cast_selective_amnesia(string *pre_msg)
     if (pre_msg)
         mpr(pre_msg->c_str());
 
-    const int ep_gain = spell_mana(spell);
     del_spell_from_memory_by_slot(slot);
-
-    if (ep_gain > 0)
-    {
-        inc_mp(ep_gain);
-        mpr("주문을 해방하여 그 잠재에너지를 당신에게 되돌린다");//mpr("The spell releases its latent energy back to you as "
-            //"it unravels.");by크롤러.
-    }
 
     return 1;
 }
@@ -354,7 +360,7 @@ spret_type cast_song_of_slaying(int pow, bool fail)
 
     you.increase_duration(DUR_SONG_OF_SLAYING, 20 + pow / 3, 20 + pow / 3);
 
-    noisy(12, you.pos());
+    noisy(10, you.pos());
 
     you.props["song_of_slaying_bonus"] = 0;
     return SPRET_SUCCESS;

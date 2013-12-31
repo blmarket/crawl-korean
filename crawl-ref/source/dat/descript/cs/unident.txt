@@ -1,9 +1,47 @@
 %%%%
+amulet
+
+Talisman, který lze nosit coby šperk kolem krku, nabitý magickými silami
+neznámého původu.
+%%%%
+book
+
+Magická kniha, obsahující tradiční kouzla neznámého původu. Je psána pro
+opravdu zkušené uživatele, a tudíž je použití svazku podmíněno elementární
+znalostí okultního umění sesílání kouzel. Mějte se na pozoru, neboť s některými
+z mocnějších grimoárů není radno si zahrávat.
+%%%%
+deck of cards
+
+Balíček mocných magických karet, malovaných krví démonů. Mohou mít mnoho
+nápomocných i nebezpečných účinků.
+%%%%
 potion
 
-Neoznačená baňka obsahující dávku neznámé kapaliny.
+Neoznačená baňka, obsahující jednu dávku neznámé kapaliny.
+%%%%
+ring
+
+Talisman s nábojem magických sil neznámého původu, který se nosí coby šperk na
+prstu.
+%%%%
+rod
+
+Magická tyč, kterou lze držet v ruce a sesílat z ní jedno z několika kouzel,
+jež čerpají sílu z neustále se dobíjejí zásobarny many. Je rovněž dost robustní
+na to, aby mohla být použita jako prostá tupá zbraň.
+%%%%
+scroll
+
+Jednorázová magická formule, zapsaná na pergamen písařem z povolání nebo
+kouzelníkem. Přečtením nahlas může kdokoliv vyvolat její moc, ale povaha jejího
+účinku není předem známa.
+%%%%
+staff
+
+Hůl, zlepšená magickými silami neznámé povahy.
 %%%%
 wand
 
-Hůl. Možná, že je kouzelná.
+Hůlka. Možná i kouzelná.
 %%%%

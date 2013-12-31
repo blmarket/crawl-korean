@@ -23,6 +23,7 @@
 #include "godabil.h"
 #include "libutil.h"
 #include "player.h"
+#include "religion.h"
 #include "species.h"
 #include "skills.h"
 #include "skill_menu.h"
@@ -91,7 +92,9 @@ static const char *skills[NUM_SKILLS][6] =
     {M_("Stabbing"),       M_("Miscreant"),     M_("Blackguard"),      M_("Backstabber"),     M_("Cutthroat"),      M_("Politician")},
 #endif
     {M_("Shields"),        M_("Shield-Bearer"), M_("Hoplite"),         M_("Blocker"),         M_("Peltast"),        M_("@Adj@ Barricade")},
+#if TAG_MAJOR_VERSION == 34
     {M_("Traps"),          M_("Scout"),         M_("Disarmer"),        M_("Vigilant"),        M_("Perceptive"),     M_("Dungeon Master")},
+#endif
     // STR based fighters, for DEX/martial arts titles see below.  Felids get their own category, too.
     {M_("Unarmed Combat"), M_("Ruffian"),       M_("Grappler"),        M_("Brawler"),         M_("Wrestler"),       M_("@Weight@weight Champion")},
 
@@ -497,7 +500,7 @@ void calc_mp()
 bool is_useless_skill(skill_type skill)
 {
 #if TAG_MAJOR_VERSION == 34
-    if (skill == SK_STABBING)
+    if (skill == SK_STABBING || skill == SK_TRAPS)
         return true;
 #endif
     return species_apt(skill) == -99;
@@ -505,7 +508,7 @@ bool is_useless_skill(skill_type skill)
 
 bool is_harmful_skill(skill_type skill)
 {
-    return is_magic_skill(skill) && you.religion == GOD_TROG;
+    return is_magic_skill(skill) && you_worship(GOD_TROG);
 }
 
 bool all_skills_maxed(bool inc_harmful)
@@ -772,7 +775,7 @@ int transfer_skill_points(skill_type fsk, skill_type tsk, int skp_max,
     if (!simu && you.ct_skill_points[fsk] > 0)
         dprf("ct_skill_points[%s]: %d", skill_name(fsk), you.ct_skill_points[fsk]);
 
-    // We need to transfer by small steps and updating skill levels each time
+    // We need to transfer by small steps and update skill levels each time
     // so that cross/anti-training are handled properly.
     while (total_skp_lost < skp_max
            && (simu || total_skp_lost < (int)you.transfer_skill_points))

@@ -93,7 +93,7 @@ static int find_weight(string &s, int defweight = TAG_UNFOUND)
     int weight = strip_number_tag(s, "weight:");
     if (weight == TAG_UNFOUND)
         weight = strip_number_tag(s, "w:");
-    return (weight == TAG_UNFOUND? defweight : weight);
+    return (weight == TAG_UNFOUND ? defweight : weight);
 }
 
 void clear_subvault_stack(void)
@@ -263,7 +263,7 @@ string level_range::describe() const
 {
     return make_stringf("%s%s%s",
                         deny? "!" : "",
-                        branch == NUM_BRANCHES? "Any" :
+                        branch == NUM_BRANCHES ? "Any" :
                         branches[branch].abbrevname,
                         str_depth_range().c_str());
 }
@@ -1451,7 +1451,7 @@ void map_lines::nsubst(nsubst_spec &spec)
         while ((pos = lines[y].find_first_of(spec.key, pos)) != string::npos)
             positions.push_back(coord_def(pos++, y));
     }
-    random_shuffle(positions.begin(), positions.end(), random2);
+    shuffle_array(positions);
 
     int pcount = 0;
     const int psize = positions.size();
@@ -1483,7 +1483,7 @@ int map_lines::apply_nsubst(vector<coord_def> &pos, int start, int nsub,
 string map_lines::block_shuffle(const string &s)
 {
     vector<string> segs = split_string("/", s);
-    random_shuffle(segs.begin(), segs.end(), random2);
+    shuffle_array(segs);
     return (comma_separated_line(segs.begin(), segs.end(), "/", "/"));
 }
 
@@ -2198,8 +2198,9 @@ string depth_ranges::describe() const
 
 const int DEFAULT_MAP_WEIGHT = 10;
 map_def::map_def()
-    : name(), description(), tags(), place(), depths(), orient(), _chance(),
-      _weight(DEFAULT_MAP_WEIGHT), map(), mons(), items(), random_mons(),
+    : name(), description(), order(INT_MAX), tags(), place(), depths(),
+      orient(), _chance(), _weight(DEFAULT_MAP_WEIGHT),
+      map(), mons(), items(), random_mons(),
       prelude("dlprelude"), mapchunk("dlmapchunk"), main("dlmain"),
       validate("dlvalidate"), veto("dlveto"), epilogue("dlepilogue"),
       rock_colour(BLACK), floor_colour(BLACK), rock_tile(""),
@@ -2214,6 +2215,7 @@ void map_def::init()
     orient = MAP_NONE;
     name.clear();
     description.clear();
+    order = INT_MAX;
     tags.clear();
     place.clear();
     depths.clear();
@@ -2234,6 +2236,7 @@ void map_def::init()
 void map_def::reinit()
 {
     description.clear();
+    order = INT_MAX;
     items.clear();
     random_mons.clear();
     level_flags.clear();
@@ -3537,7 +3540,7 @@ mons_spec mons_list::get_monster(int slot_index, int list_index) const
     if (list_index < 0 || list_index >= (int)list.size())
         return mons_spec(RANDOM_MONSTER);
 
-    return (list[list_index]);
+    return list[list_index];
 }
 
 void mons_list::clear()
@@ -3762,7 +3765,7 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(string spec)
             }
         }
 
-        // place:Elf:7 to choose monsters appropriate for that level,
+        // place:Elf:$ to choose monsters appropriate for that level,
         // for example.
         const string place = strip_tag_prefix(mon_str, "place:");
         if (!place.empty())
@@ -4611,7 +4614,9 @@ static int _str_to_ego(item_spec &spec, string ego_str)
         "freezing",
         "holy_wrath",
         "electrocution",
+#if TAG_MAJOR_VERSION == 34
         "orc_slaying",
+#endif
         "dragon_slaying",
         "venom",
         "protection",
@@ -4697,7 +4702,7 @@ static int _str_to_ego(item_spec &spec, string ego_str)
             return (i + 1);
     }
 
-    // Incompatible or non-existant ego type
+    // Incompatible or non-existent ego type
     for (int i = 1; i <= 2; i++)
     {
         const char** list = name_lists[order[i]];
@@ -4708,7 +4713,7 @@ static int _str_to_ego(item_spec &spec, string ego_str)
                 return -1;
     }
 
-    // Non-existant ego
+    // Non-existent ego
     return 0;
 }
 
@@ -4759,16 +4764,19 @@ bool item_list::monster_corpse_is_valid(monster_type *mons,
 item_spec item_list::parse_corpse_spec(item_spec &result, string s)
 {
     const bool never_decay = strip_tag(s, "never_decay");
+    const bool rotting = strip_tag(s, "rotting");
 
     if (never_decay)
         result.props[CORPSE_NEVER_DECAYS].get_bool() = true;
+    if (rotting)
+        result.item_special = ROTTING_CORPSE;
 
     const bool corpse = strip_suffix(s, "corpse");
     const bool skeleton = !corpse && strip_suffix(s, "skeleton");
     const bool chunk = !corpse && !skeleton && strip_suffix(s, "chunk");
 
-    result.base_type = chunk? OBJ_FOOD : OBJ_CORPSES;
-    result.sub_type  = (chunk  ? static_cast<int>(FOOD_CHUNK) :
+    result.base_type = chunk ? OBJ_FOOD : OBJ_CORPSES;
+    result.sub_type  = (chunk ? static_cast<int>(FOOD_CHUNK) :
                         static_cast<int>(corpse ? CORPSE_BODY :
                                          CORPSE_SKELETON));
 

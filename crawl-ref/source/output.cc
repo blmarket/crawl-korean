@@ -580,7 +580,7 @@ static void _print_stats_contam(int x, int y)
     if (you.species != SP_DJINNI)
         return;
 
-    const int max_contam = 16;
+    const int max_contam = 16000;
     int contam = min(you.magic_contamination, max_contam);
 
     // Calculate colour
@@ -683,7 +683,7 @@ static void _print_stats_hp(int x, int y)
 
 static short _get_stat_colour(stat_type stat)
 {
-    if (you.stat_zero[stat] > 0)
+    if (you.stat_zero[stat])
         return LIGHTRED;
 
     // Check the stat_colour option for warning thresholds.
@@ -756,7 +756,9 @@ static void _print_stats_ac(int x, int y)
 static void _print_stats_ev(int x, int y)
 {
     CGOTOXY(x+4, y, GOTO_STAT);
-    textcolor(you.duration[DUR_PHASE_SHIFT] || you.duration[DUR_AGILITY]
+    textcolor(you.duration[DUR_PETRIFYING] || you.duration[DUR_GRASPING_ROOTS]
+              || you.cannot_move() ? RED :
+              you.duration[DUR_PHASE_SHIFT] || you.duration[DUR_AGILITY]
               ? LIGHTBLUE : HUD_VALUE_COLOUR);
     CPRINTF("%2d ", player_evasion());
 }
@@ -1007,13 +1009,18 @@ static void _get_status_lights(vector<status_light>& out)
         DUR_INFUSION,
         DUR_SONG_OF_SLAYING,
         DUR_SONG_OF_SHIELDING,
+        STATUS_DRAINED,
+        DUR_TOXIC_RADIANCE,
+        STATUS_RAY,
+        DUR_RECITE,
+        DUR_GRASPING_ROOTS,
+        DUR_FIRE_VULN,
     };
 
     status_info inf;
     for (unsigned i = 0; i < ARRAYSZ(statuses); ++i)
     {
-        fill_status_info(statuses[i], &inf);
-        if (!inf.light_text.empty())
+        if (fill_status_info(statuses[i], &inf) && !inf.light_text.empty())
         {
             status_light sl(inf.light_colour, inf.light_text);
             out.push_back(sl);
@@ -1176,10 +1183,10 @@ static void _redraw_title(const string &your_name, const string &job_name)
     CGOTOXY(1, 2, GOTO_STAT);
     string species = _(species_name(you.species).c_str());
     NOWRAP_EOL_CPRINTF("%s", species.c_str());
-    if (you.religion != GOD_NO_GOD)
+    if (!you_worship(GOD_NO_GOD))
     {
         string god = ", "; // " of ";
-        god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
+        god += you_worship(GOD_JIYVA) ? god_name_jiyva(true)
                                          : _(god_name(you.religion).c_str());
         NOWRAP_EOL_CPRINTF("%s", god.c_str());
 
@@ -1745,7 +1752,8 @@ static string _status_mut_abilities(int sw);
 
 // helper for print_overview_screen
 static void _print_overview_screen_equip(column_composer& cols,
-                                         vector<char>& equip_chars)
+                                         vector<char>& equip_chars,
+                                         int sw)
 {
     const int e_order[] =
     {
@@ -1755,7 +1763,9 @@ static void _print_overview_screen_equip(column_composer& cols,
         EQ_RING_FIVE, EQ_RING_SIX, EQ_RING_SEVEN, EQ_RING_EIGHT,
     };
 
-    char buf[100];
+    sw = min(max(sw, 79), 640);
+
+    char buf[641];
     for (int i = 0; i < NUM_EQUIP; i++)
     {
         int eqslot = e_order[i];
@@ -1804,7 +1814,7 @@ static void _print_overview_screen_equip(column_composer& cols,
                      equip_char,
                      colname,
                      melded ? "일체화 " : "",
-                     chop_string(item.name(true, DESC_PLAIN, true), 42, false).c_str(),
+                     chop_string(item.name(true, DESC_PLAIN, true), sw - 38, false).c_str(),
                      colname);
             equip_chars.push_back(equip_char);
         }
@@ -1920,7 +1930,7 @@ static string _wiz_god_powers()
 static string _god_powers(bool simple)
 {
     string godpowers = simple ? "" : _(god_name(you.religion).c_str()) ;
-    if (you.religion == GOD_XOM)
+    if (you_worship(GOD_XOM))
     {
         if (!you.gift_timeout)
             godpowers += simple ? "- 지루함" : " - 지루함";
@@ -1929,7 +1939,7 @@ static string _god_powers(bool simple)
         return (simple ? godpowers
                        : colour_string(godpowers, god_colour(you.religion)));
     }
-    else if (you.religion != GOD_NO_GOD)
+    else if (!you_worship(GOD_NO_GOD))
     {
         if (player_under_penance())
             return (simple ? "*" : colour_string("*" + godpowers, RED));
@@ -1937,7 +1947,7 @@ static string _god_powers(bool simple)
         {
             // piety rankings
             int prank = piety_rank() - 1;
-            if (prank < 0 || you.religion == GOD_XOM)
+            if (prank < 0 || you_worship(GOD_XOM))
                 prank = 0;
 
             // Careful about overflow. We erase some of the god's name
@@ -2149,8 +2159,7 @@ static vector<formatted_string> _get_overview_stats()
 }
 
 static vector<formatted_string> _get_overview_resistances(
-    vector<char> &equip_chars,
-    bool calc_unid = false)
+    vector<char> &equip_chars, bool calc_unid, int sw)
 {
     char buf[1000];
 
@@ -2164,8 +2173,7 @@ static vector<formatted_string> _get_overview_resistances(
     const int relec = player_res_electricity(calc_unid);
     const int rsust = player_sust_abil(calc_unid);
     const int rmuta = (you.rmut_from_item(calc_unid)
-                       || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3
-                       || you.religion == GOD_ZIN && you.piety >= 150);
+                       || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3);
     const int rrott = you.res_rotting();
 
     snprintf(buf, sizeof buf,
@@ -2258,7 +2266,7 @@ static vector<formatted_string> _get_overview_resistances(
              _determine_colour_string(rflyi, 1), _itosym1(rflyi));
     cols.add_formatted(1, buf, false);
 
-    _print_overview_screen_equip(cols, equip_chars);
+    _print_overview_screen_equip(cols, equip_chars, sw);
 
     return cols.formatted_lines();
 }
@@ -2268,16 +2276,9 @@ static char _get_overview_screen_results()
 {
     bool calc_unid = false;
     formatted_scroller overview;
+
     overview.set_flags(MF_SINGLESELECT | MF_ALWAYS_SHOW_MORE | MF_NOWRAP);
-    overview.set_more(formatted_string::parse_string(
-// FIXME later
-#ifdef USE_TILE_LOCAL
-                        "<cyan>[ +/좌클릭 : 아래 페이지 - : 윗 페이지."
-                        "           Esc/우클릭 : 나가기]"));
-#else
-                        "<cyan>[ + : Page down.   - : Page up."
-                        "                           Esc exits.]"));
-#endif
+    overview.set_more();
     overview.set_tag("resists");
 
     overview.add_text(_overview_screen_title(get_number_of_cols()));
@@ -2289,11 +2290,10 @@ static char _get_overview_screen_results()
         overview.add_text(" ");
     }
 
-
     {
         vector<char> equip_chars;
         vector<formatted_string> blines =
-            _get_overview_resistances(equip_chars, calc_unid);
+            _get_overview_resistances(equip_chars, calc_unid, get_number_of_cols());
 
         for (unsigned int i = 0; i < blines.size(); ++i)
         {
@@ -2325,7 +2325,7 @@ string dump_overview_screen(bool full_id)
     text += "\n";
 
     vector<char> equip_chars;
-    blines = _get_overview_resistances(equip_chars, full_id);
+    blines = _get_overview_resistances(equip_chars, full_id, 640);
     for (unsigned int i = 0; i < blines.size(); ++i)
     {
         text += blines[i];
@@ -2485,13 +2485,17 @@ static string _status_mut_abilities(int sw)
         DUR_WEAK,
         DUR_DIMENSION_ANCHOR,
         DUR_SPIRIT_HOWL,
+        STATUS_DRAINED,
+        DUR_TOXIC_RADIANCE,
+        DUR_RECITE,
+        DUR_GRASPING_ROOTS,
+        DUR_FIRE_VULN,
     };
 
     status_info inf;
     for (unsigned i = 0; i < ARRAYSZ(statuses); ++i)
     {
-        fill_status_info(statuses[i], &inf);
-        if (!inf.short_text.empty())
+        if (fill_status_info(statuses[i], &inf) && !inf.short_text.empty())
             status.push_back(inf.short_text);
     }
 
@@ -2646,6 +2650,16 @@ static string _status_mut_abilities(int sw)
         mutations.push_back(_dragon_abil("증기 내뿜기"));
         break;
 
+    case SP_GARGOYLE:
+        AC_change += 2 + you.experience_level * 2 / 5
+                       + max(0, you.experience_level - 7) * 2 / 5;
+        break;
+
+    case SP_DJINNI:
+        mutations.push_back("fire immunity");
+        mutations.push_back("cold vulnerability");
+        break;
+
     default:
         break;
     }                           //end switch - innate abilities
@@ -2720,23 +2734,24 @@ static string _status_mut_abilities(int sw)
                 AC_change += level;
                 break;
             case MUT_STRONG:
-                Str_change += level;
+                Str_change += level * 2;
                 break;
             case MUT_CLEVER:
-                Int_change += level;
+                Int_change += level * 2;
                 break;
             case MUT_AGILE:
-                Dex_change += level;
+                Dex_change += level * 2;
                 break;
             case MUT_WEAK:
-                Str_change -= level;
+                Str_change -= level * 2;
                 break;
             case MUT_DOPEY:
-                Int_change -= level;
+                Int_change -= level * 2;
                 break;
             case MUT_CLUMSY:
-                Dex_change -= level;
+                Dex_change -= level * 2;
                 break;
+#if TAG_MAJOR_VERSION == 34
             case MUT_STRONG_STIFF:
                 Str_change += level;
                 Dex_change -= level;
@@ -2745,6 +2760,7 @@ static string _status_mut_abilities(int sw)
                 Str_change -= level;
                 Dex_change += level;
                 break;
+#endif
             case MUT_FRAIL:
                 snprintf(info, INFO_SIZE, "-%d%% hp", level*10);
                 current = info;

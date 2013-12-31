@@ -630,7 +630,7 @@ function portal_next(e, next)
   end
 end
 
--- Turn persistant data into a human readable string.
+-- Turn persistent data into a human readable string.
 function persist_to_string()
     return table_to_string(dgn.persist)
 end
@@ -672,7 +672,7 @@ dgn.good_scrolls = [[
     w:10  scroll of acquirement no_pickup /
     w:4   scroll of acquirement no_pickup q:2 /
     w:1   scroll of acquirement no_pickup q:3 /
-    w:10  scroll of vorpalise weapon no_pickup /
+    w:10  scroll of brand weapon no_pickup /
     w:10  scroll of torment no_pickup /
     w:10  scroll of vulnerability no_pickup
     ]]

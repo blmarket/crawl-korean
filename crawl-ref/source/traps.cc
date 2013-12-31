@@ -573,7 +573,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
     if (in_sight)
         reveal();
 
-    // Store the position now in case it gets cleared inbetween.
+    // Store the position now in case it gets cleared in between.
     const coord_def p(pos);
 
     if (type_has_ammo())
@@ -928,7 +928,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             actor* targ = NULL;
             if (m->wont_attack() || crawl_state.game_is_arena())
                 targ = m;
-            else if (in_sight && one_chance_in(5))
+            else if (you.see_cell_no_trans(pos) && one_chance_in(5))
                 targ = &you;
 
             // Give the player a chance to figure out what happened
@@ -997,7 +997,14 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
         }
         break;
 
+#if TAG_MAJOR_VERSION == 34
     case TRAP_GAS:
+        if (in_sight && you_know)
+            mpr("The gas trap seems to be inoperative.");
+        trap_destroyed = true;
+        break;
+#endif
+
     case TRAP_PLATE:
         dungeon_events.fire_position_event(DET_PRESSURE_PLATE, pos);
         break;
@@ -1007,14 +1014,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
     }
 
     if (you_trigger)
-    {
         learned_something_new(HINT_SEEN_TRAP, p);
-
-        // Exercise T&D if the trap revealed itself, but not if it ran
-        // out of ammo.
-        if (!you_know && type != TRAP_UNASSIGNED && is_known())
-            practise(EX_TRAP_TRIGGER);
-    }
 
     if (trap_destroyed)
         destroy(know_trap_destroyed);
@@ -1074,8 +1074,10 @@ int trap_def::difficulty()
         return 15;
     case TRAP_WEB:
         return 12;
+#if TAG_MAJOR_VERSION == 34
     case TRAP_GAS:
         return 15;
+#endif
     // Irrelevant:
     default:
         return 0;
@@ -1189,12 +1191,10 @@ void disarm_trap(const coord_def& where)
 
     // Make the actual attempt
     you.turn_is_over = true;
-    if (random2(you.skill_rdiv(SK_TRAPS) + 2) <= random2(trap.difficulty() + 5))
+    if (random2(div_rand_round(you.experience_level, 3) + 2) <= random2(trap.difficulty() + 5))
     {
         mpr(_("You failed to disarm the trap."));
-        if (random2(you.dex()) > 5 + random2(5 + trap.difficulty()))
-            practise(EX_TRAP_DISARM_FAIL, trap.difficulty());
-        else
+        if (random2(you.dex()) <= 5 + random2(5 + trap.difficulty()))
         {
             if ((trap.type == TRAP_NET || trap.type==TRAP_WEB)
                 && trap.pos != you.pos())
@@ -1207,15 +1207,12 @@ void disarm_trap(const coord_def& where)
             }
             else
                 trap.trigger(you, true);
-
-            practise(EX_TRAP_DISARM_TRIGGER);
         }
     }
     else
     {
         mpr(gettext("You have disarmed the trap."));
         trap.disarm();
-        practise(EX_TRAP_DISARM, trap.difficulty());
     }
 }
 
@@ -1633,7 +1630,9 @@ dungeon_feature_type trap_category(trap_type type)
     case TRAP_BOLT:
     case TRAP_NEEDLE:
     case TRAP_NET:
+#if TAG_MAJOR_VERSION == 34
     case TRAP_GAS:
+#endif
     case TRAP_PLATE:
         return DNGN_TRAP_MECHANICAL;
 
@@ -1764,27 +1763,33 @@ void handle_items_on_shaft(const coord_def& pos, bool open_shaft)
     if (o == NON_ITEM)
         return;
 
-    igrd(pos) = NON_ITEM;
-
-    if (env.map_knowledge(pos).seen() && open_shaft)
-    {
-        mpr(gettext("A shaft opens up in the floor!"));
-        grd(pos) = DNGN_TRAP_NATURAL;
-    }
+    bool need_open_message = env.map_knowledge(pos).seen() && open_shaft;
 
     while (o != NON_ITEM)
     {
         int next = mitm[o].link;
 
-        if (mitm[o].defined())
+        if (mitm[o].defined() && !item_is_stationary(mitm[o]))
         {
-            if (env.map_knowledge(pos).seen())
+            if (need_open_message)
+            {
+                mpr(_("A shaft opens up in the floor!"));
+                grd(pos) = DNGN_TRAP_NATURAL;
+                need_open_message = false;
+            }
+
+            if (env.map_knowledge(pos).visible())
             {
                 mprf(gettext("%s fall%s through the shaft."),
                      mitm[o].name(true, DESC_INVENTORY).c_str(),
                      mitm[o].quantity == 1 ? "s" : "");
+
+                env.map_knowledge(pos).clear_item();
+                StashTrack.update_stash(pos);
             }
+
             // Item will be randomly placed on the destination level.
+            unlink_item(o);
             mitm[o].pos = INVALID_COORD;
             add_item_to_transit(dest, mitm[o]);
 

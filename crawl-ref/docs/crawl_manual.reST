@@ -1186,7 +1186,7 @@ is to quaff a potion of cure mutation, which will attempt to remove one or more
 random mutations.
 
 Demonspawn are a special case. Characters of this species get certain special
-powers during their career; these are listed in magenta. They are permanent and
+powers during their career; these are listed in cyan. They are permanent and
 can never be removed. If one of your Demonspawn powers has been augmented by a
 mutation, it is displayed in a lighter colour.
 
@@ -1717,7 +1717,8 @@ Felids
   Centaurs or Spriggans. Felids advance in levels very slowly. They are skilled
   with many forms of magic, though less so with raw elemental magic.
 
-  The tale of a Felid who had nine lives isn't far from truth, as well.
+  Felids gain extra lives as they increase in levels. Upon death, they will be
+  resurrected in a safe place, losing an experience level in the process.
 
 Octopodes
   These land-capable relatives of common octopuses can move about as fast as
@@ -1735,64 +1736,17 @@ Octopodes
   knowledge of poisons as well. They are also able to use their tentacles to
   constrict enemies - potentially several at a time!
 
-Djinn
-  Of the same stock as angels or demons, these spirits have been created from
-  smokeless fire by some deranged god. Unlike regular living beings, they draw
-  their sustenance from magic rather than eating or drinking, although for some
-  reason they can still do the latter - probably due to being unintelligently
-  designed by a creator with no knowledge of evolution.
-
-  Magic is literally their life, to the point of their health and magical
-  powers' being one force, called "essence". The Djinn can also withstand more
-  magical contamination than most, and slowly recover from its effects.
-
-  Being spirits of fire, they obviously suffer no harm from any kind of fire,
-  but the same cannot be said of their equipment. Accordingly, cold and water
-  cause them great harm. Fortunately, levitation allows them to cross bodies of
-  liquid, although without external means to power their flight it takes them
-  much effort to do so.
-
-  Djinn make great fire mages (duh). They are competent with air magic,
-  enchantments, magic items and weapons with long reaches that don't require
-  high dexterity. They are terrible with ice, earth, necromancy and poison.
-
-Lava Orcs
-  These strange humanoids are made of living stone, with a unique heat-based
-  metabolism. Ordinarily slow and hardy, when anything puts some stress on them,
-  they literally fire up, turning into fast-moving lava. Outwardly, their shape
-  mostly resembles that of Orcs, thus the name.
-
-  They are unique in their ability to swim in lava: even the Djinn, while immune
-  to fire, can't swim through a treacle of molten rock. In order to be able to
-  use regular equipment, Lava Orcs have invented special fire-proof backpacks;
-  vulnerable items like scrolls or books are not accessible when their owner is
-  too hot.
-
-  Many things can fire up their metabolism: facing multiple and/or dangerous
-  enemies, being badly hurt, suffering fire damage, berserking, and obviously
-  being submerged in lava. As their heat grows, Lava Orcs gain normal speed,
-  become more accustomed to fire, have their stony skin soften, gain extra power
-  when casting fire magic, become vulnerable to cold, speed up even more, and
-  finally cause fire damage to all creatures in their presence.
-
-  Lava Orcs make good melee fighters, preferring axes. They're pretty bad
-  spellcasters, except for transmutations, fire and earth magic.
-
-  Many Orcs feel superior to all other species and beings, and they have formed
-  a religion around that idea. Only Orcs can worship Beogh, the Orc god. They
-  can join Beogh whenever an orc priest is in sight.
-
 Gargoyles
   A cross between ordinary stone gargoyles and living beings, Gargoyles are
-  hideous humanoids with an affinity to rock. They are immune to petrification,
-  and their stony weight protects them from being trampled.
+  hideous humanoids with an affinity to rock. They have low health, but large
+  amounts of innate armour which increases further as they gain levels. They
+  eventually gain the ability to fly continuously.
 
-  Gargoyles' partially living form makes them less susceptible to effects of
-  necromancy and cold than most beings. Their metabolisms are slow, and they
-  blend into the dungeon pretty well. Their fangs and talons make them dangerous
-  unarmed fighters, although they're incompetent with weapons other than maces.
-  They can be exceptional earth-based conjurers, although they're bad with all
-  other magic schools besides ice.
+  Gargoyles' partially living form grants them immunity to poison, as well as a
+  slow metabolism, resistance to electricity, and protection from some effects
+  of necromancy. Their fangs and talons make them strong unarmed fighters, and
+  they are capable with blunt weapons. They can also be exceptional earth-based
+  conjurers.
 
 Elves
 ========================================
@@ -1979,7 +1933,7 @@ Chaos Knights
 
 Death Knights
   The Death Knight is a fighter who aligns him or herself with the powers of
-  death and worships Yredelemnul the Dark, who will soon grant the ability to
+  death and worships Yredelemnul the Dark, who grants followers the ability to
   re-animate the dead.
 
 Abyssal Knights
@@ -2001,7 +1955,7 @@ Warpers
 
 Assassins
   An Assassin is a stealthy character who is especially good at killing, using
-  daggers or blowguns.
+  daggers or blowguns. They start with some deadly curare needles.
 
 Hunters
   The Hunter is a type of fighter who specialises in missile weapons. A Hunter

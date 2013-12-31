@@ -5,6 +5,8 @@
 #include "libutil.h"
 #include "random.h"
 
+#include "version.h"
+
 // March 2008: change order of species and jobs on character selection
 // screen as suggested by Markus Maier. Summarizing comments below are
 // copied directly from Markus' SourceForge comments. (jpeg)
@@ -51,7 +53,7 @@ species_type get_species(const int index)
     if (index < 0 || index >= ng_num_species())
         return SP_UNKNOWN;
 
-    return (species_order[index]);
+    return species_order[index];
 }
 
 static const char * Species_Abbrev_List[NUM_SPECIES] =
@@ -289,11 +291,6 @@ size_type species_size(species_type species, size_part_type psize)
     case SP_TROLL:
         return SIZE_LARGE;
     case SP_NAGA:
-        // Most of their body is on the ground giving them a low profile.
-        if (psize == PSIZE_TORSO || psize == PSIZE_PROFILE)
-            return SIZE_MEDIUM;
-        else
-            return SIZE_LARGE;
     case SP_CENTAUR:
         return ((psize == PSIZE_TORSO) ? SIZE_MEDIUM : SIZE_LARGE);
     case SP_HALFLING:
@@ -403,6 +400,23 @@ bool is_valid_species(species_type species)
     return (species >= 0 && species <= LAST_VALID_SPECIES);
 }
 
+bool is_species_valid_choice(species_type species)
+{
+#if TAG_MAJOR_VERSION == 34
+    if (species == SP_SLUDGE_ELF)
+        return false;
+#endif
+    if ((species == SP_LAVA_ORC || species == SP_DJINNI)
+        && Version::ReleaseType != VER_ALPHA)
+    {
+        return false;
+    }
+
+    // Non-base draconians cannot be selected either.
+    return is_valid_species(species)
+        && !(species >= SP_RED_DRACONIAN && species < SP_BASE_DRACONIAN);
+}
+
 int species_exp_modifier(species_type species)
 {
     switch (species) // table: Experience
@@ -463,6 +477,7 @@ int species_hp_modifier(species_type species)
     case SP_DEEP_ELF:
     case SP_TENGU:
     case SP_KOBOLD:
+    case SP_GARGOYLE:
         return -2;
     case SP_HIGH_ELF:
     case SP_SLUDGE_ELF:
@@ -484,7 +499,6 @@ int species_hp_modifier(species_type species)
     case SP_PURPLE_DRACONIAN:
     case SP_MOTTLED_DRACONIAN:
     case SP_PALE_DRACONIAN:
-    case SP_GARGOYLE:
     case SP_GHOUL:
     case SP_HILL_ORC:
     case SP_LAVA_ORC:

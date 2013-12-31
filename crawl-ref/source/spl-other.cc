@@ -103,12 +103,12 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
             mpr(gettext("A conflicting enchantment prevents the spell from "
                 "coming into effect."));
         }
-        else if (you.species == SP_DJINNI)
-            mpr(_("Draw from your essence to power your essence... yeah right."));
-        else if (!you.can_bleed(false))
+        else if (!you.can_bleed())
         {
-            mpr(gettext("You don't have enough blood to draw power from your "
-                "own body."));
+            if (you.species == SP_VAMPIRE)
+                mpr(_("You don't have enough blood to draw power from your own body."));
+            else
+                mpr(_("Your body is bloodless."));
         }
         else if (!enough_hp(2, true))
             mpr(_("Your attempt to draw power from your own body fails."));
@@ -247,7 +247,7 @@ void recall_orders(monster *mons)
     // Don't wander
     mons->behaviour = BEH_SEEK;
 
-    // Don't persue distant enemies
+    // Don't pursue distant enemies
     const actor *foe = mons->get_foe();
     if (foe && !you.can_see(foe))
         mons->foe = MHITYOU;

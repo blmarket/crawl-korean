@@ -206,8 +206,7 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
             }
         }
     }
-
-    if (_snakable_weapon(wpn))
+    else if (_snakable_weapon(wpn))
     {
         fail_check();
         // Upsizing Snakes to Water Moccasins as the base class for using
@@ -238,6 +237,11 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
             count++;
             snake->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, dur));
         }
+    }
+    else
+    {
+        mpr(abort_msg);
+        return SPRET_ABORT;
     }
 
     if (!count)
@@ -1159,7 +1163,8 @@ spret_type cast_shadow_creatures(bool scroll, god_type god, bool fail)
                 mon_enchant me = mon_enchant(ENCH_ABJ, d);
                 me.set_duration(mons, &me);
                 mons->update_ench(me);
-                summoned_monster(mons, &you, SPELL_SHADOW_CREATURES);
+                if (!scroll) // Only track cap for non-scroll casting
+                    summoned_monster(mons, &you, SPELL_SHADOW_CREATURES);
             }
 
             // Remove any band members that would turn hostile
@@ -1170,8 +1175,6 @@ spret_type cast_shadow_creatures(bool scroll, god_type god, bool fail)
                 {
                     if (player_will_anger_monster(*mi))
                         monster_die(*mi, KILL_RESET, NON_MONSTER);
-                    else if (!scroll) // Only track cap for non-scroll casting
-                        summoned_monster(*mi, &you, SPELL_SHADOW_CREATURES);
                 }
             }
 
@@ -1704,7 +1707,7 @@ int animate_remains(const coord_def &a, corpse_type class_allowed,
         }
     }
 
-    if (motions_r)
+    if (motions_r && you.see_cell(a))
         *motions_r |= motions;
 
     if (number_found == 0)
@@ -2132,10 +2135,19 @@ bool twisted_resurrection(actor *caster, int pow, beh_type beha,
 {
     int num_orcs = 0;
     int num_holy = 0;
+
+    // In a tracer (actual == false), num_crawlies counts the number of
+    // affected corpses. When actual == true, these count the number of
+    // crawling corpses, macabre masses, and lost corpses, respectively.
     int num_crawlies = 0;
     int num_masses = 0;
     int num_lost = 0;
-    int num_lost_piles = 0;
+
+    // ...and the number of each that were seen by the player.
+    int seen_crawlies = 0;
+    int seen_masses = 0;
+    int seen_lost = 0;
+    int seen_lost_piles = 0;
 
     radius_iterator ri(caster->pos(), LOS_RADIUS, C_ROUND,
                        caster->get_los_no_trans());
@@ -2144,6 +2156,7 @@ bool twisted_resurrection(actor *caster, int pow, beh_type beha,
     {
         int num_corpses = 0;
         int total_mass = 0;
+        const bool visible = you.see_cell(*ri);
 
         // Count up number/size of corpses at this location.
         for (stack_iterator si(*ri); si; ++si)
@@ -2182,7 +2195,11 @@ bool twisted_resurrection(actor *caster, int pow, beh_type beha,
         if (hd <= 0)
         {
             num_lost += num_corpses;
-            num_lost_piles++;
+            if (visible)
+            {
+                seen_lost += num_corpses;
+                seen_lost_piles++;
+            }
             continue;
         }
 
@@ -2212,14 +2229,26 @@ bool twisted_resurrection(actor *caster, int pow, beh_type beha,
             mons->god = god;
 
             if (num_corpses > 1)
+            {
                 ++num_masses;
+                if (visible)
+                    ++seen_masses;
+            }
             else
+            {
                 ++num_crawlies;
+                if (visible)
+                    ++seen_crawlies;
+            }
         }
         else
         {
             num_lost += num_corpses;
-            num_lost_piles++;
+            if (visible)
+            {
+                seen_lost += num_corpses;
+                seen_lost_piles++;
+            }
         }
     }
 
@@ -2230,27 +2259,27 @@ bool twisted_resurrection(actor *caster, int pow, beh_type beha,
     if (num_lost + num_crawlies + num_masses == 0)
         return false;
 
-    if (num_lost)
+    if (seen_lost)
     {
         mprf(pgettext("summoning","%s %s into %s!"),
-             _count_article(num_lost, num_crawlies + num_masses == 0),
-             num_lost == 1 ? pgettext("summoning","corpse collapses") : pgettext("summoning","corpses collapse"),
-             num_lost_piles == 1 ? pgettext("summoning","a pulpy mess") : pgettext("summoning","pulpy messes"));
+             _count_article(seen_lost, seen_crawlies + seen_masses == 0),
+             seen_lost == 1 ? pgettext("summoning","corpse collapses") : pgettext("summoning","corpses collapse"),
+             seen_lost_piles == 1 ? pgettext("summoning","a pulpy mess") : pgettext("summoning","pulpy messes"));
     }
 
-    if (num_crawlies > 0)
+    if (seen_crawlies > 0)
     {
         mprf(_("%s %s to drag %s along the ground!"),
-             _count_article(num_crawlies, num_lost + num_masses == 0),
-             num_crawlies == 1 ? pgettext("summoning","corpse begins") : pgettext("summoning","corpses begin"),
-             num_crawlies == 1 ? pgettext("summoning","itself") : pgettext("summoning","themselves"));
+             _count_article(seen_crawlies, seen_lost + seen_masses == 0),
+             seen_crawlies == 1 ? pgettext("summoning","corpse begins") : pgettext("summoning","corpses begin"),
+             seen_crawlies == 1 ? pgettext("summoning","itself") : pgettext("summoning","themselves"));
     }
 
-    if (num_masses > 0)
+    if (seen_masses > 0)
     {
         mprf(_("%s corpses meld into %s of writhing flesh!"),
-             _count_article(2, num_crawlies + num_lost == 0),
-             num_masses == 1 ? pgettext("summoning","an agglomeration") : pgettext("summoning","agglomerations"));
+             _count_article(2, seen_crawlies + seen_lost == 0),
+             seen_masses == 1 ? pgettext("summoning","an agglomeration") : pgettext("summoning","agglomerations"));
     }
 
     if (num_orcs > 0 && caster->is_player())
@@ -2347,7 +2376,7 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
     }
 
     //jmf: Kiku sometimes deflects this
-    if (you.religion != GOD_KIKUBAAQUDGHA
+    if (!you_worship(GOD_KIKUBAAQUDGHA)
         || player_under_penance() || you.piety < piety_breakpoint(3)
         || !x_chance_in_y(you.piety, MAX_PIETY))
     {
@@ -2493,7 +2522,7 @@ spret_type cast_battlesphere(actor* agent, int pow, god_type god, bool fail)
         {
             int dur = min((7 + roll_dice(2, pow)) * 10, 500);
             battlesphere->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 1, 0, dur));
-            battlesphere->props["bs_mid"].get_int() = agent->mid;
+            battlesphere->summoner = agent->mid;
             agent->props["battlesphere"].get_int() = battlesphere->mid;
 
             if (agent->is_player())
@@ -2524,7 +2553,7 @@ void end_battlesphere(monster* mons, bool killed)
     if (!mons)
         return;
 
-    actor* agent = actor_by_mid(mons->props["bs_mid"].get_int());
+    actor* agent = actor_by_mid(mons->summoner);
     if (agent)
         agent->props.erase("battlesphere");
 
@@ -2559,9 +2588,12 @@ static bool _battlesphere_can_mirror(spell_type spell)
 {
     return ((spell_typematch(spell, SPTYP_CONJURATION)
             && spell_to_zap(spell) != NUM_ZAPS)
-            || spell == SPELL_MEPHITIC_CLOUD
-            || spell == SPELL_IOOD
-            || spell == SPELL_DAZZLING_SPRAY);
+            || spell == SPELL_FREEZE
+            || spell == SPELL_STICKY_FLAME
+            || spell == SPELL_SANDBLAST
+            || spell == SPELL_AIRSTRIKE
+            || spell == SPELL_DAZZLING_SPRAY
+            || spell == SPELL_SEARING_RAY);
 }
 
 bool aim_battlesphere(actor* agent, spell_type spell, int powc, bolt& beam)
@@ -2726,7 +2758,7 @@ bool fire_battlesphere(monster* mons)
     if (!mons || mons->type != MONS_BATTLESPHERE)
         return false;
 
-    actor* agent = actor_by_mid(mons->props["bs_mid"].get_int());
+    actor* agent = actor_by_mid(mons->summoner);
 
     if (!agent || !agent->alive())
     {
@@ -3006,7 +3038,7 @@ spret_type cast_spectral_weapon(actor *agent, int pow, god_type god, bool fail)
         mons->props["band_leader"].get_int() = agent->mid;
     }
 
-    mons->props["sw_mid"].get_int() = agent->mid;
+    mons->summoner = agent->mid;
     agent->props["spectral_weapon"].get_int() = mons->mid;
 
     return SPRET_SUCCESS;
@@ -3018,7 +3050,7 @@ void end_spectral_weapon(monster* mons, bool killed, bool quiet)
     if (!mons)
         return;
 
-    actor *owner = actor_by_mid(mons->props["sw_mid"].get_int());
+    actor *owner = actor_by_mid(mons->summoner);
 
     if (owner)
         owner->props.erase("spectral_weapon");
@@ -3151,7 +3183,7 @@ static const summons_desc summonsdata[] =
     { SPELL_SUMMON_ELEMENTAL,           3, 2 },
     { SPELL_SUMMON_UGLY_THING,          3, 2 },
     { SPELL_SUMMON_HORRIBLE_THINGS,     8, 2 },
-    { SPELL_SHADOW_CREATURES,           5, 2 },
+    { SPELL_SHADOW_CREATURES,           4, 2 },
     { SPELL_SUMMON_DRAGON,              2, 8 },
     // Rod specials
     { SPELL_SUMMON_SWARM,              99, 2 },

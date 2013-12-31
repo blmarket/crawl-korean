@@ -64,26 +64,22 @@ string god_prayer_reaction()
 {
     return make_stringf(crawl_state.player_is_dead() ?
         pgettext("godprayer","%s was %s.") : pgettext("godprayer","%s is %s."), _(god_name(you.religion).c_str()),
-        (you.piety > 130) ? _("exalted by your worship") :
-        (you.piety > 100) ? _("extremely pleased with you") :
-        (you.piety >  70) ? _("greatly pleased with you") :
-        (you.piety >  40) ? _("most pleased with you") :
-        (you.piety >  20) ? _("pleased with you") :
-        (you.piety >   5) ? _("noncommittal")
-                          : _("displeased"));
+        (you.piety >= piety_breakpoint(5)) ? _("exalted by your worship") :
+        (you.piety >= piety_breakpoint(4)) ? _("extremely pleased with you") :
+        (you.piety >= piety_breakpoint(3)) ? _("greatly pleased with you") :
+        (you.piety >= piety_breakpoint(2)) ? _("most pleased with you") :
+        (you.piety >= piety_breakpoint(1)) ? _("pleased with you") :
+        (you.piety >= piety_breakpoint(0)) ? _("aware of your devotion")
+                          : _("noncommittal"));
 }
 
 static bool _bless_weapon(god_type god, brand_type brand, int colour)
 {
     item_def& wpn = *you.weapon();
 
-    if (wpn.base_type != OBJ_WEAPONS
-        || (is_range_weapon(wpn)
-            && (brand != SPWPN_HOLY_WRATH || wpn.sub_type == WPN_BLOWGUN))
-        || is_artefact(wpn))
-    {
+    // Only TSO allows blessing ranged weapons.
+    if (!is_brandable_weapon(wpn, brand == SPWPN_HOLY_WRATH))
         return false;
-    }
 
     // 뒤에 무기 이름이 붙음. 근데 그 뒤로 계속 뭔가 붙으니 어순도 이대로 유지해야함.
     string prompt = _("Do you wish to have ") + 
@@ -199,15 +195,14 @@ static bool _altar_prayer()
     bool did_something = false;
 
     // donate gold to gain piety distributed over time
-    if (you.religion == GOD_ZIN)
+    if (you_worship(GOD_ZIN))
         did_something = _zin_donate_gold();
 
     // TSO blesses weapons with holy wrath, and long blades and demon
     // whips specially.
-    if (you.religion == GOD_SHINING_ONE
-        && !you.one_time_ability_used[GOD_SHINING_ONE]
-        && !player_under_penance()
-        && you.piety > 160)
+    if (you_worship(GOD_SHINING_ONE) && !player_under_penance()
+        && you.piety >= piety_breakpoint(5)
+        && !you.one_time_ability_used[GOD_SHINING_ONE])
     {
         item_def *wpn = you.weapon();
 
@@ -221,10 +216,9 @@ static bool _altar_prayer()
     }
 
     // Lugonu blesses weapons with distortion.
-    if (you.religion == GOD_LUGONU
-        && !you.one_time_ability_used[GOD_LUGONU]
-        && !player_under_penance()
-        && you.piety > 160)
+    if (you_worship(GOD_LUGONU) && !player_under_penance()
+        && you.piety >= piety_breakpoint(5)
+        && !you.one_time_ability_used[GOD_LUGONU])
     {
         item_def *wpn = you.weapon();
 
@@ -233,10 +227,9 @@ static bool _altar_prayer()
     }
 
     // Kikubaaqudgha blesses weapons with pain, or gives you a Necronomicon.
-    if (you.religion == GOD_KIKUBAAQUDGHA
-        && !you.one_time_ability_used[GOD_KIKUBAAQUDGHA]
-        && !player_under_penance()
-        && you.piety > 160)
+    if (you_worship(GOD_KIKUBAAQUDGHA) && !player_under_penance()
+        && you.piety >= piety_breakpoint(5)
+        && !you.one_time_ability_used[GOD_KIKUBAAQUDGHA])
     {
         if (you.species != SP_FELID)
         {
@@ -302,7 +295,7 @@ void pray()
     const god_type altar_god = feat_altar_god(grd(you.pos()));
     if (altar_god != GOD_NO_GOD)
     {
-        if (you.religion != GOD_NO_GOD && altar_god == you.religion)
+        if (!you_worship(GOD_NO_GOD) && altar_god == you.religion)
             something_happened = _altar_prayer();
         else if (altar_god != GOD_NO_GOD)
         {
@@ -320,7 +313,7 @@ void pray()
         }
     }
 
-    if (you.religion == GOD_NO_GOD)
+    if (you_worship(GOD_NO_GOD))
     {
         const mon_holy_type holi = you.holiness();
 
@@ -335,13 +328,13 @@ void pray()
     mprf(MSGCH_PRAY, _("You offer a prayer to %s."),
          _(god_name(you.religion).c_str()));
 
-    if (you.religion == GOD_FEDHAS && fedhas_fungal_bloom())
+    if (you_worship(GOD_FEDHAS) && fedhas_fungal_bloom())
         something_happened = true;
 
     // All sacrifices affect items you're standing on.
     something_happened |= _offer_items();
 
-    if (you.religion == GOD_XOM)
+    if (you_worship(GOD_XOM))
         mpr(getSpeakString("Xom prayer"), MSGCH_GOD);
     else if (player_under_penance())
         simple_god_message(_(" demands penance!"));
@@ -471,18 +464,19 @@ static bool _zin_donate_gold()
     {
         string result = pgettext("zin","You feel that ") + std::string(_(god_name(GOD_ZIN).c_str())) + pgettext("zin"," will soon be ");
         result +=
-            (estimated_piety > 130) ? _("exalted by your worship") :
-            (estimated_piety > 100) ? _("extremely pleased with you") :
-            (estimated_piety >  70) ? _("greatly pleased with you") :
-            (estimated_piety >  40) ? _("most pleased with you") :
-            (estimated_piety >  20) ? _("pleased with you") :
-            (estimated_piety >   5) ? _("noncommittal")
-                                    : _("displeased");
-        result += (donation >= 30 && you.piety <= 170) ? pgettext("zin","!") : ".";
+            (estimated_piety >= piety_breakpoint(5)) ? _("exalted by your worship") :
+            (estimated_piety >= piety_breakpoint(4)) ? _("extremely pleased with you") :
+            (estimated_piety >= piety_breakpoint(3)) ? _("greatly pleased with you") :
+            (estimated_piety >= piety_breakpoint(2)) ? _("most pleased with you") :
+            (estimated_piety >= piety_breakpoint(1)) ? _("pleased with you") :
+            (estimated_piety >= piety_breakpoint(0)) ? _("aware of your devotion")
+                                                     : _("noncommittal");
+        result += (donation >= 30 && you.piety < piety_breakpoint(5)) ? pgettext("zin","!") : ".";
 
         mpr(result.c_str());
     }
 
+    zin_recite_interrupt();
     return true;
 }
 
@@ -554,7 +548,7 @@ static bool _destroyed_valuable_weapon(int value, int type)
 
 static piety_gain_t _sac_corpse(const item_def& item)
 {
-    if (you.religion == GOD_OKAWARU)
+    if (you_worship(GOD_OKAWARU))
     {
         monster dummy;
         dummy.type = (monster_type)(item.orig_monnum ? item.orig_monnum
@@ -828,7 +822,7 @@ static bool _offer_items()
         }
 
         // Skip items you don't want to sacrifice right now.
-        if (you.religion == GOD_NEMELEX_XOBEH
+        if (you_worship(GOD_NEMELEX_XOBEH)
             && !check_nemelex_sacrificing_item_type(item))
         {
             i = next;
@@ -866,7 +860,7 @@ static bool _offer_items()
         num_sacced++;
     }
 
-    if (num_sacced > 0 && you.religion == GOD_NEMELEX_XOBEH)
+    if (num_sacced > 0 && you_worship(GOD_NEMELEX_XOBEH))
     {
         const int new_leading = _leading_sacrifice_group();
         if (old_leading != new_leading || one_chance_in(50))
@@ -891,17 +885,17 @@ static bool _offer_items()
         // sacrifices.
         else if (god_likes_fresh_corpses(you.religion))
             simple_god_message(_(" only cares about fresh corpses!"));
-        else if (you.religion == GOD_BEOGH)
+        else if (you_worship(GOD_BEOGH))
             simple_god_message(_(" only cares about orcish remains!"));
-        else if (you.religion == GOD_NEMELEX_XOBEH)
+        else if (you_worship(GOD_NEMELEX_XOBEH))
             if (disliked_item->base_type == OBJ_GOLD)
                 simple_god_message(_(" does not care about gold!"));
             else
                 simple_god_message(_(" expects you to use your decks, not offer them!"));
-        else if (you.religion == GOD_ASHENZARI)
+        else if (you_worship(GOD_ASHENZARI))
             simple_god_message(_(" can corrupt only scrolls of remove curse."));
     }
-    if (num_sacced == 0 && you.religion == GOD_ELYVILON)
+    if (num_sacced == 0 && you_worship(GOD_ELYVILON))
     {
         mprf(_("There are no %sweapons here to destroy!"),
              you.piety_max[GOD_ELYVILON] < piety_breakpoint(2) ? "" : _("unholy or evil "));

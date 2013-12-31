@@ -303,7 +303,7 @@ static void _check_inventory_skills()
 {
     for (int i = 0; i < ENDOFPACK; ++i)
     {
-        // Exit early if ther's no more skill to check.
+        // Exit early if there's no more skill to check.
         if (you.stop_train.empty())
             return;
 
@@ -326,7 +326,7 @@ static void _check_spell_skills()
 {
     for (int i = 0; i < MAX_KNOWN_SPELLS; i++)
     {
-        // Exit early if ther's no more skill to check.
+        // Exit early if there's no more skill to check.
         if (you.stop_train.empty())
             return;
 
@@ -462,7 +462,6 @@ bool training_restricted(skill_type sk)
     case SK_ARMOUR:
     case SK_DODGING:
     case SK_STEALTH:
-    case SK_TRAPS:
     case SK_UNARMED_COMBAT:
     case SK_SPELLCASTING:
         return false;
@@ -821,7 +820,7 @@ static void _train_skills(int exp, const int cost, const bool simu)
     {
         // We randomize the order, to avoid a slight bias to first skills.
         // Being trained first can make a difference if skill cost increases.
-        random_shuffle(training_order.begin(), training_order.end());
+        shuffle_array(training_order);
         for (vector<skill_type>::iterator it = training_order.begin();
              it != training_order.end(); ++it)
         {

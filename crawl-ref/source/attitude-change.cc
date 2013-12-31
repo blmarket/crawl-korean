@@ -79,7 +79,7 @@ void beogh_follower_convert(monster* mons, bool orc_hit)
         return;
 
     // For followers of Beogh, decide whether orcs will join you.
-    if (you.religion == GOD_BEOGH
+    if (you_worship(GOD_BEOGH)
         && mons->foe == MHITYOU
         && mons_genus(mons->type) == MONS_ORC
         && !mons->is_summoned()
@@ -97,16 +97,6 @@ void beogh_follower_convert(monster* mons, bool orc_hit)
             && random2(you.piety / 15) + random2(4 + you.experience_level / 3)
                  > random2(hd) + hd + random2(5))
         {
-            if (you.weapon()
-                && you.weapon()->base_type == OBJ_WEAPONS
-                && get_weapon_brand(*you.weapon()) == SPWPN_ORC_SLAYING
-                && coinflip()) // 50% chance of conversion failing
-            {
-                msg::stream << mons->name(DESC_THE)
-                            << _(" flinches from your weapon.")
-                            << endl;
-                return;
-            }
             beogh_convert_orc(mons, orc_hit);
             stop_running();
         }
@@ -115,7 +105,7 @@ void beogh_follower_convert(monster* mons, bool orc_hit)
 
 void slime_convert(monster* mons)
 {
-    if (you.religion == GOD_JIYVA && mons_is_slime(mons)
+    if (you_worship(GOD_JIYVA) && mons_is_slime(mons)
         && !mons->is_shapeshifter()
         && !mons->neutral()
         && !mons->friendly()
@@ -134,7 +124,7 @@ void slime_convert(monster* mons)
 
 void fedhas_neutralise(monster* mons)
 {
-    if (you.religion == GOD_FEDHAS
+    if (you_worship(GOD_FEDHAS)
         && mons->attitude == ATT_HOSTILE
         && fedhas_neutralises(mons)
         && !testbits(mons->flags, MF_ATT_CHANGE_ATTEMPT)
@@ -439,9 +429,6 @@ void beogh_convert_orc(monster* orc, bool emergency,
     // become hostile later on, it won't count as a good kill.
     orc->flags |= MF_NO_REWARD;
 
-    mons_make_god_gift(orc, GOD_BEOGH);
-    add_companion(orc);
-
     if (orc->is_patrolling())
     {
         // Make orcs stop patrolling and forget their patrol point,
@@ -451,6 +438,9 @@ void beogh_convert_orc(monster* orc, bool emergency,
 
     if (!orc->alive())
         orc->hit_points = min(random_range(1, 4), orc->max_hit_points);
+
+    mons_make_god_gift(orc, GOD_BEOGH);
+    add_companion(orc);
 
     // Avoid immobile "followers".
     behaviour_event(orc, ME_ALERT);

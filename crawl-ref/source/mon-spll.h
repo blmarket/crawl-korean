@@ -4,9 +4,13 @@
 
 /* *********************************************************************
 
+    This file determines which spells are contained in monster spellbooks.
+    It is used by /util/gen-mst.pl to generate spellbook enums, which are
+    listed in mon-mst.h.
 
     Template Format:
 
+    {    mon_spellbook_type,
         {
              bolt spell,
              enchantment,
@@ -15,6 +19,7 @@
              misc(2) spell,             // SPELL_DIG must be here to work!
              emergency spell            // only when fleeing
         }
+    }
 
 ********************************************************************* */
 
@@ -52,6 +57,7 @@
       }
     },
 
+#if TAG_MAJOR_VERSION == 34
     {  MST_DEEP_DWARF_NECROMANCER,
       {
        SPELL_PAIN,
@@ -62,15 +68,16 @@
        SPELL_VAMPIRIC_DRAINING
       }
     },
+#endif
 
-    {  MST_UNBORN_DEEP_DWARF,
+    {  MST_UNBORN,
       {
        SPELL_AGONY,
        SPELL_DISPEL_UNDEAD,
-       SPELL_MIRROR_DAMAGE,
+       SPELL_INJURY_MIRROR,
        SPELL_ANIMATE_DEAD,
        SPELL_HAUNT,
-       SPELL_MIRROR_DAMAGE
+       SPELL_INJURY_MIRROR
       }
     },
 
@@ -90,7 +97,7 @@
       {
        SPELL_NO_SPELL,
        SPELL_ANIMATE_DEAD,
-       SPELL_MIRROR_DAMAGE,
+       SPELL_INJURY_MIRROR,
        SPELL_NO_SPELL,
        SPELL_DRAIN_LIFE,
        SPELL_DRAIN_LIFE
@@ -606,44 +613,33 @@
     {  MST_DEEP_ELF_SUMMONER,
       {
        SPELL_BLINK,
-       SPELL_SUMMON_MINOR_DEMON,
-       SPELL_SUMMON_UFETUBUS,
-       SPELL_SUMMON_DEMON,
-       SPELL_SUMMON_DEMON,
+       SPELL_SUMMON_VERMIN,
+       SPELL_NO_SPELL,
+       SPELL_SUMMON_VERMIN,
+       SPELL_NO_SPELL,
        SPELL_NO_SPELL
       }
     },
 
-    {  MST_DEEP_ELF_CONJURER_I,
+    {  MST_DEEP_ELF_CONJURER,
       {
        SPELL_BOLT_OF_FIRE,
        SPELL_BOLT_OF_COLD,
-       SPELL_CANTRIP,
+       SPELL_NO_SPELL,
        SPELL_LIGHTNING_BOLT,
        SPELL_BOLT_OF_DRAINING,
        SPELL_NO_SPELL
       }
     },
 
-    {  MST_DEEP_ELF_CONJURER_II,
-      {
-       SPELL_STICKY_FLAME_RANGE,
-       SPELL_ISKENDERUNS_MYSTIC_BLAST,
-       SPELL_INVISIBILITY,
-       SPELL_STONE_ARROW,
-       SPELL_BOLT_OF_DRAINING,
-       SPELL_INVISIBILITY
-      }
-    },
-
     {  MST_DEEP_ELF_PRIEST,
       {
        SPELL_PAIN,
-       SPELL_CANTRIP,
-       SPELL_MINOR_HEALING,
+       SPELL_MALIGN_OFFERING,
+       SPELL_NO_SPELL,
        SPELL_SMITING,
        SPELL_TWISTED_RESURRECTION,
-       SPELL_MINOR_HEALING
+       SPELL_NO_SPELL
       }
     },
 
@@ -651,10 +647,10 @@
       {
        SPELL_SUMMON_DEMON,
        SPELL_HELLFIRE_BURST,
-       SPELL_MINOR_HEALING,
+       SPELL_MALIGN_OFFERING,
        SPELL_SMITING,
        SPELL_TWISTED_RESURRECTION,
-       SPELL_MINOR_HEALING
+       SPELL_NO_SPELL
       }
     },
 
@@ -715,8 +711,8 @@
 
     {  MST_NAGA,
       {
-       SPELL_POISON_SPLASH,
-       SPELL_POISON_SPLASH,
+       SPELL_SPIT_POISON,
+       SPELL_SPIT_POISON,
        SPELL_NO_SPELL,
        SPELL_NO_SPELL,
        SPELL_NO_SPELL,
@@ -925,10 +921,10 @@
     {  MST_SERPENT_OF_HELL_TARTARUS,
       {
        SPELL_BOLT_OF_DRAINING,
-       SPELL_MIASMA,
+       SPELL_MIASMA_BREATH,
        SPELL_NO_SPELL,
        SPELL_BOLT_OF_DRAINING,
-       SPELL_MIASMA,
+       SPELL_MIASMA_BREATH,
        SPELL_NO_SPELL
       }
     },
@@ -990,11 +986,11 @@
 
     {  MST_DEATH_DRAKE,
       {
-       SPELL_MIASMA,
-       SPELL_MIASMA,
+       SPELL_MIASMA_BREATH,
+       SPELL_MIASMA_BREATH,
        SPELL_NO_SPELL,
-       SPELL_MIASMA,
-       SPELL_MIASMA,
+       SPELL_MIASMA_BREATH,
+       SPELL_MIASMA_BREATH,
        SPELL_NO_SPELL
       }
     },
@@ -1254,12 +1250,12 @@
     // demon lords
     {  MST_GERYON,
       {
-       SPELL_SUMMON_BEAST,
-       SPELL_SUMMON_BEAST,
+       SPELL_SUMMON_HELL_BEAST,
+       SPELL_SUMMON_HELL_BEAST,
        SPELL_NO_SPELL,
-       SPELL_SUMMON_BEAST,
+       SPELL_SUMMON_HELL_BEAST,
        SPELL_NO_SPELL,
-       SPELL_SUMMON_BEAST
+       SPELL_SUMMON_HELL_BEAST
       }
     },
 
@@ -1343,11 +1339,11 @@
     {  MST_GLOORX_VLOQ,
       {
        SPELL_POISON_ARROW,
-       SPELL_MIASMA,
+       SPELL_MIASMA_BREATH,
        SPELL_SYMBOL_OF_TORMENT,
        SPELL_BOLT_OF_DRAINING,
        SPELL_DISPEL_UNDEAD,
-       SPELL_INVISIBILITY
+       SPELL_NO_SPELL
       }
     },
 
@@ -1488,7 +1484,7 @@
        SPELL_SUNRAY,
        SPELL_AWAKEN_FOREST,
        SPELL_HASTE_PLANTS,
-       SPELL_SUMMON_CANIFORMS,
+       SPELL_DRUIDS_CALL,
        SPELL_HASTE_PLANTS,
        SPELL_MINOR_HEALING
       }
@@ -1597,7 +1593,7 @@
       {
        SPELL_IOOD,
        SPELL_NO_SPELL,
-       SPELL_CANTRIP,
+       SPELL_IOOD,
        SPELL_IOOD,
        SPELL_NO_SPELL,
        SPELL_IOOD
@@ -1612,17 +1608,6 @@
        SPELL_HOLY_BREATH,
        SPELL_HOLY_BREATH,
        SPELL_NO_SPELL
-      }
-    },
-
-    {  MST_SPIRIT,
-      {
-       SPELL_BLINK_AWAY,
-       SPELL_BLINK_AWAY,
-       SPELL_BLINK_AWAY,
-       SPELL_BLINK_AWAY,
-       SPELL_BLINK_AWAY,
-       SPELL_BLINK_AWAY
       }
     },
 
@@ -2090,8 +2075,8 @@
 
     {  MST_SPRIGGAN_ENCHANTER,
       {
-       SPELL_HIBERNATION,
-       SPELL_HIBERNATION,
+       SPELL_SLEEP,
+       SPELL_SLEEP,
        SPELL_INVISIBILITY,
        SPELL_NO_SPELL,
        SPELL_STRIP_RESISTANCE,
@@ -2170,8 +2155,74 @@
        SPELL_PRIMAL_WAVE,
        SPELL_PRIMAL_WAVE,
        SPELL_NO_SPELL,
-       SPELL_WATER_ELEMENTALS,
+       SPELL_PRIMAL_WAVE,
+       SPELL_PRIMAL_WAVE,
+       SPELL_NO_SPELL
+      }
+    },
+
+    {  MST_DRACONIAN_ZEALOT,
+      {
+       SPELL_SUMMON_DEMON,
+       SPELL_HELLFIRE_BURST,
+       SPELL_MINOR_HEALING,
+       SPELL_SMITING,
+       SPELL_ANIMATE_DEAD,
+       SPELL_MINOR_HEALING
+      }
+    },
+
+    {  MST_DEEP_ELF_MAGE_I,
+      {
+       SPELL_FREEZE,
+       SPELL_THROW_ICICLE,
+       SPELL_FREEZE,
+       SPELL_SUMMON_ICE_BEAST,
+       SPELL_THROW_ICICLE,
+       SPELL_NO_SPELL
+      }
+    },
+
+    {  MST_DEEP_ELF_MAGE_II,
+      {
+       SPELL_BOLT_OF_MAGMA,
+       SPELL_STONE_ARROW,
        SPELL_NO_SPELL,
+       SPELL_PETRIFY,
+       SPELL_STONE_ARROW,
+       SPELL_NO_SPELL
+      }
+    },
+
+    {  MST_DEEP_ELF_MAGE_III,
+      {
+       SPELL_ISKENDERUNS_MYSTIC_BLAST,
+       SPELL_SLOW,
+       SPELL_NO_SPELL,
+       SPELL_VENOM_BOLT,
+       SPELL_BLINK,
+       SPELL_BLINK
+      }
+    },
+
+    {  MST_DEEP_ELF_MAGE_IV,
+      {
+       SPELL_FLAME_TONGUE,
+       SPELL_STICKY_FLAME_RANGE,
+       SPELL_FIREBALL,
+       SPELL_FIREBALL,
+       SPELL_THROW_FLAME,
+       SPELL_NO_SPELL
+      }
+    },
+
+    {  MST_DEEP_ELF_MAGE_V,
+      {
+       SPELL_MAGIC_DART,
+       SPELL_FORCE_LANCE,
+       SPELL_BATTLESPHERE,
+       SPELL_ISKENDERUNS_MYSTIC_BLAST,
+       SPELL_BATTLESPHERE,
        SPELL_NO_SPELL
       }
     },

@@ -938,6 +938,7 @@ static void _close_level_gates()
 static void _clear_env_map()
 {
     env.map_knowledge.init(map_cell());
+    env.map_forgotten.reset();
 }
 
 static void _clear_clouds()
@@ -1092,6 +1093,8 @@ static void _grab_followers()
             continue;
         if (mons->type == MONS_BATTLESPHERE)
             end_battlesphere(mons, false);
+        if (mons->type == MONS_SPECTRAL_WEAPON)
+            end_spectral_weapon(mons, false);
         mons->flags &= ~MF_TAKING_STAIRS;
     }
 }
@@ -1633,7 +1636,8 @@ void save_game(bool leave_game, const char *farewellmsg)
     // If just save, early out.
     if (!leave_game)
     {
-        you.save->commit();
+        if (!crawl_state.disables[DIS_SAVE_CHECKPOINTS])
+            you.save->commit();
         return;
     }
 

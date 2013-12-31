@@ -99,7 +99,7 @@ static const spell_type _xom_nontension_spells[] =
 static const spell_type _xom_tension_spells[] =
 {
     SPELL_BLINK, SPELL_CONFUSING_TOUCH, SPELL_CAUSE_FEAR, SPELL_ENGLACIATION,
-    SPELL_DISPERSAL, SPELL_STONESKIN, SPELL_RING_OF_FLAMES,
+    SPELL_DISPERSAL, SPELL_STONESKIN, SPELL_RING_OF_FLAMES, SPELL_DISCORD,
     SPELL_OLGREBS_TOXIC_RADIANCE, SPELL_FIRE_BRAND, SPELL_FREEZING_AURA,
     SPELL_POISON_WEAPON, SPELL_LETHAL_INFUSION, SPELL_EXCRUCIATING_WOUNDS,
     SPELL_WARP_BRAND, SPELL_TUKIMAS_DANCE, SPELL_SUMMON_BUTTERFLIES,
@@ -149,7 +149,7 @@ static const char *describe_xom_mood()
 const string describe_xom_favour()
 {
     string favour;
-    if (you.religion != GOD_XOM)
+    if (!you_worship(GOD_XOM))
         favour = _("a very buggy toy of Xom.");
     else if (you.gift_timeout < 1)
         favour = _("a BORING thing.");
@@ -174,7 +174,7 @@ static string _get_xom_speech(const string key)
 
 static bool _xom_is_bored()
 {
-    return (you.religion == GOD_XOM && !you.gift_timeout);
+    return (you_worship(GOD_XOM) && !you.gift_timeout);
 }
 
 static bool _xom_feels_nasty()
@@ -186,10 +186,10 @@ static bool _xom_feels_nasty()
 
 bool xom_is_nice(int tension)
 {
-    if (you.penance[GOD_XOM])
+    if (player_under_penance(GOD_XOM))
         return false;
 
-    if (you.religion == GOD_XOM)
+    if (you_worship(GOD_XOM))
     {
         // If you.gift_timeout is 0, then Xom is BORED.  He HATES that.
         if (!you.gift_timeout)
@@ -225,7 +225,7 @@ static void _xom_is_stimulated(int maxinterestingness,
                                const char *message_array[],
                                bool force_message)
 {
-    if (you.religion != GOD_XOM || maxinterestingness <= 0)
+    if (!you_worship(GOD_XOM) || maxinterestingness <= 0)
         return;
 
     // Xom is not directly stimulated by his own acts.
@@ -273,7 +273,7 @@ void xom_is_stimulated(int maxinterestingness, xom_message_type message_type,
 void xom_is_stimulated(int maxinterestingness, const string& message,
                        bool force_message)
 {
-    if (you.religion != GOD_XOM)
+    if (!you_worship(GOD_XOM))
         return;
 
     const char *message_array[6];
@@ -291,8 +291,8 @@ void xom_tick()
     {
         // Xom semi-randomly drifts your piety.
         const string old_xom_favour = describe_xom_favour();
-        const bool good = (you.piety == HALF_MAX_PIETY? coinflip()
-                                                      : you.piety > HALF_MAX_PIETY);
+        const bool good = (you.piety == HALF_MAX_PIETY ? coinflip()
+                                                       : you.piety > HALF_MAX_PIETY);
         int size = abs(you.piety - HALF_MAX_PIETY);
 
         // Piety slowly drifts towards the extremes.
@@ -316,7 +316,7 @@ void xom_tick()
             // doesn't really matter.
             you.piety = HALF_MAX_PIETY + (good ? size : -size);
         }
-#ifdef DEBUG_DIAGNOSTICS
+#ifdef DEBUG_XOM
         snprintf(info, INFO_SIZE, "xom_tick(), delta: %d, piety: %d",
                  delta, you.piety);
         take_note(Note(NOTE_MESSAGE, 0, 0, info), true);
@@ -1509,7 +1509,8 @@ static int _xom_swap_weapons(bool debug = false)
     {
         if (!wpn || mi->wont_attack() || mi->is_summoned()
             || mons_itemuse(*mi) < MONUSE_STARTING_EQUIPMENT
-            || (mi->flags & MF_HARD_RESET))
+            || (mi->flags & MF_HARD_RESET)
+            || !feat_has_solid_floor(grd(mi->pos())))
         {
             continue;
         }
@@ -3209,7 +3210,7 @@ static int _xom_repel_stairs(bool debug = false)
         you.duration[DUR_REPEL_STAIRS_CLIMB] = 500;
     }
 
-    random_shuffle(stairs_avail.begin(), stairs_avail.end());
+    shuffle_array(stairs_avail);
     int count_moved = 0;
     for (unsigned int i = 0; i < stairs_avail.size(); i++)
         if (move_stair(stairs_avail[i], true, true))
@@ -3417,7 +3418,7 @@ static bool _will_not_banish()
 static bool _allow_xom_banishment()
 {
     // Always allowed if under penance.
-    if (you.penance[GOD_XOM])
+    if (player_under_penance(GOD_XOM))
         return true;
 
     // If Xom is bored, banishment becomes viable earlier.
@@ -3772,6 +3773,7 @@ static void _handle_accidental_death(const int orig_hp,
                         true, true, true);
     }
 
+#if TAG_MAJOR_VERSION == 34
     while (you.dex() <= 0
            && you.mutation[MUT_FLEXIBLE_WEAK] <
                   orig_mutation[MUT_FLEXIBLE_WEAK])
@@ -3791,6 +3793,7 @@ static void _handle_accidental_death(const int orig_hp,
     {
         mutate(MUT_STRONG_STIFF, "Xom's lifesaving", true, true, true);
     }
+#endif
 
     mutation_type bad_muts[3]  = {MUT_WEAK, MUT_DOPEY, MUT_CLUMSY};
     mutation_type good_muts[3] = {MUT_STRONG, MUT_CLEVER, MUT_AGILE};
@@ -3957,7 +3960,7 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
 
     _handle_accidental_death(orig_hp, orig_stat_loss, orig_mutation);
 
-    if (you.religion == GOD_XOM && one_chance_in(5))
+    if (you_worship(GOD_XOM) && one_chance_in(5))
     {
         const string old_xom_favour = describe_xom_favour();
         you.piety = random2(MAX_PIETY + 1);
@@ -4044,7 +4047,7 @@ static bool _death_is_funny(const kill_method_type killed_by)
 
 void xom_death_message(const kill_method_type killed_by)
 {
-    if (you.religion != GOD_XOM && (!you.worshipped[GOD_XOM] || coinflip()))
+    if (!you_worship(GOD_XOM) && (!you.worshipped[GOD_XOM] || coinflip()))
         return;
 
     const int death_tension = get_tension(GOD_XOM);
@@ -4125,7 +4128,7 @@ bool xom_saves_your_life(const int dam, const int death_source,
                          const kill_method_type death_type, const char *aux,
                          bool see_source)
 {
-    if (you.religion != GOD_XOM || _xom_feels_nasty())
+    if (!you_worship(GOD_XOM) || _xom_feels_nasty())
         return false;
 
     // If this happens, don't bother.
@@ -4288,7 +4291,7 @@ void debug_xom_effects()
     fprintf(ostat, "%s\n", mpr_monster_list().c_str());
     fprintf(ostat, " --> Tension: %d\n", tension);
 
-    if (you.penance[GOD_XOM])
+    if (player_under_penance(GOD_XOM))
         fprintf(ostat, "You are under Xom's penance!\n");
     else if (_xom_is_bored())
         fprintf(ostat, "Xom is BORED.\n");

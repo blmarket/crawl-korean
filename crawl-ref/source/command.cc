@@ -208,18 +208,7 @@ static void _print_version(void)
     int flags = MF_NOSELECT | MF_ALWAYS_SHOW_MORE | MF_NOWRAP | MF_EASY_EXIT;
     cmd_version.set_flags(flags, false);
     cmd_version.set_tag("version");
-
-    // FIXME: Allow for hiding Page down when at the end of the listing, ditto
-    // for page up at start of listing.
-    cmd_version.set_more(formatted_string::parse_string(
-#ifdef USE_TILE_LOCAL
-                              gettext("<cyan>[ +/L-click : Page down.   - : Page up."
-                              "           Esc/R-click exits.]")));
-#else
-                              gettext("<cyan>[ + : Page down.   - : Page up."
-                              "                           Esc exits.]")));
-#endif
-
+    cmd_version.set_more();
     cmd_version.add_text(_get_version_information(), true);
     cmd_version.add_text(_get_version_features(), true);
     cmd_version.add_text(_get_version_changes(), true);
@@ -334,12 +323,12 @@ static void _adjust_spell(void)
 
     int keyin = 0;
     if (Options.auto_list)
-        keyin = list_spells(false, false, false);
+        keyin = list_spells(false, false, false, "Adjust which spell?");
     else
     {
         keyin = get_ch();
         if (keyin == '?' || keyin == '*')
-            keyin = list_spells(false, false, false);
+            keyin = list_spells(false, false, false, "Adjust which spell?");
     }
 
     if (!isaalpha(keyin))
@@ -372,8 +361,10 @@ static void _adjust_spell(void)
             canned_msg(MSG_OK);
             return;
         }
+        // FIXME: It would be nice if the user really could select letters
+        // without spells from this menu.
         if (keyin == '?' || keyin == '*')
-            keyin = list_spells(true, false, false);
+            keyin = list_spells(true, false, false, "Adjust to which letter?");
     }
 
     const int input_2 = keyin;
@@ -748,8 +739,8 @@ static help_file help_files[] = {
 
 static bool _compare_mon_names(MenuEntry *entry_a, MenuEntry* entry_b)
 {
-    monster* a = static_cast<monster* >(entry_a->data);
-    monster* b = static_cast<monster* >(entry_b->data);
+    monster_info* a = static_cast<monster_info* >(entry_a->data);
+    monster_info* b = static_cast<monster_info* >(entry_b->data);
 
     if (a->type == b->type)
         return false;
@@ -763,8 +754,8 @@ static bool _compare_mon_names(MenuEntry *entry_a, MenuEntry* entry_b)
 // levels are equal, or by name if both level and hitdice are equal.
 static bool _compare_mon_toughness(MenuEntry *entry_a, MenuEntry* entry_b)
 {
-    monster* a = static_cast<monster* >(entry_a->data);
-    monster* b = static_cast<monster* >(entry_b->data);
+    monster_info* a = static_cast<monster_info* >(entry_a->data);
+    monster_info* b = static_cast<monster_info* >(entry_b->data);
 
     if (a->type == b->type)
         return false;
@@ -889,6 +880,9 @@ static vector<string> _get_monster_keys(ucs_t showchar)
         if (me->mc != i)
             continue;
 
+        if (i == MONS_MARA_FAKE || i == MONS_RAKSHASA_FAKE)
+            continue;
+
         if (getLongDescription(me->name).empty())
             continue;
 
@@ -932,8 +926,8 @@ static vector<string> _get_branch_keys()
 
 static bool _monster_filter(string key, string body)
 {
-    int mon_num = get_monster_by_name(key.c_str());
-    return (mon_num == MONS_PROGRAM_BUG);
+    monster_type mon_num = get_monster_by_name(key.c_str());
+    return mons_class_flag(mon_num, M_CANT_SPAWN);
 }
 
 static bool _spell_filter(string key, string body)
@@ -1002,6 +996,10 @@ static bool _card_filter(string key, string body)
 static bool _ability_filter(string key, string body)
 {
     lowercase(key);
+    if (!ends_with(key, " ability"))
+        return true;
+    key.erase(key.length() - 8);
+
     if (string_matches_ability_name(key))
         return false;
 
@@ -1090,6 +1088,32 @@ static void _append_non_item(string &desc, string key)
     }
 }
 
+static bool _is_rod_spell(spell_type spell)
+{
+    if (spell == SPELL_NO_SPELL)
+        return false;
+
+    for (int i = 0; i < NUM_RODS; i++)
+        for (int j = 0; j < 8; j++)
+            if (which_spell_in_book(i + NUM_FIXED_BOOKS, j) == spell)
+                return true;
+
+    return false;
+}
+
+static bool _is_book_spell(spell_type spell)
+{
+    if (spell == SPELL_NO_SPELL)
+        return false;
+
+    for (int i = 0; i < NUM_FIXED_BOOKS; i++)
+        for (int j = 0; j < 8; j++)
+            if (which_spell_in_book(i, j) == spell)
+                return true;
+
+    return false;
+}
+
 // Adds a list of all books/rods that contain a given spell (by name)
 // to a description string.
 static bool _append_books(string &desc, item_def &item, string key)
@@ -1150,7 +1174,7 @@ static bool _append_books(string &desc, item_def &item, string key)
 
         for (int j = 0; j < 8; j++)
             if (which_spell_in_book(book, j) == type)
-                rods.push_back(item.name(false, DESC_PLAIN));
+                rods.push_back(item.name(false, DESC_BASENAME));
     }
 
     if (!books.empty())
@@ -1170,7 +1194,7 @@ static bool _append_books(string &desc, item_def &item, string key)
             desc += comma_separated_line(rods.begin(), rods.end(), "\n", "\n");
         }
     }
-    else // rods-only
+    else if (!rods.empty()) // rods-only
     {
         desc += gettext("\n\nThis spell can be found in the following rod");
 //      if (rods.size() > 1)
@@ -1178,6 +1202,8 @@ static bool _append_books(string &desc, item_def &item, string key)
         desc += ":\n";
         desc += comma_separated_line(rods.begin(), rods.end(), "\n", "\n");
     }
+    else
+        desc += "\n\nThis spell is not found in any books or rods.";
 
     return true;
 }
@@ -1428,6 +1454,7 @@ static void _find_description(bool *again, string *error_inout)
     case 'A':
         type   = "ability";
         filter = _ability_filter;
+        suffix = " ability";
         break;
     case 'C':
         type   = "card";
@@ -1479,7 +1506,7 @@ static void _find_description(bool *again, string *error_inout)
 
         mpr(gettext("Describe what? "), MSGCH_PROMPT);
         char buf[80];
-        if (cancelable_get_line(buf, sizeof(buf)) || buf[0] == '\0')
+        if (cancellable_get_line(buf, sizeof(buf)) || buf[0] == '\0')
         {
             *error_inout = gettext("Okay, then.");
             return;
@@ -1667,16 +1694,17 @@ static void _find_description(bool *again, string *error_inout)
         {
             me = new MenuEntry(str, MEL_ITEM, 1, letter);
 
-#ifdef USE_TILE
             if (doing_spells)
             {
                 spell_type spell = spell_by_name(str);
+#ifdef USE_TILE
                 if (spell != SPELL_NO_SPELL)
                     me->add_tile(tile_def(tileidx_spell(spell), TEX_GUI));
-            }
-#else
-            UNUSED(doing_spells);
 #endif
+                me->colour = _is_book_spell(spell) ? WHITE
+                           : _is_rod_spell(spell)  ? LIGHTGREY
+                                                   : DARKGREY; // monster-only
+            }
 
             me->data = &key_list[i];
         }
@@ -1799,7 +1827,7 @@ help_highlighter::help_highlighter(string highlight_string) :
 
 int help_highlighter::entry_colour(const MenuEntry *entry) const
 {
-    return !pattern.empty() && pattern.matches(entry->text)? WHITE : -1;
+    return !pattern.empty() && pattern.matches(entry->text) ? WHITE : -1;
 }
 
 // To highlight species in aptitudes list. ('?%')
@@ -1828,17 +1856,7 @@ static int _show_keyhelp_menu(const vector<formatted_string> &lines,
         flags |= MF_EASY_EXIT;
     cmd_help.set_flags(flags, false);
     cmd_help.set_tag("help");
-
-    // FIXME: Allow for hiding Page down when at the end of the listing, ditto
-    // for page up at start of listing.
-    cmd_help.set_more(formatted_string::parse_string(
-#ifdef USE_TILE_LOCAL
-                            "<cyan>[ +/L-click : Page down.   - : Page up."
-                            "           Esc/R-click exits.]"));
-#else
-                            gettext("<cyan>[ + : Page down.   - : Page up."
-                            "                           Esc exits.]")));
-#endif
+    cmd_help.set_more();
 
     if (with_manual)
     {
@@ -2558,105 +2576,107 @@ int list_wizard_commands(bool do_redraw_screen)
     cols.set_pagesize(get_number_of_lines());
 
     cols.add_formatted(0,
-                       gettext("<yellow>Player stats</yellow>\n"
-                       "<w>A</w>      : set all skills to level\n"
-                       "<w>Ctrl-D</w> : change enchantments/durations\n"
-                       "<w>g</w>      : exercise a skill\n"
-                       "<w>Ctrl-L</w> : change experience level\n"
-                       "<w>r</w>      : change character's species\n"
-                       "<w>s</w>      : gain 20000 skill points\n"
-                       "<w>S</w>      : set skill to level\n"
-                       "<w>x</w>      : gain an experience level\n"
-                       "<w>$</w>      : get 1000 gold\n"
-                       "<w>]</w>      : get a mutation\n"
-                       "<w>_</w>      : gain religion\n"
-                       "<w>^</w>      : set piety to a value\n"
-                       "<w>@</w>      : set Str Int Dex\n"
-                       "<w>#</w>      : load character from a dump file\n"
-                       "<w>Z</w>      : gain lots of Zot Points\n"
-                       "<w>&</w>      : list all divine followers\n"
+                       _("<yellow>Player stats</yellow>\n"
+                       "<w>A</w>      set all skills to level\n"
+                       "<w>Ctrl-D</w> change enchantments/durations\n"
+                       "<w>g</w>      exercise a skill\n"
+                       "<w>Ctrl-L</w> change experience level\n"
+                       "<w>r</w>      change character's species\n"
+                       "<w>s</w>      gain 20000 skill points\n"
+                       "<w>S</w>      set skill to level\n"
+                       "<w>x</w>      gain an experience level\n"
+                       "<w>$</w>      get 1000 gold\n"
+                       "<w>]</w>      get a mutation\n"
+                       "<w>_</w>      gain religion\n"
+                       "<w>^</w>      set piety to a value\n"
+                       "<w>@</w>      set Str Int Dex\n"
+                       "<w>#</w>      load character from a dump file\n"
+                       "<w>Z</w>      gain lots of Zot Points\n"
+                       "<w>&</w>      list all divine followers\n"
                        "\n"
                        "<yellow>Create level features</yellow>\n"
-                       "<w>L</w>      : place a vault by name\n"
-                       "<w>p</w>      : make a portal\n"
-                       "<w>T</w>      : make a trap\n"
-                       "<w><<</w>/<w>></w>    : create up/down staircase\n"
-                       "<w>(</w>      : turn cell into feature\n"
-                       "<w>\\</w>      : make a shop\n"
-                       "<w>Ctrl-K</w> : mark all vaults as unused\n"
+                       "<w>L</w>      place a vault by name\n"
+                       "<w>p</w>      make a portal\n"
+                       "<w>T</w>      make a trap\n"
+                       "<w><<</w>/<w>></w>    create up/down staircase\n"
+                       "<w>(</w>      turn cell into feature\n"
+                       "<w>\\</w>      make a shop\n"
+                       "<w>Ctrl-K</w> mark all vaults as unused\n"
                        "\n"
                        "<yellow>Other level related commands</yellow>\n"
-                       "<w>Ctrl-A</w> : generate new Abyss area\n"
-                       "<w>b</w>      : controlled blink\n"
-                       "<w>Ctrl-B</w> : controlled teleport\n"
-                       "<w>B</w>      : banish yourself to the Abyss\n"
-                       "<w>k</w>      : shift section of a labyrinth\n"
-                       "<w>R</w>      : change monster spawn rate\n"
-                       "<w>Ctrl-S</w> : change Abyss speed\n"
-                       "<w>u</w>/<w>d</w>    : shift up/down one level\n"
-                       "<w>~</w>      : go to a specific level\n"
-                       "<w>:</w>      : find branches and overflow\n"
-                       "         temples in the dungeon\n"
-                       "<w>;</w>      : list known levels and counters\n"
-                       "<w>{</w>      : magic mapping\n"
-                       "<w>}</w>      : detect all traps on level\n"
-                       "<w>)</w>      : change Shoals' tide speed\n"
-                       "<w>Ctrl-E</w> : dump level builder information\n"
-                       "<w>Ctrl-R</w> : regenerate current level\n"
-                       "<w>P</w>      : create a level based on a vault\n"),
+                       "<w>Ctrl-A</w> generate new Abyss area\n"
+                       "<w>b</w>      controlled blink\n"
+                       "<w>Ctrl-B</w> controlled teleport\n"
+                       "<w>B</w>      banish yourself to the Abyss\n"
+                       "<w>k</w>      shift section of a labyrinth\n"
+                       "<w>R</w>      change monster spawn rate\n"
+                       "<w>Ctrl-S</w> change Abyss speed\n"
+                       "<w>u</w>/<w>d</w>    shift up/down one level\n"
+                       "<w>~</w>      go to a specific level\n"
+                       "<w>:</w>      find branches and overflow\n"
+                       "       temples in the dungeon\n"
+                       "<w>;</w>      list known levels and counters\n"
+                       "<w>{</w>      magic mapping\n"
+                       "<w>}</w>      detect all traps on level\n"
+                       "<w>)</w>      change Shoals' tide speed\n"
+                       "<w>Ctrl-E</w> dump level builder information\n"
+                       "<w>Ctrl-R</w> regenerate current level\n"
+                       "<w>P</w>      create a level based on a vault\n"),
                        true, true);
 
     cols.add_formatted(1,
-                       gettext("<yellow>Other player related effects</yellow>\n"
-                       "<w>c</w>      : card effect\n"
+                       _("<yellow>Other player related effects</yellow>\n"
+                       "<w>c</w>      card effect\n"
 #ifdef DEBUG_BONES
-                       "<w>Ctrl-G</w> : save/load ghost (bones file)\n"
+                       "<w>Ctrl-G</w> save/load ghost (bones file)\n"
 #endif
-                       "<w>h</w>/<w>H</w>    : heal yourself (super-Heal)\n"
-                       "<w>Ctrl-H</w> : set hunger state\n"
-                       "<w>X</w>      : make Xom do something now\n"
-                       "<w>z</w>      : cast spell by number/name\n"
-                       "<w>Ctrl-M</w> : memorise spell\n"
-                       "<w>W</w>      : god wrath\n"
-                       "<w>w</w>      : god mollification\n"
-                       "<w>Ctrl-P</w> : polymorph into a form\n"
-                       "<w>Ctrl-V</w> : toggle xray vision\n"
+                       "<w>h</w>/<w>H</w>    heal yourself (super-Heal)\n"
+                       "<w>Ctrl-H</w> set hunger state\n"
+                       "<w>X</w>      make Xom do something now\n"
+                       "<w>z</w>      cast spell by number/name\n"
+                       "<w>Ctrl-M</w> memorise spell\n"
+                       "<w>W</w>      god wrath\n"
+                       "<w>w</w>      god mollification\n"
+                       "<w>Ctrl-P</w> polymorph into a form\n"
+                       "<w>Ctrl-V</w> toggle xray vision\n"
                        "\n"
                        "<yellow>Monster related commands</yellow>\n"
-                       "<w>D</w>      : detect all monsters\n"
-                       "<w>G</w>      : dismiss all monsters\n"
-                       "<w>m</w>/<w>M</w>    : create monster by number/name\n"
-                       "<w>\"</w>      : list monsters\n"
+                       "<w>D</w>      detect all monsters\n"
+                       "<w>G</w>      dismiss all monsters\n"
+                       "<w>m</w>/<w>M</w>    create monster by number/name\n"
+                       "<w>\"</w>      list monsters\n"
                        "\n"
                        "<yellow>Item related commands</yellow>\n"
-                       "<w>a</w>      : acquirement\n"
-                       "<w>C</w>      : (un)curse item\n"
-                       "<w>i</w>/<w>I</w>    : identify/unidentify inventory\n"
-                       "<w>o</w>/<w>%</w>    : create an object\n"
-                       "<w>t</w>      : tweak object properties\n"
-                       "<w>v</w>      : show gold value of an item\n"
-                       "<w>-</w>      : get a god gift\n"
-                       "<w>|</w>      : create all predefined artefacts\n"
-                       "<w>+</w>      : make randart from item\n"
-                       "<w>'</w>      : list items\n"
-                       "<w>J</w>      : Jiyva off-level sacrifice\n"
+                       "<w>a</w>      acquirement\n"
+                       "<w>C</w>      (un)curse item\n"
+                       "<w>i</w>/<w>I</w>    identify/unidentify inventory\n"
+                       "<w>o</w>/<w>%</w>    create an object\n"
+                       "<w>t</w>      tweak object properties\n"
+                       "<w>v</w>      show gold value of an item\n"
+                       "<w>-</w>      get a god gift\n"
+                       "<w>|</w>      create all unrand artefacts\n"
+                       "<w>+</w>      make randart from item\n"
+                       "<w>'</w>      list items\n"
+                       "<w>J</w>      Jiyva off-level sacrifice\n"
                        "\n"
                        "<yellow>Debugging commands</yellow>\n"
-                       "<w>f</w>      : quick fight simulation\n"
-                       "<w>F</w>      : single scale fsim\n"
-                       "<w>Ctrl-F</w> : double scale fsim\n"
-                       "<w>Ctrl-I</w> : item generation stats\n"
-                       "<w>O</w>      : measure exploration time\n"
-                       "<w>Ctrl-t</w> : enter in-game Lua interpreter\n"
-                       "<w>Ctrl-X</w> : Xom effect stats\n"
+                       "<w>f</w>      quick fight simulation\n"
+                       "<w>F</w>      single scale fsim\n"
+                       "<w>Ctrl-F</w> double scale fsim\n"
+                       "<w>Ctrl-I</w> item generation stats\n"
+                       "<w>O</w>      measure exploration time\n"
+                       "<w>Ctrl-T</w> dungeon (D)Lua interpreter\n"
+                       "<w>Ctrl-U</w> client (C)Lua interpreter\n"
+                       "<w>Ctrl-X</w> Xom effect stats\n"
 #ifdef DEBUG_DIAGNOSTICS
-                       "<w>Ctrl-Q</w> : make some debug messages quiet\n"
+                       "<w>Ctrl-Q</w> make some debug messages quiet\n"
 #endif
+                       "<w>Ctrl-C</w> force a crash\n"
                        "\n"
                        "<yellow>Other wizard commands</yellow>\n"
                        "(not prefixed with <w>&</w>!)\n"
-                       "<w>x?</w>     : list targeted commands\n"
-                       "<w>X?</w>     : list map-mode commands\n"),
+                       "<w>x?</w>     list targeted commands\n"
+                       "<w>X?</w>     list map-mode commands\n"),
                        true, true);
 
     int key = _show_keyhelp_menu(cols.formatted_lines(), false,

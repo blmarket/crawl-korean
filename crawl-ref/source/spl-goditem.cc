@@ -57,8 +57,10 @@ int identify(int power, int item_slot, string *pre_msg)
     {
         if (item_slot == -1)
         {
-            item_slot = prompt_invent_item(_("Identify which item?"), MT_INVLIST,
-                                           OSEL_UNIDENT, true, true, false);
+            item_slot = prompt_invent_item(
+                _("Identify which item? (\\ to view known items)"),
+                MT_INVLIST, OSEL_UNIDENT, true, true, false, 0,
+                -1, NULL, OPER_ANY, true);
         }
         if (prompt_failed(item_slot))
             return identified;
@@ -136,7 +138,7 @@ static bool _mons_hostile(const monster* mon)
 // Returns 0, if it's possible to pacify this monster.
 int is_pacifiable(const monster* mon)
 {
-    if (you.religion != GOD_ELYVILON)
+    if (!you_worship(GOD_ELYVILON))
         return -1;
 
     // I was thinking of jellies when I wrote this, but maybe we shouldn't
@@ -157,7 +159,7 @@ int is_pacifiable(const monster* mon)
         return -1;
     }
 
-    if (mons_is_stationary(mon)) // not able to leave the level
+    if (mon->is_stationary()) // not able to leave the level
         return -1;
 
     if (mon->asleep()) // not aware of what is happening
@@ -241,7 +243,7 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
     {
         spd.isValid = spell_direction(spd, beam, DIR_TARGET,
                                       mode != TARG_NUM_MODES ? mode :
-                                      you.religion == GOD_ELYVILON ?
+                                      you_worship(GOD_ELYVILON) ?
                                             TARG_ANY : TARG_FRIEND,
                                       LOS_RADIUS, false, true, true, "Heal",
                                       NULL, false, NULL, _desc_mindless);
@@ -282,7 +284,7 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
 
     // Don't divinely heal a monster you can't pacify.
     if (divine_ability && is_hostile
-        && you.religion == GOD_ELYVILON
+        && you_worship(GOD_ELYVILON)
         && can_pacify <= 0)
     {
         if (can_pacify == 0)
@@ -318,7 +320,7 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
 
     bool did_something = false;
 
-    if (you.religion == GOD_ELYVILON
+    if (you_worship(GOD_ELYVILON)
         && can_pacify == 1
         && is_hostile)
     {
@@ -463,7 +465,7 @@ void antimagic()
              danger ? _("Careful! ") : "");
     }
 
-    contaminate_player(-1 * (1 + random2(5)));
+    contaminate_player(-1 * (1000 + random2(4000)));
 }
 
 int detect_traps(int pow)
@@ -484,7 +486,7 @@ int detect_items(int pow)
         map_radius = 8 + random2(8) + pow;
     else
     {
-        if (you.religion == GOD_ASHENZARI)
+        if (you_worship(GOD_ASHENZARI))
         {
             map_radius = min(you.piety / 20, LOS_RADIUS);
             if (map_radius <= 0)
@@ -650,7 +652,7 @@ static bool _selectively_remove_curse(string *pre_msg)
 
 bool remove_curse(bool alreadyknown, string *pre_msg)
 {
-    if (you.religion == GOD_ASHENZARI && alreadyknown)
+    if (you_worship(GOD_ASHENZARI) && alreadyknown)
     {
         if (_selectively_remove_curse(pre_msg))
         {
@@ -757,7 +759,7 @@ bool curse_item(bool armour, bool alreadyknown, string *pre_msg)
 
     if (affected == EQ_WEAPON)
     {
-        if (you.religion == GOD_ASHENZARI && alreadyknown)
+        if (you_worship(GOD_ASHENZARI) && alreadyknown)
         {
             mprf(MSGCH_PROMPT, _("You aren't wearing any piece of uncursed %s."),
                  armour ? _(M_("armour")) : _(M_("jewellery")));
@@ -772,7 +774,7 @@ bool curse_item(bool armour, bool alreadyknown, string *pre_msg)
         return false;
     }
 
-    if (you.religion == GOD_ASHENZARI && alreadyknown)
+    if (you_worship(GOD_ASHENZARI) && alreadyknown)
         return _selectively_curse_item(armour, pre_msg);
 
     if (pre_msg)

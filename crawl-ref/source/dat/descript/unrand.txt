@@ -60,15 +60,20 @@ This dreadful weapon is used at the user's peril.
 %%%%
 Sword of Cerebov
 
-Eerie flames cover its twisted blade.
+Eerie flames cover its twisted blade. Its demonic power burns away some of the
+defender's fire resistance.
 %%%%
 Staff of Dispater
 
-This legendary item can unleash the fury of Hell.
+This legendary item can unleash the fury of Hell. The unholy flames it evokes
+may cost a portion of your life and your soul, but since when have such details
+stopped anyone in their quest for power?
 %%%%
 Sceptre of Asmodeus
 
-It carries some of the powers of the arch-fiend Asmodeus.
+It carries some of the powers of the arch-fiend Asmodeus. Waving this sceptre
+can yank powerful hellspawn from their infernal home and enslave them to do
+your bidding. Obviously, they're not going to like you when the spell expires.
 %%%%
 faerie dragon armour
 
@@ -183,7 +188,8 @@ It is designed for easy concealment, but still packs a nasty punch.
 lance "Wyrmbane"
 
 An enchanted lance which grows more and more powerful every time it inflicts a
-killing blow on a dragon.
+killing blow on a strong dragon. The more powerful it grows, the harder it will
+be to find a worthy opponent.
 %%%%
 Spriggan's Knife
 
@@ -216,6 +222,7 @@ whip "Snakebite"
 A double-ended whip made from the cured hides of the Lair of Beasts' deadly
 black mambas.
 %%%%
+# TAG_MAJOR_VERSION == 34
 knife of Accuracy
 
 It is almost unerringly accurate.
@@ -270,6 +277,7 @@ cloak of Flash
 
 A vibrating cloak.
 %%%%
+# TAG_MAJOR_VERSION == 34
 boots of the Assassin
 
 Some soft boots, specially designed by the Assassin's Guild.
@@ -307,8 +315,8 @@ A weird-looking armour.
 %%%%
 mask of the Dragon
 
-A strange blue helm made of hard flexible leather that makes the wearer's
-face resemble a dragon's visage.
+A strange blue helm made of hard flexible leather that makes the wearer's face
+resemble a dragon's visage.
 %%%%
 robe of Night
 
@@ -350,7 +358,7 @@ from rats of all kinds.
 shield of the gong
 
 This is a large bronze gong that can be worn as a shield. According to certain
-mystics, beating on such a gong can grant you spiritual protection.
+mystics, beating on such a gong can grant you some kinds of protection.
 
 And this shield surely will be heard!
 %%%%
@@ -460,6 +468,14 @@ Axe of Woe
 As you hold this axe your mind does not feel fully your own. Your body begins
 to exhibit strength far beyond its capabilities, and your movements become
 guided by Makhleb.
+%%%%
+moon troll leather armour
+
+This armour was reportedly created by enchanting the hide of a now-extinct
+species of troll. Whether this armour is truly a remnant of the legendary
+unseen terrors of the wind or merely an appropriation of the name to add
+mystique is something of a mystery; its power of rapid regeneration at the
+occasional expense of the wearer's magic power, however, is hard to dispute.
 %%%%
 milk chocolate
 

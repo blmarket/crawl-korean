@@ -54,6 +54,13 @@ enum tag_minor_version
     TAG_MINOR_CHIMERA_GHOST_DEMON, // Use ghost demon
     TAG_MINOR_MONSTER_PARTS,       // Flag the presence of ghost_demon (and more)
     TAG_MINOR_OPTIONAL_PARTS,      // Make three big monster structs optional.
+    TAG_MINOR_SHORT_SPELL_TYPE,    // Spell types changed to short instead of byte
+    TAG_MINOR_FORGOTTEN_MAP,       // X^F can be undone.
+    TAG_MINOR_CONTAM_SCALE,        // Scale the magic contamination by a factor of 1000
+    TAG_MINOR_SUMMONER,            // Store summoner data.
+    TAG_MINOR_STAT_MUT,            // Flag for converting stat mutations
+    TAG_MINOR_MAP_ORDER,           // map_def::order added to des cache
+    TAG_MINOR_FIXED_CONSTRICTION,  // Corrected a constricting marshalling bug.
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
 };

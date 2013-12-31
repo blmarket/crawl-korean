@@ -85,7 +85,7 @@
 #endif
 
 #ifdef WIZARD
-#include "cio.h" // for cancelable_get_line()
+#include "cio.h" // for cancellable_get_line()
 #endif
 
 // DUNGEON BUILDERS
@@ -783,7 +783,9 @@ static bool _is_upwards_exit_stair(const coord_def &c)
     case DNGN_STONE_STAIRS_UP_II:
     case DNGN_STONE_STAIRS_UP_III:
     case DNGN_EXIT_HELL:
+#if TAG_MAJOR_VERSION == 34
     case DNGN_RETURN_FROM_DWARVEN_HALL:
+#endif
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_SLIME_PITS:
@@ -827,7 +829,9 @@ static bool _is_exit_stair(const coord_def &c)
     case DNGN_STONE_STAIRS_UP_III:
     case DNGN_ESCAPE_HATCH_UP:
     case DNGN_EXIT_HELL:
+#if TAG_MAJOR_VERSION == 34
     case DNGN_RETURN_FROM_DWARVEN_HALL:
+#endif
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_SLIME_PITS:
@@ -1034,6 +1038,20 @@ dgn_register_place(const vault_placement &place, bool register_vault)
             _mask_vault(place, MMT_OPAQUE);
     }
 
+    // Find tags matching properties.
+    vector<string> tags = place.map.get_tags();
+
+    for (vector<string>::const_iterator i = tags.begin(); i != tags.end(); ++i)
+    {
+        const feature_property_type prop = str_to_fprop(*i);
+        if (prop == FPROP_NONE)
+            continue;
+
+        for (vault_place_iterator vi(place); vi; ++vi)
+            env.pgrid(*vi) |= prop;
+
+    }
+
     if (place.map.has_tag("no_monster_gen"))
         _mask_vault(place, MMT_NO_MONS);
 
@@ -1179,7 +1197,6 @@ void dgn_reset_level(bool enable_random_maps)
 {
     env.level_uniq_maps.clear();
     env.level_uniq_map_tags.clear();
-    env.level_vault_list.clear();
     clear_subvault_stack();
 
     you.unique_creatures = temp_unique_creatures;
@@ -1212,6 +1229,7 @@ void dgn_reset_level(bool enable_random_maps)
     env.pgrid.init(0);
     env.grid_colours.init(BLACK);
     env.map_knowledge.init(map_cell());
+    env.map_forgotten.reset();
 
     // Delete all traps.
     for (int i = 0; i < MAX_TRAPS; i++)
@@ -1471,7 +1489,7 @@ static void _fixup_branch_stairs()
 
             if (!stairs.empty())
             {
-                random_shuffle(stairs.begin(), stairs.end());
+                shuffle_array(stairs);
                 coord_def coord = *(stairs.begin());
                 env.markers.add(new map_feature_marker(coord, grd(coord)));
                 _set_grd(coord, exit);
@@ -2330,6 +2348,26 @@ static void _place_item_mimics()
 
 }
 
+// Apply modifications (ruination, plant clumps) that should happen
+// regardless of game mode.
+static void _post_vault_build()
+{
+    if (player_in_branch(BRANCH_LAIR))
+    {
+        int depth = you.depth + 1;
+        _ruin_level(rectangle_iterator(1), MMT_VAULT,
+                    20 - depth, depth / 2 + 4, 1 + (depth / 3));
+        do
+        {
+            _add_plant_clumps(12 - depth, 18 - depth / 4, depth / 4 + 2);
+            depth -= 3;
+        } while (depth > 0);
+    }
+
+    if (player_in_branch(BRANCH_FOREST))
+        _add_plant_clumps(2);
+}
+
 static void _build_dungeon_level(dungeon_feature_type dest_stairs_type)
 {
     bool place_vaults = _builder_by_type();
@@ -2345,21 +2383,6 @@ static void _build_dungeon_level(dungeon_feature_type dest_stairs_type)
     // yet to be placed). Some items and monsters already exist.
 
     _check_doors();
-
-    if (player_in_branch(BRANCH_LAIR))
-    {
-        int depth = you.depth + 1;
-        _ruin_level(rectangle_iterator(1), MMT_VAULT,
-                    20 - depth, depth / 2 + 4, 1 + (depth / 3));
-        do
-        {
-            _add_plant_clumps(12 - depth, 18 - depth / 4, depth / 4 + 2);
-            depth -= 3;
-        } while (depth > 0);
-    }
-
-    if (player_in_branch(BRANCH_FOREST))
-        _add_plant_clumps(2);
 
     const unsigned nvaults = env.level_vaults.size();
 
@@ -2394,6 +2417,9 @@ static void _build_dungeon_level(dungeon_feature_type dest_stairs_type)
             _place_chance_vaults();
         }
 
+        // Ruination and plant clumps.
+        _post_vault_build();
+
         // XXX: Moved this here from builder_monsters so that
         //      connectivity can be ensured
         _place_uniques();
@@ -2401,10 +2427,10 @@ static void _build_dungeon_level(dungeon_feature_type dest_stairs_type)
         if (_mimic_at_level())
             _place_feature_mimics(dest_stairs_type);
 
+        _place_traps();
+
         // Any vault-placement activity must happen before this check.
         _dgn_verify_connectivity(nvaults);
-
-        _place_traps();
 
         // Place monsters.
         if (!crawl_state.game_is_zotdef())
@@ -2414,6 +2440,12 @@ static void _build_dungeon_level(dungeon_feature_type dest_stairs_type)
         _builder_items();
 
         _fixup_walls();
+    }
+    else
+    {
+        // Do ruination and plant clumps even in funny game modes, if
+        // they happen to have the relevant branch.
+        _post_vault_build();
     }
 
     _fixup_branch_stairs();
@@ -2570,8 +2602,12 @@ static const map_def *_pick_layout(const map_def *vault)
     {
         do
         {
-             layout = random_map_for_tag("layout", true, true);
-             tries--;
+            if (!tries--)
+            {
+                die("Couldn't find a layout for %s",
+                    level_id::current().describe().c_str());
+            }
+            layout = random_map_for_tag("layout", true, true);
         }
         while (layout->has_tag("no_primary_vault")
                || (tries > 10 && !_vault_can_use_layout(vault, layout)));
@@ -3088,7 +3124,7 @@ static void _place_chance_vaults()
     // [ds] If there are multiple CHANCE maps that share an luniq_ or
     // uniq_ tag, only the first such map will be placed. Shuffle the
     // order of chosen maps so we don't have a first-map bias.
-    random_shuffle(maps.begin(), maps.end());
+    shuffle_array(maps);
     for (int i = 0, size = maps.size(); i < size; ++i)
     {
         const map_def *map = maps[i];
@@ -3214,6 +3250,15 @@ static void _place_traps()
                 while (ts.type == TRAP_SHAFT || ts.type >= NUM_TRAPS)
                     ts.type = random_trap_for_place();
             }
+        }
+
+        // Only teleport, shaft, alarm and Zot traps are interesting enough to
+        // be placed randomly.  Until the formula is overhauled, let's just
+        // skip creation if the old code would pick a boring one.
+        if (trap_category(ts.type) == DNGN_TRAP_MECHANICAL)
+        {
+            ts.type = TRAP_UNASSIGNED;
+            continue;
         }
 
         grd(ts.pos) = DNGN_UNDISCOVERED_TRAP;
@@ -3613,7 +3658,7 @@ static void _place_aquatic_monsters_weighted()
     if (water.size() > 49)
     {
         int num = min(random2avg(9, 2) + (random2(water_count) / 10), 15);
-        random_shuffle(water.begin(), water.end());
+        shuffle_array(water);
 
         for (int i = 0; i < num; i++)
         {
@@ -3820,7 +3865,7 @@ static void _builder_monsters()
     // letting all the merfolk be generated in the middle of the
     // water.
     const dungeon_feature_type preferred_grid_feature =
-        in_shoals? DNGN_FLOOR : DNGN_UNSEEN;
+        in_shoals ? DNGN_FLOOR : DNGN_UNSEEN;
 
     dprf("_builder_monsters: Generating %d monsters", mon_wanted);
     for (int i = 0; i < mon_wanted; i++)
@@ -4068,7 +4113,7 @@ const vault_placement *dgn_safe_place_map(const map_def *mdef,
 vault_placement *dgn_vault_at(coord_def p)
 {
     const int map_index = env.level_map_ids(p);
-    return (map_index == INVALID_MAP_INDEX? NULL : env.level_vaults[map_index]);
+    return (map_index == INVALID_MAP_INDEX ? NULL : env.level_vaults[map_index]);
 }
 
 void dgn_seen_vault_at(coord_def p)
@@ -4156,7 +4201,7 @@ _build_vault_impl(const map_def *vault,
 
     dprf("Map: %s; placed: %s; place: (%d,%d), size: (%d,%d)",
          vault->name.c_str(),
-         placed_vault_orientation != MAP_NONE? "yes" : "no",
+         placed_vault_orientation != MAP_NONE ? "yes" : "no",
          place.pos.x, place.pos.y, place.size.x, place.size.y);
 
     if (placed_vault_orientation == MAP_NONE)
@@ -4166,10 +4211,10 @@ _build_vault_impl(const map_def *vault,
 
     if (!build_only
         && (placed_vault_orientation == MAP_ENCOMPASS || is_layout)
-        && vault->border_fill_type != DNGN_ROCK_WALL)
+        && place.map.border_fill_type != DNGN_ROCK_WALL)
     {
        dgn_replace_area(0, 0, GXM-1, GYM-1, DNGN_ROCK_WALL,
-                        vault->border_fill_type);
+                        place.map.border_fill_type);
     }
 
     // XXX: Moved this out of dgn_register_place so that vault-set monsters can
@@ -4745,7 +4790,7 @@ monster* dgn_place_monster(mons_spec &mspec, coord_def where,
         const habitat_type habitat = mons_class_primary_habitat(montype);
 
         if (in_bounds(where) && !monster_habitable_grid(montype, grd(where)))
-            dungeon_terrain_changed(where, habitat2grid(habitat));
+            dungeon_terrain_changed(where, habitat2grid(habitat), !Generating_Level);
     }
 
     if (type == RANDOM_MONSTER)
@@ -5356,7 +5401,7 @@ static dungeon_feature_type _pick_temple_altar(vault_placement &place)
         }
         // Randomized altar list for mini-temples.
         _temple_altar_list = temple_god_list();
-        random_shuffle(_temple_altar_list.begin(), _temple_altar_list.end());
+        shuffle_array(_temple_altar_list);
     }
 
     const god_type god = _temple_altar_list.back();
@@ -5384,13 +5429,6 @@ static dungeon_feature_type _pick_an_altar()
         case BRANCH_CRYPT:
             god = (coinflip() ? GOD_KIKUBAAQUDGHA
                               : GOD_YREDELEMNUL);
-            break;
-
-        case BRANCH_DWARVEN_HALL:
-            god = random_choose(GOD_KIKUBAAQUDGHA, GOD_YREDELEMNUL,
-                                GOD_MAKHLEB,       GOD_TROG,
-                                GOD_CHEIBRIADOS,   GOD_ELYVILON,
-                                GOD_OKAWARU,       -1);
             break;
 
         case BRANCH_ORCISH_MINES: // violent gods (50% chance of Beogh)
@@ -5531,7 +5569,7 @@ static void _place_spec_shop(const coord_def& where,
 
     int plojy = 5 + random2avg(12, 3);
     if (representative)
-        plojy = env.shop[i].type == SHOP_WAND? NUM_WANDS : 16;
+        plojy = env.shop[i].type == SHOP_WAND ? NUM_WANDS : 16;
 
     if (spec->use_all && !spec->items.empty())
     {
@@ -5594,7 +5632,7 @@ static void _place_spec_shop(const coord_def& where,
             else
             {
                 orb = items(1, _item_in_shop(env.shop[i].type), subtype, true,
-                             one_chance_in(4)? MAKE_GOOD_ITEM : item_level,
+                             one_chance_in(4) ? MAKE_GOOD_ITEM : item_level,
                              MAKE_ITEM_RANDOM_RACE);
             }
 
@@ -6842,16 +6880,6 @@ static dungeon_feature_type _vault_inspect_glyph(vault_placement &place,
 
 static void _remember_vault_placement(const vault_placement &place, bool extra)
 {
-    // First we store some info on the vault, so that if there's a crash the
-    // crash report can list them all.
-    env.level_vault_list.push_back(
-        make_stringf("%s%s: (%d,%d) (%d,%d) orient: %d",
-                     place.map.name.c_str(),
-                     extra ? " (extra)" : "",
-                     place.pos.x, place.pos.y,
-                     place.size.x, place.size.y,
-                     place.orient));
-
     // Second we setup some info to be saved in the player's properties
     // hash table, so the information can be included in the character
     // dump when the player dies/quits/wins.

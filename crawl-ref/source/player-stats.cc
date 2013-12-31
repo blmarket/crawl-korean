@@ -28,6 +28,10 @@
 #include "tilepick.h"
 #endif
 
+// Don't make this larger than 255 without changing the type of you.stat_zero
+// in player.h as well as the associated marshalling code in tags.cc
+const int STATZERO_TURN_CAP = 200;
+
 int player::stat(stat_type s, bool nonneg) const
 {
     const int val = max_stat(s) - stat_loss[s];
@@ -357,7 +361,7 @@ static int _strength_modifier()
     if (you.duration[DUR_DIVINE_STAMINA])
         result += you.attribute[ATTR_DIVINE_STAMINA];
 
-    result += che_stat_boost();
+    result += chei_stat_boost();
 
     if (!you.suppressed())
     {
@@ -372,10 +376,12 @@ static int _strength_modifier()
     }
 
     // mutations
-    result += player_mutation_level(MUT_STRONG)
-              - player_mutation_level(MUT_WEAK);
+    result += 2 * (player_mutation_level(MUT_STRONG)
+                  - player_mutation_level(MUT_WEAK));
+#if TAG_MAJOR_VERSION == 34
     result += player_mutation_level(MUT_STRONG_STIFF)
               - player_mutation_level(MUT_FLEXIBLE_WEAK);
+#endif
     result -= player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE)
               ? player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE) - 1 : 0;
 
@@ -384,7 +390,6 @@ static int _strength_modifier()
     {
     case TRAN_STATUE:          result +=  2; break;
     case TRAN_DRAGON:          result += 10; break;
-    case TRAN_LICH:            result +=  3; break;
     case TRAN_BAT:             result -=  5; break;
     default:                                 break;
     }
@@ -402,7 +407,7 @@ static int _int_modifier()
     if (you.duration[DUR_DIVINE_STAMINA])
         result += you.attribute[ATTR_DIVINE_STAMINA];
 
-    result += che_stat_boost();
+    result += chei_stat_boost();
 
     if (!you.suppressed())
     {
@@ -417,8 +422,8 @@ static int _int_modifier()
     }
 
     // mutations
-    result += player_mutation_level(MUT_CLEVER)
-              - player_mutation_level(MUT_DOPEY);
+    result += 2 * (player_mutation_level(MUT_CLEVER)
+                  - player_mutation_level(MUT_DOPEY));
 
     return result;
 }
@@ -433,7 +438,7 @@ static int _dex_modifier()
     if (you.duration[DUR_DIVINE_STAMINA])
         result += you.attribute[ATTR_DIVINE_STAMINA];
 
-    result += che_stat_boost();
+    result += chei_stat_boost();
 
     if (!you.suppressed())
     {
@@ -448,11 +453,12 @@ static int _dex_modifier()
     }
 
     // mutations
-    result += player_mutation_level(MUT_AGILE)
-              - player_mutation_level(MUT_CLUMSY);
+    result += 2 * (player_mutation_level(MUT_AGILE)
+                  - player_mutation_level(MUT_CLUMSY));
+#if TAG_MAJOR_VERSION == 34
     result += player_mutation_level(MUT_FLEXIBLE_WEAK)
               - player_mutation_level(MUT_STRONG_STIFF);
-
+#endif
     result += 2 * player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE);
     result -= player_mutation_level(MUT_ROUGH_BLACK_SCALES);
 
@@ -536,7 +542,7 @@ bool lose_stat(stat_type which_stat, int stat_loss, bool force,
     {
         you.stat_loss[which_stat] = min<int>(100,
                                         you.stat_loss[which_stat] + stat_loss);
-        if (you.stat_zero[which_stat] > 0)
+        if (you.stat_zero[which_stat])
         {
             mprf(MSGCH_DANGER, "You convulse from lack of %s!", stat_desc(which_stat, SD_NAME));
             ouch(5 + random2(you.hp_max / 10), NON_MONSTER, _statloss_killtype(which_stat), cause);
@@ -639,7 +645,7 @@ static void _handle_stat_change(stat_type stat, const char* cause, bool see_sour
     if (you.stat(stat) <= 0 && you.stat_zero[stat] == 0)
     {
         // Turns required for recovery once the stat is restored, randomised slightly.
-        you.stat_zero[stat] += 10 + random2(10);
+        you.stat_zero[stat] = 10 + random2(10);
         mprf(MSGCH_WARN, _("You have lost your %s."), stat_desc(stat, SD_NAME));
         take_note(Note(NOTE_MESSAGE, 0, 0, make_stringf(_("Lost %s."),
             _(stat_desc(stat, SD_NAME))).c_str()), true);
@@ -683,8 +689,11 @@ void update_stat_zero()
     {
         stat_type s = static_cast<stat_type>(i);
         if (you.stat(s) <= 0)
-            you.stat_zero[s]++;
-        else if (you.stat_zero[s] > 0)
+        {
+            if (you.stat_zero[s] < STATZERO_TURN_CAP)
+                you.stat_zero[s]++;
+        }
+        else if (you.stat_zero[s])
         {
             you.stat_zero[s]--;
             if (you.stat_zero[s] == 0)

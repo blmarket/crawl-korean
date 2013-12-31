@@ -29,7 +29,7 @@ monster_type debug_prompt_for_monster(void)
     char specs[1024];
 
     mpr("Which monster by name? ", MSGCH_PROMPT);
-    if (!cancelable_get_line_autohist(specs, sizeof specs))
+    if (!cancellable_get_line_autohist(specs, sizeof specs))
     {
         if (specs[0] == '\0')
             return MONS_NO_MONSTER;
@@ -81,7 +81,7 @@ void debug_dump_levgen()
     mprf("Level build method = %s, level layout type  = %s, absdepth0 = %d",
          method.c_str(), type.c_str(), env.absdepth0);
 
-    if (!env.level_vault_list.empty())
+    if (!env.level_vaults.empty())
     {
         mpr("Level vaults:");
         for (size_t i = 0; i < env.level_vaults.size(); ++i)

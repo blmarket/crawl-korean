@@ -31,6 +31,7 @@ enum object_selector
     OSEL_UNCURSED_WORN_ARMOUR    = -15,
     OSEL_UNCURSED_WORN_JEWELLERY = -16,
     OSEL_SCROLL_TARGET           = -17,
+    OSEL_BRANDABLE_WEAPON        = -18,
 };
 
 #define SLOT_BARE_HANDS      -2
@@ -211,8 +212,7 @@ vector<SelItem> prompt_invent_items(
                         Menu::selitem_tfn fn = NULL,
                         const vector<SelItem> *pre_select = NULL);
 
-void browse_inventory();
-unsigned char get_invent(int invent_type);
+unsigned char get_invent(int invent_type, bool redraw = true);
 
 bool in_inventory(const item_def &i);
 

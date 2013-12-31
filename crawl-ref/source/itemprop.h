@@ -105,6 +105,8 @@ int get_vorpal_type(const item_def &item) PURE;
 int get_damage_type(const item_def &item) PURE;
 int single_damage_type(const item_def &item) PURE;
 
+bool is_brandable_weapon(const item_def &wpn, bool allow_ranged);
+
 int weapon_str_weight(const item_def &wpn) PURE;
 
 skill_type weapon_skill(const item_def &item) PURE;
@@ -147,7 +149,6 @@ bool ring_has_stackable_effect(const item_def &item) PURE;
 
 // food functions:
 bool is_blood_potion(const item_def &item) PURE;
-bool is_fizzing_potion(const item_def &item) PURE;
 bool food_is_meaty(int food_type) PURE;
 bool food_is_meaty(const item_def &item) PURE;
 bool food_is_veggie(int food_type) PURE;

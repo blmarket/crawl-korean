@@ -177,6 +177,7 @@ static void _initialize()
 #ifdef USE_TILE
         init_player_doll();
 #endif
+        dgn_reset_level();
         crawl_state.show_more_prompt = false;
         run_tests(true);
         // Superfluous, just to make it clear that this is the end of
@@ -882,7 +883,7 @@ static void _choose_arena_teams(newgame_def* choice,
     cgotoxy(1, 2);
 
     char buf[80];
-    if (cancelable_get_line(buf, sizeof(buf)))
+    if (cancellable_get_line(buf, sizeof(buf)))
         game_ended();
     choice->arena_teams = buf;
     if (choice->arena_teams.empty())

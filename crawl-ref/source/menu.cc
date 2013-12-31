@@ -248,6 +248,21 @@ void Menu::set_more(const formatted_string &fs)
     more = fs;
 }
 
+void Menu::set_more()
+{
+    set_more(formatted_string::parse_string(
+#ifdef USE_TILE_LOCAL
+        "<cyan>[ <w>+</w>, <w>></w>, <w>Space</w> or <w>L-click</w>: Page down."
+        "   <w>-</w> or <w><<</w>: Page up."
+        "   <w>Esc</w> or <w>R-click</w> exits.]"
+#else
+        _("<cyan>[ <w>+</w>, <w>></w> or <w>Space</w>: Page down."
+        "   <w>-</w> or <w><<</w>: Page up."
+        "                       <w>Esc</w> exits.]")
+#endif
+    ));
+}
+
 void Menu::set_highlighter(MenuHighlighter *mh)
 {
     if (highlighter != mh)
@@ -481,7 +496,7 @@ bool Menu::process_key(int keyin)
         textcolor(WHITE);
         cprintf("Select what? (regex) ");
         textcolor(LIGHTGREY);
-        bool validline = !cancelable_get_line(linebuf, sizeof linebuf);
+        bool validline = !cancellable_get_line(linebuf, sizeof linebuf);
         if (validline && linebuf[0])
         {
             text_pattern tpat(linebuf, true);
@@ -2389,11 +2404,11 @@ MenuObject* PrecisionMenu::_find_object_by_direction(const MenuObject* start,
         aabb_start.x = start->get_min_coord().x;
         aabb_end.x = start->get_max_coord().x;
         aabb_start.y = start->get_max_coord().y;
-        // we choose an arbitarily large number here, because
+        // we choose an arbitrarily large number here, because
         // tiles saves entry coordinates in pixels, yet console saves them
         // in characters
-        // basicly, we want the AABB to be large enough to extend to the bottom
-        // of the screen in every possible resolution
+        // basically, we want the AABB to be large enough to extend to the
+        // bottom of the screen in every possible resolution
         aabb_end.y = 32767;
         break;
     case LEFT:
@@ -2811,7 +2826,8 @@ void TextItem::render()
         cgotoxy(m_min_coord.x, m_min_coord.y + i);
         textcolor(m_fg_colour);
         textbackground(m_bg_colour);
-        cprintf("%s", m_render_text.substr(newline_pos, endline_pos).c_str());
+        cprintf("%s", m_render_text.substr(newline_pos,
+                endline_pos - newline_pos).c_str());
         if (endline_pos != string::npos)
             newline_pos = endline_pos + 1;
         else
@@ -2864,7 +2880,7 @@ void TextItem::_wrap_text()
     if (num_linebreaks > max_lines)
     {
         size_t pos = 0;
-        // find the max_line'th occurence of '\n'
+        // find the max_line'th occurrence of '\n'
         for (int i = 0; i < max_lines; ++i)
             pos = m_render_text.find('\n', pos);
 
@@ -3647,11 +3663,11 @@ MenuItem* MenuFreeform::_find_item_by_direction(const MenuItem* start,
         aabb_start.x = start->get_min_coord().x;
         aabb_end.x = start->get_max_coord().x;
         aabb_start.y = start->get_max_coord().y;
-        // we choose an arbitarily large number here, because
+        // we choose an arbitrarily large number here, because
         // tiles saves entry coordinates in pixels, yet console saves them
         // in characters
-        // basicly, we want the AABB to be large enough to extend to the bottom
-        // of the screen in every possible resolution
+        // basically, we want the AABB to be large enough to extend to the
+        // bottom of the screen in every possible resolution
         aabb_end.y = 32767;
         break;
     case LEFT:

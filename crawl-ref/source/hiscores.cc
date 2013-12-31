@@ -358,15 +358,8 @@ static void _show_morgue(scorefile_entry& se)
 
     morgue_file.set_flags(flags, false);
     morgue_file.set_tag("morgue");
+    morgue_file.set_more();
 
-    morgue_file.set_more(formatted_string::parse_string(
-#ifdef USE_TILE_LOCAL
-                            "<cyan>[ +/L-click : 페이지 다운  - : 페이지 업."
-                            "           Esc/R-click 종료.]"));
-#else
-                            "<cyan>[ + : Page down.   - : Page up."
-                            "                           Esc exits.]"));
-#endif
     string morgue_base = morgue_name(se.get_name(), se.get_death_time());
     string morgue_path = morgue_directory()
                          + strip_filename_unsafe_chars(morgue_base) + ".txt";
@@ -700,6 +693,7 @@ void scorefile_entry::init_from(const scorefile_entry &se)
     lvl               = se.lvl;
     best_skill        = se.best_skill;
     best_skill_lvl    = se.best_skill_lvl;
+    title             = se.title;
     death_type        = se.death_type;
     death_source      = se.death_source;
     death_source_name = se.death_source_name;
@@ -745,6 +739,9 @@ void scorefile_entry::init_from(const scorefile_entry &se)
     zigs              = se.zigs;
     zigmax            = se.zigmax;
     fixup_char_name();
+
+    // We could just reset raw_line to "" instead.
+    raw_line          = se.raw_line;
 }
 
 xlog_fields scorefile_entry::get_fields() const
@@ -901,6 +898,7 @@ void scorefile_entry::init_with_fields()
 
     best_skill     = str_to_skill(fields->str_field("sk"));
     best_skill_lvl = fields->int_field("sklev");
+    title          = fields->str_field("title");
 
     death_type        = _str_to_kill_method(fields->str_field("ktyp"));
     death_source_name = fields->str_field("killer");
@@ -987,9 +985,7 @@ void scorefile_entry::set_base_xlog_fields() const
     fields->add_field("xl",    "%d", lvl);
     fields->add_field("sk",    "%s", skill_name(best_skill));
     fields->add_field("sklev", "%d", best_skill_lvl);
-    fields->add_field("title", "%s",
-                      skill_title(best_skill, best_skill_lvl,
-                                  race, str, dex, god).c_str());
+    fields->add_field("title", "%s", title.c_str());
 
     fields->add_field("place", "%s",
                       place_name(get_packed_place(branch, dlvl),
@@ -1011,7 +1007,7 @@ void scorefile_entry::set_base_xlog_fields() const
     fields->add_field("ev", "%d", ev);
     fields->add_field("sh", "%d", sh);
 
-    fields->add_field("god", "%s", god == GOD_NO_GOD? "" :
+    fields->add_field("god", "%s", god == GOD_NO_GOD ? "" :
                       god_name(god).c_str());
 
     if (wiz_mode)
@@ -1291,6 +1287,7 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
 void scorefile_entry::reset()
 {
     // simple init
+    raw_line.clear();
     version.clear();
     tiles                = 0;
     points               = -1;
@@ -1301,6 +1298,7 @@ void scorefile_entry::reset()
     race_class_name.clear();
     best_skill           = SK_NONE;
     best_skill_lvl       = 0;
+    title.clear();
     death_type           = KILLED_BY_SOMETHING;
     death_source         = NON_MONSTER;
     death_source_name.clear();
@@ -1468,6 +1466,7 @@ void scorefile_entry::init(time_t dt)
     lvl            = you.experience_level;
     best_skill     = ::best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
     best_skill_lvl = you.skills[ best_skill ];
+    title          = player_title();
 
     // Note all skills at level 27, and also all skills at level >= 15.
     for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
@@ -1507,14 +1506,14 @@ void scorefile_entry::init(time_t dt)
         DUR_INVIS, DUR_POISONING, STATUS_MISSILES, DUR_SURE_BLADE,
         DUR_TRANSFORMATION, STATUS_CONSTRICTED, STATUS_SILENCE, STATUS_RECALL,
         DUR_WEAK, DUR_DIMENSION_ANCHOR, DUR_ANTIMAGIC, DUR_SPIRIT_HOWL,
-        DUR_FLAYED, DUR_WATER_HOLD,
+        DUR_FLAYED, DUR_WATER_HOLD, STATUS_DRAINED, DUR_TOXIC_RADIANCE,
+        DUR_FIRE_VULN
     };
 
     status_info inf;
     for (unsigned i = 0; i < ARRAYSZ(statuses); ++i)
     {
-        fill_status_info(statuses[i], &inf);
-        if (!inf.short_text.empty())
+        if (fill_status_info(statuses[i], &inf) && !inf.short_text.empty())
         {
             if (!status_effects.empty())
                 status_effects += ",";
@@ -1541,7 +1540,7 @@ void scorefile_entry::init(time_t dt)
     sh    = player_shield_class();
 
     god = you.religion;
-    if (you.religion != GOD_NO_GOD)
+    if (!you_worship(GOD_NO_GOD))
     {
         piety   = you.piety;
         penance = you.penance[you.religion];
@@ -1752,10 +1751,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
     if (verbose)
     {
         snprintf(buf, HIGHSCORE_SIZE, "%8d \"%s\", %s (레벨 %d",
-                  points, name.c_str(),
-                  skill_title(best_skill, best_skill_lvl,
-                               race, str, dex, god, piety).c_str(),
-                  lvl);
+                  points, name.c_str(), title.c_str(), lvl);
         desc = buf;
     }
     else
@@ -1816,14 +1812,14 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
                 // Not exactly the same as the religion screen, but
                 // good enough to fill this slot for now.
                 snprintf(scratch, INFO_SIZE, "그(그녀)는 %s의 %s%s", _(god_name(god).c_str()),
-                             (piety >  160) ? "화신" :
-                             (piety >= 120) ? "장로" :
-                             (piety >= 100) ? "사제" :
-                             (piety >=  75) ? "수행자" :
-                             (piety >=  50) ? "신자" :
-                             (piety >=  30) ? "추종자"
-                                            : "수련생",
-                          
+                             (piety >= piety_breakpoint(5)) ? "화신" :
+                             (piety >= piety_breakpoint(4)) ? "고위 사제" :
+                             (piety >= piety_breakpoint(3)) ? "사제" :
+                             (piety >= piety_breakpoint(2)) ? "수행자" :
+                             (piety >= piety_breakpoint(1)) ? "신자" :
+                             (piety >= piety_breakpoint(0)) ? "추종자"
+                                                            : "수련생",
+
                              (penance > 0) ? " (으)로서 참회의 길을 걷고 있었다." : "(이)였다.");
 
                 desc += scratch;
@@ -2082,7 +2078,7 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
     case KILLED_BY_STUPIDITY:
         if (terse)
             desc += "지능 고갈";
-        else if (_species_is_undead(race) || race == SP_GREY_DRACONIAN)
+        else if (_species_is_undead(race) || race == SP_GREY_DRACONIAN || race == SP_GARGOYLE)
             desc += "자기자신의 존재를 잊어버렸다.";
         else
             desc += "숨쉬는 것을 잊어서 죽었다.";
@@ -2488,10 +2484,8 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
             {
                 if (!semiverbose)
                 {
-                    if (auxkilldata == "angry trees")
-                        desc += "... awoken ";
-                    else desc += (is_vowel(auxkilldata[0])) ? "... with an "
-                        : "... with a ";
+                    desc += (is_vowel(auxkilldata[0])) ? "... with an "
+                                                       : "... with a ";
                     desc += auxkilldata;
                     desc += _hiscore_newline_string();
                     needs_damage = true;
@@ -2504,8 +2498,10 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
             }
             else if (needs_called_by_monster_line)
             {
-                snprintf(scratch, sizeof(scratch), "... invoked by %s",
-                          death_source_name.c_str());
+                snprintf(scratch, sizeof(scratch), "... %s by %s",
+                         auxkilldata == "by angry trees" ? "awakened"
+                                                         : "invoked",
+                         death_source_name.c_str());
                 desc += scratch;
                 desc += _hiscore_newline_string();
                 needs_damage = true;

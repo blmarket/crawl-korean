@@ -184,15 +184,19 @@ Call Lost Soul cast
 Haste Plants cast
 
 @The_monster@ empowers the plants around itself!
+%%%%
+Druid's Call cast
+
+@The_monster@ calls out to the beasts of the land!
 #####################################################
 # Individual innate spells (breathing and spitting).
 #####################################################
 %%%%
-Acid Splash cast
+Spit Acid cast
 
 @The_monster@은(는) @target@에게 산성 침을 뱉었다.
 %%%%
-unseen Acid Splash cast
+unseen Spit Acid cast
 
 무엇인가 내뱉는 소리가 들렸다.
 %%%%
@@ -220,11 +224,11 @@ unseen Draconian Breath cast
 
 으르렁거리는 소리가 들렸다.
 %%%%
-Poison Splash cast
+Spit Poison cast
 
 @The_monster@은(는) @target@에게 독을 뱉었다.
 %%%%
-unseen Poison Splash cast
+unseen Spit Poison cast
 
 무엇인가 내뱉는 소리가 들렸다.
 %%%%
@@ -531,6 +535,10 @@ Heal Other priest cast
 Might Other priest cast
 
 @The_monster@은(는) 신의 힘을 빌어, @target@에게 힘을 부여했다.
+%%%%
+Malign Offering priest cast
+
+@The_monster@ utters a dark prayer and points at @target@.
 %%%%
 priest cast targeted
 

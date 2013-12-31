@@ -19,6 +19,7 @@
 #include "describe.h"
 #include "env.h"
 #include "exercise.h"
+#include "fight.h"
 #include "fineff.h"
 #include "godconduct.h"
 #include "hints.h"
@@ -40,6 +41,7 @@
 #include "teleport.h"
 #include "terrain.h"
 #include "transform.h"
+#include "version.h"
 #include "view.h"
 #include "viewchar.h"
 
@@ -553,14 +555,8 @@ int launcher_final_speed(const item_def &launcher, const item_def *shield, bool 
         speed = 2 * speed / 3;
     }
 
-    if (scaled && you.duration[DUR_FINESSE])
-    {
-        ASSERT(!you.duration[DUR_BERSERK]);
-        // Need to undo haste by hand.
-        if (you.duration[DUR_HASTE])
-            speed = haste_mul(speed);
-        speed /= 2;
-    }
+    if (scaled)
+        speed = finesse_adjust_delay(speed);
 
     return speed;
 }
@@ -584,6 +580,12 @@ static bool _elemental_missile_beam(int launcher_brand, int ammo_brand)
 
 static bool _poison_hit_victim(bolt& beam, actor* victim, int dmg)
 {
+    if (victim->is_player() && victim->res_poison() > 0)
+    {
+        maybe_id_resist(BEAM_POISON);
+        return false;
+    }
+
     if (!victim->alive() || victim->res_poison() > 0)
         return false;
 
@@ -871,12 +873,12 @@ static bool _blowgun_check(bolt &beam, actor* victim, special_missile_type type,
         chance += wp->plus * 4;
         chance = min(95, chance);
 
-        if (type == SPMSL_RAGE)
+        if (type == SPMSL_FRENZY)
             chance = chance / 2;
         else if (type == SPMSL_PARALYSIS || type == SPMSL_SLEEP)
             chance = chance * 4 / 5;
 
-        return (x_chance_in_y(chance, 100));
+        return x_chance_in_y(chance, 100);
     }
 
     const int skill = you.skill_rdiv(SK_THROWING);
@@ -975,17 +977,18 @@ static bool _rage_hit_victim(bolt &beam, actor* victim, int dmg)
     if (beam.is_tracer)
         return false;
 
-    if (!_blowgun_check(beam, victim, SPMSL_RAGE))
+    if (!_blowgun_check(beam, victim, SPMSL_FRENZY))
         return false;
 
     if (victim->is_monster())
-        victim->as_monster()->go_frenzy();
+        victim->as_monster()->go_frenzy(beam.agent());
     else
         victim->go_berserk(false);
 
     return true;
 }
 
+#if TAG_MAJOR_VERSION == 34
 static bool _blind_hit_victim(bolt &beam, actor* victim, int dmg)
 {
     if (beam.is_tracer)
@@ -1004,6 +1007,7 @@ static bool _blind_hit_victim(bolt &beam, actor* victim, int dmg)
 
     return true;
 }
+#endif
 
 static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
                                 string &ammo_name, bool &returning)
@@ -1049,13 +1053,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
             ammo_brand = SPMSL_NORMAL;
         }
         // Nessos gets to cheat.
-        else if (agent->is_monster())
-        {
-            const monster* mon = static_cast<const monster* >(agent);
-            if (mon->type != MONS_NESSOS)
-                bow_brand = SPWPN_NORMAL;
-        }
-        else
+        else if (agent->type != MONS_NESSOS)
             bow_brand = SPWPN_NORMAL;
     }
 
@@ -1126,7 +1124,10 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     const bool exploding    = (ammo_brand == SPMSL_EXPLODING);
     const bool penetrating  = (bow_brand  == SPWPN_PENETRATION
-                                || ammo_brand == SPMSL_PENETRATION);
+                                || ammo_brand == SPMSL_PENETRATION
+                                || (Version::ReleaseType == VER_ALPHA
+                                    && item.base_type == OBJ_MISSILES
+                                    && item.sub_type == MI_LARGE_ROCK));
     const bool silver       = (ammo_brand == SPMSL_SILVER);
     const bool disperses    = (ammo_brand == SPMSL_DISPERSAL);
     const bool charged      = bow_brand  == SPWPN_ELECTROCUTION;
@@ -1139,8 +1140,10 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 #if TAG_MAJOR_VERSION == 34
     const bool sickness     = ammo_brand == SPMSL_SICKNESS;
 #endif
-    const bool rage         = ammo_brand == SPMSL_RAGE;
+    const bool rage         = ammo_brand == SPMSL_FRENZY;
+#if TAG_MAJOR_VERSION == 34
     const bool blinding     = ammo_brand == SPMSL_BLINDING;
+#endif
 
     ASSERT(!exploding || !is_artefact(item));
 
@@ -1213,7 +1216,10 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     if (penetrating)
     {
         beam.range_funcs.push_back(_item_penetrates_victim);
-        beam.hit_verb = pgettext("beam","pierces through");
+        if (item.base_type == OBJ_MISSILES && item.sub_type == MI_LARGE_ROCK)
+            beam.hit_verb = pgettext("beam","crashes through");
+        else
+            beam.hit_verb = pgettext("beam","pierces through");
     }
     if (disperses)
         beam.hit_funcs.push_back(_dispersal_hit_victim);
@@ -1241,11 +1247,13 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
             beam.hit_funcs.push_back(_rage_hit_victim);
     }
 
+#if TAG_MAJOR_VERSION == 34
     if (blinding)
     {
         beam.hit_verb = pgettext("verb","blinds");
         beam.hit_funcs.push_back(_blind_hit_victim);
     }
+#endif
 
     if (disperses && item.special != SPMSL_DISPERSAL)
     {
@@ -1260,7 +1268,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         ammo_name = _("poisoned ") + ammo_name;
     }
 
-    if (penetrating && item.special != SPMSL_PENETRATION)
+    if (penetrating && item.special != SPMSL_PENETRATION
+        && item.sub_type != MI_LARGE_ROCK)
     {
         beam.name = _("penetrating ") + beam.name;
         ammo_name = _("penetrating ") + ammo_name;
@@ -1294,7 +1303,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
             expl->name   += pgettext("throw"," fragments"); 
 
             const string short_name =
-                item.name(true, DESC_PLAIN, false, false, false, false,
+                item.name(true, DESC_BASENAME, true, false, false, false,
                           ISFLAG_IDENT_MASK | ISFLAG_COSMETIC_MASK
                           | ISFLAG_RACIAL_MASK);
 
@@ -1461,7 +1470,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 
     // Items that get a temporary brand from a player spell lose the
     // brand as soon as the player lets go of the item.  Can't call
-    // unwield_item() yet since the beam might get canceled.
+    // unwield_item() yet since the beam might get cancelled.
     if (you.duration[DUR_WEAPON_BRAND] && projected != LRET_LAUNCHED
         && throw_2 == you.equip[EQ_WEAPON])
     {
@@ -1819,7 +1828,10 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             || (wepClass == OBJ_MISSILES
                 && (wepType == MI_STONE || wepType == MI_LARGE_ROCK
                     || wepType == MI_DART || wepType == MI_JAVELIN
-                    || wepType == MI_PIE)))
+#if TAG_MAJOR_VERSION == 34
+                    || wepType == MI_PIE
+#endif
+                    )))
         {
             // Elves with elven weapons.
             if (get_equip_race(item) == ISFLAG_ELVEN
@@ -1902,8 +1914,10 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 break;
 
             case MI_DART:
+#if TAG_MAJOR_VERSION == 34
             case MI_PIE:
-                // Darts and pies use throwing skill.
+#endif
+                // Darts use throwing skill.
                 exHitBonus += skill_bump(SK_THROWING);
                 exDamBonus += you.skill(SK_THROWING, 3) / 5;
                 break;
@@ -1953,6 +1967,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 else
                     count_action(CACT_THROW, item.sub_type | (OBJ_WEAPONS << 16));
         }
+
+        you.time_taken = finesse_adjust_delay(you.time_taken);
     }
 
     // Dexterity bonus, and possible skill increase for silly throwing.
@@ -2071,7 +2087,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     if (bow_brand == SPWPN_SPEED)
         did_god_conduct(DID_HASTY, 1, true);
 
-    if (ammo_brand == SPMSL_RAGE)
+    if (ammo_brand == SPMSL_FRENZY)
         did_god_conduct(DID_HASTY, 6 + random2(3), ammo_brand_known);
 
     if (did_return)
@@ -2547,8 +2563,10 @@ bool thrown_object_destroyed(item_def *item, const coord_def& where)
         chance = (brand == SPMSL_CURARE ? 6 : 12);
         break;
 
+#if TAG_MAJOR_VERSION == 34
     case MI_PIE:
         return true;
+#endif
 
     case MI_SLING_BULLET:
     case MI_STONE:

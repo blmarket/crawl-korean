@@ -58,10 +58,6 @@ tileidx_t tilep_equ_weapon(const item_def &item)
         case MISC_LAMP_OF_FIRE:               return TILEP_HAND1_LANTERN;
         case MISC_LANTERN_OF_SHADOWS:         return TILEP_HAND1_BONE_LANTERN;
         case MISC_HORN_OF_GERYON:             return TILEP_HAND1_HORN;
-
-#if TAG_MAJOR_VERSION == 34
-        case MISC_EMPTY_EBONY_CASKET:
-#endif
         case MISC_BOX_OF_BEASTS:              return TILEP_HAND1_BOX;
 
         case MISC_DECK_OF_ESCAPE:
@@ -103,11 +99,6 @@ tileidx_t tilep_equ_weapon(const item_def &item)
     case WPN_FLAIL:
         tile = TILEP_HAND1_FLAIL;
         break;
-#if TAG_MAJOR_VERSION == 34
-    case WPN_SPIKED_FLAIL:
-        tile = TILEP_HAND1_SPIKED_FLAIL;
-        break;
-#endif
     case WPN_DIRE_FLAIL:
         tile = TILEP_HAND1_GREAT_FLAIL;
         break;
@@ -670,6 +661,8 @@ tileidx_t tilep_species_to_base_tile(int sp, int level)
         return TILEP_BASE_VAMPIRE;
     case SP_DEEP_DWARF:
         return TILEP_BASE_DEEP_DWARF;
+    case SP_GARGOYLE:
+        return TILEP_BASE_GARGOYLE;
     case SP_FELID:
         return TILEP_BASE_FELID;
     case SP_OCTOPODE:
@@ -761,7 +754,7 @@ void tilep_race_default(int sp, int level, dolls_data *doll)
             hair = 0;
             break;
         case SP_TROLL:
-            hair = 0;
+            hair = TILEP_HAIR_TROLL;
             break;
         case SP_BASE_DRACONIAN:
         case SP_RED_DRACONIAN:
@@ -791,8 +784,9 @@ void tilep_race_default(int sp, int level, dolls_data *doll)
             result = you.fishtail ? TILEP_BASE_MERFOLK_WATER
                                   : TILEP_BASE_MERFOLK;
             hair = TILEP_HAIR_GREEN;
-            beard = TILEP_BEARD_SHORT_GREEN;
             break;
+        case SP_NAGA:
+            hair = TILEP_HAIR_PART2_RED;
         case SP_VAMPIRE:
             hair = TILEP_HAIR_ARWEN;
             break;
@@ -803,6 +797,9 @@ void tilep_race_default(int sp, int level, dolls_data *doll)
         case SP_SPRIGGAN:
             hair = 0;
             beard = TILEP_BEARD_MEDIUM_GREEN;
+            break;
+        case SP_DJINNI:
+            hair = TILEP_HAIR_DJINN2;
             break;
         default:
             // nothing to do
@@ -1082,6 +1079,7 @@ void tilep_calc_flags(const dolls_data &doll, int flag[])
         flag[TILEP_PART_BOOTS]  = TILEP_FLAG_HIDE;
         flag[TILEP_PART_LEG]    = TILEP_FLAG_HIDE;
         flag[TILEP_PART_SHADOW] = TILEP_FLAG_HIDE;
+        flag[TILEP_PART_BODY]   = TILEP_FLAG_CUT_NAGA; // Do they need their own flag?
     }
     else if (doll.parts[TILEP_PART_BASE] >= TILEP_BASE_DRACONIAN_FIRST
              && doll.parts[TILEP_PART_BASE] <= TILEP_BASE_DRACONIAN_LAST)

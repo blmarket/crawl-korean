@@ -96,10 +96,12 @@ void tile_default_flv(branch_type br, tile_flavour &flv)
         flv.floor = TILE_FLOOR_VINES;
         return;
 
+#if TAG_MAJOR_VERSION == 34
     case BRANCH_DWARVEN_HALL:
         flv.wall  = TILE_WALL_HALL;
         flv.floor = TILE_FLOOR_LIMESTONE;
         return;
+#endif
 
     case BRANCH_ELVEN_HALLS:
     case BRANCH_HALL_OF_BLADES:
@@ -396,7 +398,11 @@ static tileidx_t _pick_random_dngn_tile_multi(vector<tileidx_t> candidates, int 
 
 static bool _same_door_at(dungeon_feature_type feat, const coord_def &gc)
 {
-    return (grd(gc) == feat) || map_masked(gc, MMT_WAS_DOOR_MIMIC);
+    const dungeon_feature_type door = grd(gc);
+    return feat_is_closed_door(door) && feat == DNGN_SEALED_DOOR
+           || door == DNGN_SEALED_DOOR && feat_is_closed_door(feat)
+           || door == feat
+           || map_masked(gc, MMT_WAS_DOOR_MIMIC);
 }
 
 void tile_init_flavour(const coord_def &gc)
@@ -412,6 +418,8 @@ void tile_init_flavour(const coord_def &gc)
             floor_base = tile_dngn_coloured(floor_base, colour);
         env.tile_flv(gc).floor = _pick_random_dngn_tile(floor_base);
     }
+    else
+        env.tile_flv(gc).floor = _pick_random_dngn_tile(env.tile_flv(gc).floor);
 
     if (!env.tile_flv(gc).wall)
     {
@@ -430,6 +438,8 @@ void tile_init_flavour(const coord_def &gc)
             env.tile_flv(gc).wall = _pick_random_dngn_tile(wall_base);
         }
     }
+    else
+        env.tile_flv(gc).wall = _pick_random_dngn_tile(env.tile_flv(gc).wall);
 
     if (feat_is_stone_stair(grd(gc)) && player_in_branch(BRANCH_SHOALS))
     {
@@ -1031,7 +1041,7 @@ void tile_apply_animations(tileidx_t bg, tile_flavour *flv)
     tileidx_t bg_idx = bg & TILE_FLAG_MASK;
     if (bg_idx == TILE_DNGN_PORTAL_WIZARD_LAB)
         flv->special = (flv->special + 1) % tile_dngn_count(bg_idx);
-    else if (bg_idx == TILE_DNGN_LAVA)
+    else if (bg_idx == TILE_DNGN_LAVA && Options.tile_water_anim)
     {
         // Lava tiles are four sets of four tiles (the second and fourth
         // sets are the same). This cycles between the four sets, picking
@@ -1039,8 +1049,11 @@ void tile_apply_animations(tileidx_t bg, tile_flavour *flv)
         flv->special = ((flv->special - ((flv->special % 4)))
                         + 4 + random2(4)) % tile_dngn_count(bg_idx);
     }
-    else if (bg_idx > TILE_DNGN_LAVA && bg_idx < TILE_BLOOD)
+    else if (bg_idx > TILE_DNGN_LAVA && bg_idx < TILE_BLOOD
+             && Options.tile_water_anim)
+    {
         flv->special = random2(256);
+    }
     else if (bg_idx == TILE_WALL_NORMAL)
     {
         tileidx_t basetile = tile_dngn_basetile(flv->wall);
@@ -1155,6 +1168,10 @@ void apply_variations(const tile_flavour &flv, tileidx_t *bg,
             orig = TILE_WALL_CRYPT;
         else if (orig == TILE_DNGN_METAL_WALL)
             orig = TILE_WALL_CRYPT_METAL;
+        else if (orig == TILE_DNGN_OPEN_DOOR)
+            orig = TILE_DNGN_OPEN_DOOR_CRYPT;
+        else if (orig == TILE_DNGN_CLOSED_DOOR)
+            orig = TILE_DNGN_CLOSED_DOOR_CRYPT;
     }
     else if (player_in_branch(BRANCH_TOMB))
     {
@@ -1217,10 +1234,7 @@ void apply_variations(const tile_flavour &flv, tileidx_t *bg,
                                                         env.grid_colours(gc)),
                                      flv.special);
     }
-    else if ((orig == TILE_DNGN_CLOSED_DOOR || orig == TILE_DNGN_OPEN_DOOR
-              || orig == TILE_DNGN_RUNED_DOOR
-              || orig == TILE_DNGN_SEALED_DOOR)
-             && !mimic)
+    else if (is_door_tile(orig) && !mimic)
     {
         tileidx_t override = flv.feat;
         /*
@@ -1238,6 +1252,12 @@ void apply_variations(const tile_flavour &flv, tileidx_t *bg,
     }
     else if (orig == TILE_DNGN_PORTAL_WIZARD_LAB)
         *bg = orig + flv.special % tile_dngn_count(orig);
+    else if ((orig == TILE_SHOALS_SHALLOW_WATER
+              || orig == TILE_SHOALS_DEEP_WATER)
+             && element_colour(ETC_WAVES, 0, gc) == LIGHTCYAN)
+    {
+        *bg = orig + 6 + flv.special % 6;
+    }
     else if (orig < TILE_DNGN_MAX)
         *bg = _pick_random_dngn_tile(orig, flv.special);
 

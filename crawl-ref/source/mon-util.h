@@ -11,6 +11,7 @@
 #include "enum.h"
 #include "mon-enum.h"
 #include "player.h"
+#include "mon-mst.h"
 
 struct bolt;
 
@@ -96,6 +97,14 @@ private:
     }
 };
 
+struct mon_spellbook
+{
+    mon_spellbook_type type;
+    spell_type spells[NUM_MONSTER_SPELL_SLOTS];
+};
+
+extern const mon_spellbook mspell_list[];
+
 struct monsterentry
 {
     short mc;            // monster number
@@ -134,7 +143,7 @@ struct monsterentry
 
     int8_t AC; // armour class
     int8_t ev; // evasion
-    int sec;   // spellbook
+    mon_spellbook_type sec;
     corpse_effect_type corpse_thingy;
     zombie_size_type   zombie_size;
     shout_type         shouts;
@@ -237,6 +246,7 @@ bool mons_is_statue(monster_type mc, bool allow_disintegrate = false);
 bool mons_is_demon(monster_type mc);
 bool mons_is_draconian(monster_type mc);
 bool mons_is_conjured(monster_type mc);
+bool mons_is_beast(monster_type mc);
 int mons_demon_tier(monster_type mc);
 
 bool mons_class_wields_two_weapons(monster_type mc);
@@ -313,6 +323,10 @@ bool mons_has_ranged_spell(const monster* mon, bool attack_only = false,
 bool mons_has_ranged_attack(const monster* mon);
 bool mons_has_known_ranged_attack(const monster* mon);
 bool mons_can_attack(const monster* mon);
+bool mons_has_incapacitating_spell(const monster* mon, const actor* foe);
+bool mons_has_incapacitating_ranged_attack(const monster* mon, const actor* foe);
+
+vector<mon_spellbook_type> mons_spellbook_list(monster_type mon);
 
 const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
                          bool visible = true);
@@ -325,7 +339,6 @@ mon_attitude_type mons_attitude(const monster* m);
 
 bool mons_foe_is_mons(const monster* mons);
 
-bool mons_behaviour_perceptible(const monster* mon);
 bool mons_is_native_in_branch(const monster* mons,
                               const branch_type branch = you.where_are_you);
 bool mons_is_poisoner(const monster* mon);
@@ -366,7 +379,6 @@ bool mons_landlubbers_in_reach(const monster* mons);
 
 bool mons_class_is_confusable(monster_type mc);
 bool mons_class_is_stationary(monster_type mc);
-bool mons_is_stationary(const monster* mon);
 bool mons_class_is_firewood(monster_type mc);
 bool mons_is_firewood(const monster* mon);
 bool mons_has_body(const monster* mon);

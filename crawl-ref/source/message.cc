@@ -1289,12 +1289,12 @@ void msgwin_got_input()
 }
 
 int msgwin_get_line(string prompt, char *buf, int len,
-                    input_history *mh, int (*keyproc)(int& c))
+                    input_history *mh, const string &fill)
 {
     if (prompt != "")
         msgwin_prompt(prompt);
 
-    int ret = cancelable_get_line(buf, len, mh, keyproc);
+    int ret = cancellable_get_line(buf, len, mh, NULL, fill);
     msgwin_reply(buf);
     return ret;
 }
@@ -1635,9 +1635,7 @@ void load_messages(reader& inf)
 void replay_messages(void)
 {
     formatted_scroller hist(MF_START_AT_END | MF_ALWAYS_SHOW_MORE, "");
-    hist.set_more(formatted_string::parse_string(
-                        _("<cyan>[up/<< : Page up.    down/Space/> : Page down."
-                        "                         Esc exits.]</cyan>")));
+    hist.set_more();
 
     const store_t msgs = buffer.get_store();
     for (int i = 0; i < msgs.size(); ++i)

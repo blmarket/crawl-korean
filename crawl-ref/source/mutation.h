@@ -66,6 +66,7 @@ void init_mut_index();
 bool is_valid_mutation(mutation_type mut);
 bool is_body_facet(mutation_type mut);
 const mutation_def& get_mutation_def(mutation_type mut);
+bool undead_mutation_rot(bool is_beneficial_mutation);
 
 bool mutate(mutation_type which_mutation, const string &reason,
             bool failMsg = true,
@@ -85,7 +86,8 @@ bool delete_mutation(mutation_type which_mutation, const string &reason,
 
 bool delete_all_mutations(const string &reason);
 
-string mutation_name(mutation_type which_mutat, int level = -1,
+const char* mutation_name(mutation_type mut);
+string mutation_desc(mutation_type which_mutat, int level = -1,
                           bool colour = false);
 
 void roll_demonspawn_mutations();

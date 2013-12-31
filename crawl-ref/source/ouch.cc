@@ -231,21 +231,11 @@ int check_your_resists(int hurted, beam_type flavour, string source,
         break;
 
     case BEAM_NEG:
-        resist = player_prot_life();
-
-        // TSO's protection.
-        if (you.religion == GOD_SHINING_ONE && you.piety > resist * 50)
-        {
-            int unhurted = min(hurted, (you.piety * hurted) / 150);
-
-            if (unhurted > 0)
-                hurted -= unhurted;
-        }
-        else if (resist > 0)
-            hurted -= (resist * hurted) / 3;
+        hurted = resist_adjust_damage(&you, flavour, player_prot_life(),
+                                      hurted, true);
 
         if (doEffects)
-            drain_exp(true, min(75, 25 + original * 3 / 4));
+            drain_exp(true, min(75, 35 + original * 2 / 3));
         break;
 
     case BEAM_ICE:
@@ -498,7 +488,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
     // Fedhas worshipers are exempt from the food destruction effect
     // of spores.
     if (flavour == BEAM_SPORE
-        && you.religion == GOD_FEDHAS)
+        && you_worship(GOD_FEDHAS))
     {
         simple_god_message(gettext(" protects your food from the spores."),
                            GOD_FEDHAS);
@@ -540,7 +530,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
                 continue;
             }
 
-            if (you.religion == GOD_JIYVA && !player_under_penance()
+            if (you_worship(GOD_JIYVA) && !player_under_penance()
                 && x_chance_in_y(you.piety, MAX_PIETY))
             {
                 ++jiyva_block;
@@ -752,7 +742,7 @@ void lose_level(int death_source, const char *aux)
     if (you.experience_level == 1)
     {
         ouch(INSTANT_DEATH, death_source, KILLED_BY_DRAINING, aux);
-        // Return in case death was canceled via wizard mode
+        // Return in case death was cancelled via wizard mode
         return;
     }
 
@@ -800,22 +790,10 @@ bool drain_exp(bool announce_full, int power)
         return false;
     }
 
-    // TSO's protection.
-    if (you.religion == GOD_SHINING_ONE && you.piety > protection * 50)
-    {
-        unsigned int undrained = min(power, (you.piety * power) / 150);
-
-        if (undrained > 0)
-        {
-            simple_god_message(gettext(" protects your life force!"));
-            if (undrained > 0)
-                power -= undrained;
-        }
-    }
-    else if (protection > 0)
+    if (protection > 0)
     {
         canned_msg(MSG_YOU_PARTIALLY_RESIST);
-        power -= (protection * power) / 3;
+        power /= (protection * 2);
     }
 
     if (power > 0)
@@ -836,7 +814,7 @@ bool drain_exp(bool announce_full, int power)
 static void _xom_checks_damage(kill_method_type death_type,
                                int dam, int death_source)
 {
-    if (you.religion == GOD_XOM)
+    if (you_worship(GOD_XOM))
     {
         if (death_type == KILLED_BY_TARGETTING
             || death_type == KILLED_BY_BOUNCE
@@ -946,7 +924,9 @@ static void _maybe_spawn_jellies(int dam, const char* aux,
 
     // Exclude torment damage.
     const bool torment = aux && strstr(aux, "torment");
-    if (you.religion == GOD_JIYVA && you.piety > 160 && !torment)
+    if (you_worship(GOD_JIYVA)
+        && you.piety >= piety_breakpoint(5)
+        && !torment)
     {
         int how_many = 0;
         if (dam >= you.hp_max * 3 / 4)
@@ -1156,7 +1136,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
         {
             // round off fairly (important for taking 1 damage at a time)
             int mp = div_rand_round(dam * you.magic_points,
-                                    you.hp + you.magic_points);
+                                    max(you.hp + you.magic_points, 1));
             // but don't kill the player with round-off errors
             mp = max(mp, dam + 1 - you.hp);
             mp = min(mp, you.magic_points);
@@ -1188,7 +1168,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
         if (dam > 0 && you.hp_max <= dam * 2)
             mpr(gettext("Ouch! That really hurt!"), MSGCH_DANGER);
 
-        if (you.hp > 0)
+        if (you.hp > 0 && dam > 0)
         {
             if (Options.hp_warning
                 && you.hp <= (you.hp_max * Options.hp_warning) / 100)
@@ -1218,9 +1198,9 @@ void ouch(int dam, int death_source, kill_method_type death_type,
             _yred_mirrors_injury(dam, death_source);
             _maybe_spawn_jellies(dam, aux, death_type, death_source);
             _powered_by_pain(dam);
-
-            return;
-        } // else hp <= 0
+        }
+        if (you.hp > 0)
+          return;
     }
 
     // Is the player being killed by a direct act of Xom?
@@ -1233,7 +1213,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
         // Xom should only kill his worshippers if they're under penance
         // or Xom is bored.
-        if (you.religion == GOD_XOM && !you.penance[GOD_XOM]
+        if (you_worship(GOD_XOM) && !you.penance[GOD_XOM]
             && you.gift_timeout > 0)
         {
             return;
@@ -1242,7 +1222,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
         // Also don't kill wizards testing Xom acts.
         if ((crawl_state.repeat_cmd == CMD_WIZARD
                 || crawl_state.prev_cmd == CMD_WIZARD)
-            && you.religion != GOD_XOM)
+            && !you_worship(GOD_XOM))
         {
             return;
         }
@@ -1327,7 +1307,8 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
         // You wouldn't want to lose this accomplishment to a crash, would you?
         // Especially if you manage to trigger one via lua somehow...
-        save_game(false);
+        if (!crawl_state.disables[DIS_SAVE_CHECKPOINTS])
+            save_game(false);
 
         mprnojoin(_("You die..."));
         xom_death_message((kill_method_type) se.get_death_type());
@@ -1493,7 +1474,7 @@ void _end_game(scorefile_entry &se)
         more();
 
     if (!crawl_state.disables[DIS_CONFIRMATIONS])
-        browse_inventory();
+        get_invent(OSEL_ANY);
     textcolor(LIGHTGREY);
 
     // Prompt for saving macros.

@@ -1338,7 +1338,10 @@ bool direction_chooser::pickup_item()
         item->flags |= ISFLAG_THROWN;
 
     if (!just_looking) // firing/casting prompt
+    {
+        mpr("Marked for pickup.", MSGCH_EXAMINE_FILTER);
         return false;
+    }
 
     moves.isValid  = true;
     moves.isTarget = true;
@@ -2539,7 +2542,7 @@ static int _next_los(int dir, int los, bool wrap)
         //    so we can go back to the first item in LOS. Unless we set
         //    fliphv, we can't flip from hidden to visible.
         //
-        los = flipvh? LS_FLIPHV : LS_FLIPVH;
+        los = flipvh ? LS_FLIPHV : LS_FLIPVH;
     }
     else
     {
@@ -2553,7 +2556,7 @@ static int _next_los(int dir, int los, bool wrap)
             return LS_NONE;
     }
 
-    los = (los & ~LS_VISMASK) | (vis? LS_HIDDEN : LS_VISIBLE);
+    los = (los & ~LS_VISMASK) | (vis ? LS_HIDDEN : LS_VISIBLE);
     return los;
 }
 
@@ -2928,8 +2931,10 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
             return (M_("blade trap"));
         case TRAP_NET:
             return (M_("net trap"));
+#if TAG_MAJOR_VERSION == 34
         case TRAP_GAS:
             return (M_("gas trap"));
+#endif
         case TRAP_ALARM:
             return (M_("alarm trap"));
         case TRAP_SHAFT:
@@ -3018,7 +3023,11 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
     case DNGN_STONE_STAIRS_UP_I:
     case DNGN_STONE_STAIRS_UP_II:
     case DNGN_STONE_STAIRS_UP_III:
-        return (M_("stone staircase leading up"));
+        return  (M_("stone staircase leading up"));
+    case DNGN_SEALED_STAIRS_DOWN:
+        return (M_("sealed passage leading down"));
+    case DNGN_SEALED_STAIRS_UP:
+        return (M_("sealed passage leading up"));
     case DNGN_EXIT_DUNGEON:
         return (M_("staircase leading out of the dungeon"));
     case DNGN_ENTER_HELL:
@@ -3065,8 +3074,10 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
         return (M_("gate leading out of Pandemonium"));
     case DNGN_TRANSIT_PANDEMONIUM:
         return (M_("gate leading to another region of Pandemonium"));
+#if TAG_MAJOR_VERSION == 34
     case DNGN_ENTER_DWARVEN_HALL:
         return (M_("staircase to the Dwarven Hall"));
+#endif
     case DNGN_ENTER_ORCISH_MINES:
         return (M_("staircase to the Orcish Mines"));
     case DNGN_ENTER_LAIR:
@@ -3108,7 +3119,9 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
     case DNGN_EXPIRED_PORTAL:
         // should be set whenever used
         return (M_("collapsed entrance"));
+#if TAG_MAJOR_VERSION == 34
     case DNGN_RETURN_FROM_DWARVEN_HALL:
+#endif
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_VAULTS:

@@ -157,14 +157,6 @@ static void _print_character_info(const newgame_def* ng)
     cprintf("%s\n", _welcome(ng).c_str());
 }
 
-// Determines if a species is a valid choice for a new game.
-static bool _is_species_valid_choice(species_type species)
-{
-    // Non-base draconians cannot be selected either.
-    return is_valid_species(species)
-        && !(species >= SP_RED_DRACONIAN && species < SP_BASE_DRACONIAN);
-}
-
 #ifdef ASSERTS
 static bool _species_is_undead(const species_type speci)
 {
@@ -229,7 +221,7 @@ static void _resolve_species(newgame_def* ng, const newgame_def* ng_choice)
             // any valid species will do
             do
                 ng->species = get_species(random2(ng_num_species()));
-            while (!_is_species_valid_choice(ng->species));
+            while (!is_species_valid_choice(ng->species));
         }
         else
         {
@@ -333,7 +325,7 @@ static string _highlight_pattern(const newgame_def* ng)
     for (int i = 0; i < ng_num_species(); ++i)
     {
         const species_type species = get_species(i);
-        if (!_is_species_valid_choice(species))
+        if (!is_species_valid_choice(species))
             continue;
 
         if (is_good_combination(species, ng->job, true))
@@ -555,8 +547,11 @@ static void _mark_fully_random(newgame_def* ng, newgame_def* ng_choice,
  */
 static const int COLUMN_WIDTH = 25;
 static const int X_MARGIN = 4;
-static const int CHAR_DESC_START_Y = 17;
-static const int SPECIAL_KEYS_START_Y = CHAR_DESC_START_Y + 3;
+static const int CHAR_DESC_START_Y = 16;
+static const int CHAR_DESC_HEIGHT = 3;
+static const int SPECIAL_KEYS_START_Y = CHAR_DESC_START_Y
+                                        + CHAR_DESC_HEIGHT + 1;
+
 static void _construct_species_menu(const newgame_def* ng,
                                     const newgame_def& defaults,
                                     MenuFreeform* menu)
@@ -564,7 +559,7 @@ static void _construct_species_menu(const newgame_def* ng,
     ASSERT(menu != NULL);
     int items_in_column = 0;
     for (int i = 0; i < NUM_SPECIES; ++i)
-        if (_is_species_valid_choice((species_type)i))
+        if (is_species_valid_choice((species_type)i))
             items_in_column++;
     items_in_column = (items_in_column + 2) / 3;
     // Construct the menu, 3 columns
@@ -573,11 +568,14 @@ static void _construct_species_menu(const newgame_def* ng,
     coord_def min_coord(0,0);
     coord_def max_coord(0,0);
 
-    for (int i = 0; i < ng_num_species(); ++i)
+    for (int i = 0, pos = 0; i < ng_num_species(); ++i, ++pos)
     {
         const species_type species = get_species(i);
-        if (!_is_species_valid_choice(species))
+        if (!is_species_valid_choice(species))
+        {
+            --pos;
             continue;
+        }
 
         tmp = new TextItem();
         text.clear();
@@ -604,21 +602,21 @@ static void _construct_species_menu(const newgame_def* ng,
         }
         else
         {
-            text = index_to_letter(i);
+            text = index_to_letter(pos);
             text += " - ";
             text += gettext(species_name(species).c_str());
         }
         // Fill to column width - 1
         text.append(COLUMN_WIDTH - text.size() - 1 , ' ');
         tmp->set_text(text);
-        ASSERT(i < items_in_column * 3);
-        min_coord.x = X_MARGIN + (i / items_in_column) * COLUMN_WIDTH;
-        min_coord.y = 3 + i % items_in_column;
+        ASSERT(pos < items_in_column * 3);
+        min_coord.x = X_MARGIN + (pos / items_in_column) * COLUMN_WIDTH;
+        min_coord.y = 3 + pos % items_in_column;
         max_coord.x = min_coord.x + text.size();
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
 
-        tmp->add_hotkey(index_to_letter(i));
+        tmp->add_hotkey(index_to_letter(pos));
         tmp->set_id(species);
         tmp->set_description_text(unwrap_desc(getGameStartDescription(species_name(species))));
         menu->attach_item(tmp);
@@ -799,7 +797,8 @@ static void _prompt_species(newgame_def* ng, newgame_def* ng_choice,
     _construct_species_menu(ng, defaults, freeform);
     MenuDescriptor* descriptor = new MenuDescriptor(&menu);
     descriptor->init(coord_def(X_MARGIN, CHAR_DESC_START_Y),
-                     coord_def(get_number_of_cols(), CHAR_DESC_START_Y + 2),
+                     coord_def(get_number_of_cols(), CHAR_DESC_START_Y
+                                                     + CHAR_DESC_HEIGHT),
                      "descriptor");
     menu.attach_object(descriptor);
 
@@ -1918,9 +1917,11 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
     }
 }
 
-static bool _cmp_map_by_name(const map_def* m1, const map_def* m2)
+// Compare two maps by their ORDER: header, falling back to desc or name if equal.
+static bool _cmp_map_by_order(const map_def* m1, const map_def* m2)
 {
-    return (m1->desc_or_name() < m2->desc_or_name());
+    return m1->order < m2->order
+           || m1->order == m2->order && m1->desc_or_name() < m2->desc_or_name();
 }
 
 static void _prompt_gamemode_map(newgame_def* ng, newgame_def* ng_choice,
@@ -1935,7 +1936,7 @@ static void _prompt_gamemode_map(newgame_def* ng, newgame_def* ng_choice,
     menu.attach_object(freeform);
     menu.set_active_object(freeform);
 
-    sort(maps.begin(), maps.end(), _cmp_map_by_name);
+    sort(maps.begin(), maps.end(), _cmp_map_by_order);
     _construct_gamemode_map_menu(maps, defaults, freeform);
 
     BoxMenuHighlighter* highlighter = new BoxMenuHighlighter(&menu);

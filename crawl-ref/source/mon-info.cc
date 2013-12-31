@@ -116,11 +116,6 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_POSSESSABLE;
     case ENCH_PREPARING_RESURRECT:
         return MB_PREP_RESURRECT;
-    case ENCH_FADING_AWAY:
-        if ((mons.get_ench(ENCH_FADING_AWAY)).duration < 400) // min dur is 180*20, max dur 230*10
-            return MB_MOSTLY_FADED;
-
-        return MB_FADING_AWAY;
     case ENCH_REGENERATION:
         return MB_REGENERATION;
     case ENCH_RAISED_MR:
@@ -182,6 +177,12 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_CONTROL_WINDS;
     case ENCH_WIND_AIDED:
         return MB_WIND_AIDED;
+    case ENCH_TOXIC_RADIANCE:
+        return MB_TOXIC_RADIANCE;
+    case ENCH_GRASPING_ROOTS:
+        return MB_GRASPING_ROOTS;
+    case ENCH_FIRE_VULN:
+        return MB_FIRE_VULN;
     default:
         return NUM_MB_FLAGS;
     }
@@ -627,7 +628,7 @@ monster_info::monster_info(const monster* m, int milev)
     if (nomsg_wounds)
         dam = MDAM_OKAY;
 
-    if (mons_behaviour_perceptible(m))
+    if (!mons_class_flag(m->type, M_NO_EXP_GAIN)) // Firewood, butterflies, etc.
     {
         if (m->asleep())
         {
@@ -641,7 +642,7 @@ monster_info::monster_info(const monster* m, int milev)
             mb.set(MB_FLEEING);
         else if (mons_is_wandering(m) && !mons_is_batty(m))
         {
-            if (mons_is_stationary(m))
+            if (m->is_stationary())
                 mb.set(MB_UNAWARE);
             else
                 mb.set(MB_WANDERING);
@@ -677,7 +678,7 @@ monster_info::monster_info(const monster* m, int milev)
     {
     case ATT_NEUTRAL:
     case ATT_HOSTILE:
-        if (you.religion == GOD_SHINING_ONE
+        if (you_worship(GOD_SHINING_ONE)
             && !tso_unchivalric_attack_safe_monster(m)
             && is_unchivalric_attack(&you, m))
         {
@@ -1094,7 +1095,7 @@ string monster_info::mimic_name() const
         else if (item->base_type == OBJ_ORBS)
             s += _(M_("orb"));
         else
-            s += item->name(true, DESC_BASENAME);
+            s += item->name(true, DESC_DBNAME);
     }
 
     if (!s.empty())
@@ -1251,6 +1252,8 @@ static string _verbose_info0(const monster_info& mi)
 {
     if (mi.is(MB_BERSERK))
         return "berserk";
+    if (mi.is(MB_INSANE))
+        return "insane";
     if (mi.is(MB_FRENZIED))
         return "frenzied";
     if (mi.is(MB_ROUSED))
@@ -1498,10 +1501,6 @@ vector<string> monster_info::attributes() const
         v.push_back(pgettext("attributes","deflecting missiles"));
     if (is(MB_PREP_RESURRECT))
         v.push_back(pgettext("attributes","quietly preparing"));
-    if (is(MB_FADING_AWAY))
-        v.push_back(pgettext("attributes","slowly fading away"));
-    if (is(MB_MOSTLY_FADED))
-        v.push_back(pgettext("attributes","mostly faded away"));
     if (is(MB_FEAR_INSPIRING))
         v.push_back(pgettext("attributes","inspiring fear"));
     if (is(MB_BREATH_WEAPON))
@@ -1562,6 +1561,12 @@ vector<string> monster_info::attributes() const
         v.push_back(pgettext("attributes","controlling the winds"));
     if (is(MB_WIND_AIDED))
         v.push_back(pgettext("attributes","aim guided by the winds"));
+    if (is(MB_TOXIC_RADIANCE))
+        v.push_back(pgettext("attributes","radiating toxic energy"));
+    if (is(MB_GRASPING_ROOTS))
+        v.push_back(pgettext("attributes","movement impaired by roots"));
+    if (is(MB_FIRE_VULN))
+        v.push_back(pgettext("attributes","more vulnerable to fire"));
     return v;
 }
 

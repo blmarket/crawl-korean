@@ -31,6 +31,7 @@
 #include "libutil.h"
 #include "message.h"
 #include "player.h"
+#include "religion.h"
 #include "shopping.h"
 #include "showsymb.h"
 #include "stuff.h"
@@ -219,32 +220,34 @@ string InvEntry::get_text(bool need_cursor) const
     if (Options.tile_menu_icons && Options.show_inventory_weights)
         max_chars_in_line = get_number_of_cols() * 4 / 9 - 2;
 #endif
-    if (Options.show_inventory_weights)
+
+    int colour_tag_adjustment = 0;
+    if (InvEntry::show_glyph)
     {
-        max_chars_in_line -= 1;
-        const int w_weight = 10; //length of " (999 aum)"
-        int excess = strwidth(tstr.str()) + text.size() + w_weight - max_chars_in_line;
-        if (excess > 0)
-            tstr << text.substr(0, max<int>(0, text.size() - excess - 2)) << "..";
-        else
-            tstr << text;
+        // colour tags have to be taken into account for terminal width
+        // calculations on the ^x screen (monsters/items/features in LOS)
+        string colour_tag = colour_to_str(get_item_glyph(item).col);
+        colour_tag_adjustment = colour_tag.size() * 2 + 5;
     }
+
+    if (Options.show_inventory_weights)
+        max_chars_in_line -= 1;
+
+    const int w_weight = Options.show_inventory_weights
+                         ? 10 //length of " (999 aum)"
+                         : 0;
+    const int excess = strwidth(tstr.str()) - colour_tag_adjustment
+                     + strwidth(text) + w_weight - max_chars_in_line;
+    if (excess > 0)
+        tstr << chop_string(text, max(0, strwidth(text) - excess - 2)) << "..";
     else
         tstr << text;
 
     if (Options.show_inventory_weights)
     {
         const int mass = item_mass(*item) * item->quantity;
-        int colour_tag_adjustment = 0;
-        if (InvEntry::show_glyph)
-        {
-            // colour tags have to be taken into account for terminal width
-            // calculations on the ^x screen (monsters/items/features in LOS)
-            string colour_tag = colour_to_str(item->colour);
-            colour_tag_adjustment = colour_tag.size() * 2 + 5;
-        }
-
-        //Note: If updating the " (%i aum)" format, remember to update w_weight above.
+        // Note: If updating the " (%i aum)" format, remember to update
+        // w_weight above.
         tstr << setw(max_chars_in_line - strwidth(tstr.str())
                      + colour_tag_adjustment)
              << right
@@ -499,6 +502,8 @@ static string _no_selectables_message(int item_selector)
         return _("You aren't wearing any piece of uncursed armour.");
     case OSEL_UNCURSED_WORN_JEWELLERY:
         return _("You aren't wearing any piece of uncursed jewellery.");
+    case OSEL_BRANDABLE_WEAPON:
+        return _("You aren't carrying any weapons that can be branded.");
     }
 
     return _("You aren't carrying any such object.");
@@ -1188,9 +1193,7 @@ static bool _item_class_selected(const item_def &i, int selector)
         return is_enchantable_armour(i, true, true);
 
     case OBJ_FOOD:
-        return (itype == OBJ_FOOD
-                || (itype == OBJ_MISSILES && i.sub_type == MI_PIE))
-               && !is_inedible(i);
+        return itype == OBJ_FOOD && !is_inedible(i);
 
     case OSEL_VAMP_EAT:
         return (itype == OBJ_CORPSES && i.sub_type == CORPSE_BODY
@@ -1220,6 +1223,9 @@ static bool _item_class_selected(const item_def &i, int selector)
 
     case OSEL_UNCURSED_WORN_JEWELLERY:
         return (!i.cursed() && item_is_equipped(i) && itype == OBJ_JEWELLERY);
+
+    case OSEL_BRANDABLE_WEAPON:
+        return is_brandable_weapon(i, true);
 
     default:
         return false;
@@ -1311,7 +1317,7 @@ static unsigned char _invent_select(const char *title = NULL,
     return menu.getkey();
 }
 
-unsigned char get_invent(int invent_type)
+unsigned char get_invent(int invent_type, bool redraw)
 {
     unsigned char select;
     int flags = MF_SINGLESELECT;
@@ -1335,15 +1341,10 @@ unsigned char get_invent(int invent_type)
             break;
     }
 
-    if (!crawl_state.doing_prev_cmd_again)
+    if (redraw && !crawl_state.doing_prev_cmd_again)
         redraw_screen();
 
     return select;
-}
-
-void browse_inventory()
-{
-    get_invent(OSEL_ANY);
 }
 
 // Reads in digits for a count and apprends then to val, the
@@ -1689,13 +1690,22 @@ bool needs_handle_warning(const item_def &item, operation_types oper)
     if (_has_warning_inscription(item, oper))
         return true;
 
+    // Curses first.
+    if (item_known_cursed(item)
+        && (oper == OPER_WIELD && is_weapon(item) && !_is_wielded(item)
+            || oper == OPER_PUTON || oper == OPER_WEAR))
+    {
+        return true;
+    }
+
+    // Everything else depends on knowing the item subtype/brand.
     if (!item_ident(item, ISFLAG_KNOW_TYPE))
         return false;
 
     if (oper == OPER_REMOVE
         && item.base_type == OBJ_JEWELLERY
         && item.sub_type == AMU_FAITH
-        && you.religion != GOD_NO_GOD)
+        && !you_worship(GOD_NO_GOD))
     {
         return true;
     }
@@ -1719,15 +1729,7 @@ bool needs_handle_warning(const item_def &item, operation_types oper)
             return true;
         }
 
-        if (item_known_cursed(item) && !_is_wielded(item))
-            return true;
-
         if (is_artefact(item) && artefact_wpn_property(item, ARTP_MUTAGENIC))
-            return true;
-    }
-    else if (oper == OPER_PUTON || oper == OPER_WEAR)
-    {
-        if (item_known_cursed(item))
             return true;
     }
 
@@ -2149,7 +2151,7 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
 
         if (item.sub_type != MISC_LANTERN_OF_SHADOWS
 #if TAG_MAJOR_VERSION == 34
-            && item.sub_type != MISC_EMPTY_EBONY_CASKET
+            && item.sub_type != MISC_BUGGY_EBONY_CASKET
 #endif
             && item.sub_type != MISC_RUNE_OF_ZOT)
         {

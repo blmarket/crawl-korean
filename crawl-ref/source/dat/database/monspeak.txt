@@ -868,7 +868,7 @@ _pauses_or_stops_
 %%%%
 hound
 
-@The_monster@은(는) 잠시 @_pauses_or_stops_@, 바닥에 코를 대고 킁킁거렸다.
+VISUAL:@The_monster@은(는) 잠시 @_pauses_or_stops_@, 바닥에 코를 대고 킁킁거렸다.
 
 VISUAL:@The_monster@은(는) 전방을 똑바로 주시하며, 혼자 다니는 누군가를 찾았다.
 %%%%
@@ -910,7 +910,7 @@ VISUAL:@The_monster@은(는) 제대로 움직이지 못하고 있다.
 
 VISUAL:@The_monster@은(는) 더듬이를 거칠게 흔들었다.
 %%%%
-orb_spider_cantrip
+orb spider charge
 
 @The_monster@은(는) 순수한 에너지 가닥을 회전시켰다.
 
@@ -1138,7 +1138,7 @@ Crossbows player ghost
 
 @_generic_ranged_@
 
-VISUAL:@The_monster@은(는) 자신의 석궁에 석궁화살을 장전했다.
+VISUAL:@The_monster@은(는) 석궁에 볼트를 장전했다.
 %%%%
 Throwing player ghost
 
@@ -1211,7 +1211,7 @@ Unarmed Combat player ghost
 
 @The_monster@ sneers, "약해 빠진 녀석들이나 무기를 사용하지."
 
-VISUAL:@The_monster@은(는) 무도 자세를 취했다.
+VISUAL:@The_monster@은(는) 전투 자세를 취했다.
 
 VISUAL:@The_monster@은(는) 레슬링과 같은 자세를 취했다.
 
@@ -1382,7 +1382,7 @@ Evocations player ghost
 
 @The_monster@ taunts, "아마 너라면, 청동 플라스크를 보고선 그냥 마셔버렸을 테지."
 
-@The_monster@은(는) 말했다. "내가 당장에 @_misc_item_@을(를) 썼다면, 넌 진작 죽었지."
+@The_monster@은(는) 말했다. "내가 [돌멩이|부채|램프] 하나만 있었어도, 넌 죽은 목숨이었어."
 %%%%
 Ashenzari player ghost
 
@@ -1562,26 +1562,6 @@ _generic_ranged_
 @The_monster@은(는) @foe@에게 조준했다.
 
 당신은 무언가 위험한 것이 당신 머리 위를 스쳐 지나가는 것을 느꼈다. @player_only@
-%%%%
-_reloads_adj_
-
-struggles to reload
-
-effortlessly reloads
-%%%%
-_misc_item_
-
-대지 정령의 돌
-
-대기 정령의 부채
-
-화염의 램프
-%%%%
-_direction_
-
-left
-
-right
 %%%%
 _form_
 
@@ -1810,14 +1790,6 @@ Azrael
 w:2
 @_Azrael_rare_@
 %%%%
-_adj_flammable_
-
-가연성인
-
-인화성인
-
-열기를 느끼는
-%%%%
 _Azrael_common_
 
 @The_monster@은(는) 정신 나간듯 웃었다.
@@ -1834,7 +1806,7 @@ VISUAL: @The_monster@은(는) 순간적으로 화염의 구름에 감춰졌다.
 %%%%
 _Azrael_rare_
 
-@The_monster@은(는) 씩 웃더니 말했다. "넌 @adj_flammable@가?"
+@The_monster@ grins and asks @foe,@ "넌 [불에 잘 타는가|불에 잘 안 타는가|이 열기가 느껴지는가]?"
 
 @The_monster@은(는) 말했다. "오늘 밤 맛있는 케밥을 맛보겠군!"
 
@@ -4742,7 +4714,7 @@ Kirke
 
 VISUAL:@The_monster@은(는) 물약을 튀겼다.
 
-VISUAL:@The_monster@ @at_foe@을(를) 향해 @_strange_@ 가루를 던졌다.
+VISUAL:@The_monster@ @at_foe@을(를) 향해 [기이한|이상한|알 수 없는] 가루를 뿌렸다.
 
 @The_monster@은(는) 말했다. "오디세우스는 괜찮은 남자였는데, 넌 끔찍하군."
 
@@ -4758,14 +4730,6 @@ VISUAL:@The_monster@ @at_foe@을(를) 향해 @_strange_@ 가루를 던졌다.
 
 @_wizard_common_spell_@
 @_fake_spell_effect_@
-%%%%
-_strange_
-
-이상한
-
-기이한
-
-알수 없는
 ### END Kirke ###
 %%%%
 ############ LAMIA ### Naga queen
@@ -4871,12 +4835,6 @@ VISUAL ENCHANT:@The_monster@은(는) 잠시 투명해졌다.
 
 VISUAL ENCHANT:@The_monster@의 양 손이 빛나기 시작했다.
 %%%%
-_bad_effect_
-
-cursed
-
-doomed
-%%%%
 _Margery_common_
 
 VISUAL SPELL:@The_monster@은(는) 손짓했다.
@@ -4888,11 +4846,11 @@ SPELL:@The_monster@은(는) 주문을 외웠다.
 VISUAL SPELL:@The_monster@의 눈이  @_spell_colour_@색으로 빛나기 시작했다.
 
 VISUAL SPELL:@The_monster@은(는) 손짓했다.
-VISUAL WARN:당신은 @_bad_effect_@것 같다.
+VISUAL WARN:[저주받은 듯한|파멸한 듯한] 기분을 느꼈다.
 
 w:5
 VISUAL SPELL:@The_monster@은(는) 당신에게 보랏빛 가루를 던졌다.
-VISUAL WARN:당신은 @_bad_effect_@것 같다.
+VISUAL WARN:[저주받은 듯한|파멸한 듯한] 기분을 느꼈다.
 
 @The_monster@은(는) 말했다. "죽어라!"
 
@@ -5688,13 +5646,7 @@ _Roxanne_medium_
 
 @The_monster@은(는) 물었다. "물어보자, 내 등좀 긁어주지 않겠나?"
 
-@The_monster@은(는) 한숨을 쉬더니 말했다. "새똥만 아니었으면 여기도 그리 나쁘진 않았을텐데 말야."
-%%%%
-_millennia_or_aeons_
-
-천 년동안
-
-엉겁의 세월을
+@The_monster@은(는) 한숨을 쉬더니 말했다. "새똥만 아니었으면 여기도 그리 나쁘진 않았을텐데 말이지."
 %%%%
 _Roxanne_rare_
 
@@ -5704,9 +5656,9 @@ _Roxanne_rare_
 
 @The_monster@은(는) 궁금해했다. "기름칠이 도움이 될까? 아마 안되겠지."
 
-@The_monster@은(는) 주장했다. "네가 강한 전사일지는 몰라도, 석공은 아니잖아!"
+@The_monster@은(는) 주장했다. "네가 강한 전사일지는 몰라도, 최소한 석공은 아니니!"
 
-@The_monster@은(는) 말했다. "난 @_millennia_or_aeons_@ 기다릴거야. 넌 조만간 벌레 먹이가 되겠지."
+@The_monster@은(는) 말했다. "난 [천 년의 세월을|영겁으 세월을] 기다릴 수 있다. 넌 조만간 벌레 먹이가 되겠지만."
 
 @The_monster@은(는) 말했다. "그자들은 내가 새 주문에 미쳐있다고 했었지... 그자들이 옳았다는 게 밝혀졌군."
 %%%%
@@ -5889,8 +5841,8 @@ _Sigmund_rare_
 @The_monster@은(는) 소리쳤다. "오직 죽음만이, 자네를 자유롭게 할 수 있을걸세!"
 
 @The_monster@은(는) 속삭였다. "곧, 사후세계가 무엇인지 알게 될 것일세."
-#
-#VISUAL:@The_monster@ smiles chillingly.
+
+VISUAL:@The_monster@은(는) 차가운 미소를 지었다.
 %%%%
 _sigmund_speech_nouns_
 
@@ -5909,23 +5861,23 @@ w:5
 %%%%
 _Sojobo_common_
 
-VISUAL:@The_monster@ strikes a fencing pose.
+VISUAL:@The_monster@은(는) 칼 끝으로 당신을 가리켰다.
 
-@The_monster@ barks orders to his subordinates.
+@The_monster@은(는) 부하들에게 명령을 내리 듯 울부짖었다.
 
-VISUAL:@The_monster@ grins devilishly.
+VISUAL:@The_monster@은(는) 악마같이 웃어댔다.
 
-The air crackles briefly around @the_monster@.
+@the_monster@ 주변의 공기가 살짝 떨렸다.
 
-VISUAL:A brief shower of sparks shoots from @the_monster@'s claws.
+VISUAL:@the_monster@이(가) 바닥을 내리치자, 발톱 끝에서 희미한 불꽃이 일었다.
 %%%%
 _Sojobo_rare_
 
-@The_monster@ says @to_foe@, "This battle is not even a challenge!"
+@The_monster@은(는) 말했다. "참 시덥잖은 별 녀석이 다 귀찮게 하는구나!"
 
-@The_monster@ barks @at_foe@, "Your form is terrible!"
+@The_monster@은(는) 울부짖었다. "넌 참 역겹게 생겼군!"
 
-@The_monster@ sneers @at_foe@, "There are one thousand and one flaws in your strategy!"
+@The_monster@은(는) 비웃는 듯 이야기했다. "네 녀석의 전략에는 결함이 천 가지 하고도 하나 더 있구나!"
 ## END Sojobo
 %%%%
 ############ SONJA ### female kobold assassin

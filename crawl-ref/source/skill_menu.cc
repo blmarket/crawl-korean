@@ -561,8 +561,8 @@ string SkillMenuSwitch::get_help()
         {
             vector<string> causes;
             if (you.attribute[ATTR_XP_DRAIN])
-                causes.push_back(pgettext("skillmenu","draining"));
-            if (you.penance[GOD_ASHENZARI])
+                causes.push_back("draining");
+            if (player_under_penance(GOD_ASHENZARI))
                 causes.push_back(_("the power of Ashenzari"));
             return _("Skills reduced by ")
                    + comma_separated_line(causes.begin(), causes.end())
@@ -860,7 +860,7 @@ bool SkillMenu::exit()
 
     if (!enabled_skill && !all_skills_maxed())
     {
-        set_help(gettext("You need to enable at least one skill."));
+        set_help(_("<lightred>You need to enable at least one skill.</lightred>"));
         return false;
     }
 
