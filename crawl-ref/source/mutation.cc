@@ -622,16 +622,16 @@ string describe_mutations(bool center_title)
 
     case SP_GARGOYLE:
     {
-        result += "You are resistant to torment.\n";
-        result += "You are immune to poison.\n";
+        result += "당신은 지옥의 고통에 저항력이 있다.\n";
+        result += "당신은 독에 면역이다.\n";
         if (you.experience_level >= 14)
-            result += "You can fly continuously.\n";
+            result += "당신은 지속적인 비행이 가능하다.\n";
 
         ostringstream num;
         num << 2 + you.experience_level * 2 / 5
                  + max(0, you.experience_level - 7) * 2 / 5;
-        const string acstr = "Your stone body is very resilient (AC +"
-                                 + num.str() + ").";
+        const string acstr = "당신의 암석 피부는 단단하면서도 탄력있다. (AC +"
+                                 + num.str() + ")";
 
         result += _annotate_form_based(acstr, player_is_shapechanged()
                                               && you.form != TRAN_STATUE);
@@ -2460,7 +2460,7 @@ bool perma_mutate(mutation_type which_mut, int how_much, const string &reason)
             // than zero, and the innate mutation level for the mutation
             // in question is one less than the cap, we are permafying a
             // temporary mutation. This fails to produce any output normally.
-            mpr("Your mutations feel more permanent.", MSGCH_MUTATION);
+            mpr(_("Your mutations feel more permanent."), MSGCH_MUTATION);
         }
         else if (you.mutation[which_mut] < cap
             && !mutate(which_mut, reason, false, true, false, false, true))

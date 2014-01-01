@@ -1828,7 +1828,7 @@ int monster_die(monster* mons, killer_type killer,
     else if (mons->type == MONS_BRIAR_PATCH)
     {
         if (timeout && !silent)
-            simple_monster_message(mons, " crumbles away.");
+            simple_monster_message(mons, _(" crumbles away."));
     }
     else if (mons->type == MONS_SPECTRAL_WEAPON)
     {
@@ -2709,8 +2709,8 @@ void unawaken_vines(const monster* mons, bool quiet)
 
     if (!quiet && vines_seen)
     {
-        mprf("The vine%s fall%s limply to the ground.",
-              (vines_seen > 1 ? "s" : ""), (vines_seen == 1 ? "s" : ""));
+        mprf(_("The vine%s fall%s limply to the ground."),
+              (vines_seen > 1 ? pgettext("sssss","s") : ""), (vines_seen == 1 ? "s" : ""));
     }
 }
 

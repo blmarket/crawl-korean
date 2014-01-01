@@ -138,7 +138,7 @@ bool recall_offlevel_ally(mid_t mid)
         // The monster is now on this level
         remove_monster_from_transit(comp->level, mid);
         comp->level = level_id::current();
-        simple_monster_message(mons, " is recalled.");
+        simple_monster_message(mons, _(" is recalled."));
 
         // Catch up time for off-level monsters
         // (We move the player away so that we don't get expiry

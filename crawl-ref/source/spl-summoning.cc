@@ -1569,7 +1569,7 @@ static bool _raise_remains(const coord_def &pos, int corps, beh_type beha,
     if (mon == MONS_ZOMBIE && !mons_zombifiable(zombie_type))
     {
         ASSERT(mons_skeleton(zombie_type));
-        mpr("The flesh is too rotten for a proper zombie; only a skeleton remains.");
+        mpr(_("The flesh is too rotten for a proper zombie; only a skeleton remains."));
         mon = MONS_SKELETON;
     }
 
@@ -2977,12 +2977,12 @@ spret_type cast_spectral_weapon(actor *agent, int pow, god_type god, bool fail)
         {
             if (wpn)
             {
-                mprf("%s vibrate%s crazily for a second.",
+                mprf(_("%s vibrate%s crazily for a second."),
                      wpn->name(true, DESC_YOUR).c_str(),
                      wpn->quantity > 1 ? "" : "s");
             }
             else
-                mprf("Your %s twitch.", you.hand_name(true).c_str());
+                mprf(_("Your %s twitch."), _(you.hand_name(true).c_str()));
         }
 
         return SPRET_ABORT;
@@ -3022,18 +3022,18 @@ spret_type cast_spectral_weapon(actor *agent, int pow, god_type god, bool fail)
     }
 
     if (agent->is_player())
-        mpr("You draw out your weapon's spirit!");
+        mpr(_("You draw out your weapon's spirit!"));
     else
     {
         if (you.can_see(agent) && you.can_see(mons))
         {
-            string buf = " draws out ";
-            buf += agent->pronoun(PRONOUN_POSSESSIVE);
-            buf += " weapon's spirit!";
+            string buf = _(" draws out ");
+            //buf += agent->pronoun(PRONOUN_POSSESSIVE);
+            buf += _(" weapon's spirit!");
             simple_monster_message(agent->as_monster(), buf.c_str());
         }
         else if (you.can_see(mons))
-            simple_monster_message(mons, " appears!");
+            simple_monster_message(mons, _(" appears!"));
 
         mons->props["band_leader"].get_int() = agent->mid;
     }
@@ -3059,11 +3059,11 @@ void end_spectral_weapon(monster* mons, bool killed, bool quiet)
     {
         if (you.can_see(mons))
         {
-            simple_monster_message(mons, " fades away.",
+            simple_monster_message(mons, _(" fades away."),
                                    MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
         }
         else if (owner && owner->is_player())
-            mpr("You feel your bond with your spectral weapon wane.");
+            mpr(_("You feel your bond with your spectral weapon wane."));
     }
 
     if (!killed)

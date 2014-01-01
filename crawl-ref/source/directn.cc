@@ -1339,7 +1339,7 @@ bool direction_chooser::pickup_item()
 
     if (!just_looking) // firing/casting prompt
     {
-        mpr("Marked for pickup.", MSGCH_EXAMINE_FILTER);
+        mpr(_("Marked for pickup."), MSGCH_EXAMINE_FILTER);
         return false;
     }
 
@@ -3507,7 +3507,7 @@ static vector<string> _get_monster_desc_vector(const monster_info& mi)
         descs.push_back(_(M_("durably summoned")));
 
     if (mi.is(MB_SUMMONED_CAPPED))
-        descs.push_back("expiring");
+        descs.push_back(_(M_("expiring")));
 
     if (mi.is(MB_HALOED))
         descs.push_back(_(M_("haloed")));

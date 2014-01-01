@@ -2227,10 +2227,10 @@ void melee_attack::set_attack_verb()
                 else
                 {
                     const char* punch_desc[][2] =
-                        {{"pound",     "into fine dust"},
-                         {"pummel",    "like a punching bag"},
-                         {"pulverise", ""},
-                         {"squash",    "like a bug"}};
+                        {{pgettext("verb3","pound"),     "into fine dust"},
+                         {pgettext("verb3","pummel"),    "like a punching bag"},
+                         {pgettext("verb3","pulverise"), ""},
+                         {pgettext("verb3","squash"),    "like a bug"}};
                     const int choice = random2(ARRAYSZ(punch_desc)); // 메모
                     // XXX: could this distinction work better?
                     if (choice == 0

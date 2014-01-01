@@ -871,7 +871,7 @@ static void _handle_wizard_command(void)
         mpr(gettext("WARNING: ABOUT TO ENTER WIZARD MODE!"), MSGCH_WARN);
 
 #ifndef SCORE_WIZARD_CHARACTERS
-        mpr("If you continue, your game will not be scored!", MSGCH_WARN);
+        mpr(_("If you continue, your game will not be scored!"), MSGCH_WARN);
 #endif
 
         if (!yesno(_("Do you really want to enter wizard mode?"), false, 'n'))
@@ -2376,8 +2376,8 @@ static void _handle_recitation(int step)
                 speech += closure;
             }
         }
-        mprf(MSGCH_DURATION, "You finish reciting %s", speech.c_str());
-        mpr("You feel short of breath.");
+        mprf(MSGCH_DURATION, _("You finish reciting %s"), speech.c_str());
+        mpr(_("You feel short of breath."));
         you.increase_duration(DUR_BREATH_WEAPON, random2(10) + random2(30));
     }
 }
@@ -3034,7 +3034,7 @@ static void _decrement_durations()
         }
         if (_decrement_a_duration(DUR_SPIRIT_HOWL, delay))
         {
-            mpr("The howling abruptly ceases.", MSGCH_DURATION);
+            mpr(_("The howling abruptly ceases."), MSGCH_DURATION);
             add_daction(DACT_END_SPIRIT_HOWL);
             you.props["spirit_howl_cooldown"].get_int() =
                 you.elapsed_time + random_range(1500, 3000);
@@ -3047,7 +3047,7 @@ static void _decrement_durations()
                      - ((you.duration[DUR_TOXIC_RADIANCE] - delay) / 10);
         toxic_radiance_effect(&you, ticks);
         _decrement_a_duration(DUR_TOXIC_RADIANCE, delay,
-                              "Your toxic aura wanes.");
+                              _("Your toxic aura wanes."));
     }
 
     if (you.duration[DUR_RECITE] && _check_recite())
@@ -3264,7 +3264,7 @@ static void _player_reacts()
     {
         if (you.duration[DUR_SONG_OF_SLAYING])
         {
-            mpr("The silence causes your song to end.");
+            mpr(_("The silence causes your song to end."));
             _decrement_a_duration(DUR_SONG_OF_SLAYING, you.duration[DUR_SONG_OF_SLAYING]);
         }
     }

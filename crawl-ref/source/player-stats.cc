@@ -544,7 +544,7 @@ bool lose_stat(stat_type which_stat, int stat_loss, bool force,
                                         you.stat_loss[which_stat] + stat_loss);
         if (you.stat_zero[which_stat])
         {
-            mprf(MSGCH_DANGER, "You convulse from lack of %s!", stat_desc(which_stat, SD_NAME));
+            mprf(MSGCH_DANGER, _("You convulse from lack of %s!"), _(stat_desc(which_stat, SD_NAME)));
             ouch(5 + random2(you.hp_max / 10), NON_MONSTER, _statloss_killtype(which_stat), cause);
         }
         _handle_stat_change(which_stat, cause, see_source);

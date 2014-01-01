@@ -1789,7 +1789,7 @@ static spret_type _do_cast(spell_type spell, int powc,
         return cast_searing_ray(powc, beam, fail);
 
     case SPELL_MELEE: // Rod of striking
-        mpr("This rod is automatically evoked when it strikes in combat.");
+        mpr(_("This rod is automatically evoked when it strikes in combat."));
         return SPRET_ABORT;
 
     default:

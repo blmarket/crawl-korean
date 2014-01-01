@@ -435,7 +435,7 @@ static void _check_stop_train()
 
     if (!skills.empty())
     {
-        mpr(_("You stop training ") + skill_names(skills) + ".");
+        mpr(_("You stop training ") + skill_names(skills) + pgettext("stoptraining","."));
         check_selected_skills();
     }
 

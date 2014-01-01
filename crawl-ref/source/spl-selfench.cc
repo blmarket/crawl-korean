@@ -237,7 +237,7 @@ spret_type cast_fly(int power, bool fail)
 
     if (you.duration[DUR_GRASPING_ROOTS])
     {
-        mpr("The grasping roots prevent you from becoming airborne.", MSGCH_WARN);
+        mpr("당신의 뿌리가, 날아가지 않도록 지면을 꽉 붙잡았다.", MSGCH_WARN);
         return SPRET_ABORT;
     }
 
@@ -339,9 +339,9 @@ spret_type cast_infusion(int pow, bool fail)
 {
     fail_check();
     if (!you.duration[DUR_INFUSION])
-        mpr("Your attacks are magically infused.");
+        mpr("당신의 공격에 마력이 깃들었다.");
     else
-        mpr("Your attacks are magically infused for longer.");
+        mpr("당신의 공격에 마력이 더 오래 깃들었다.");
 
     you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow), 100);
     you.props["infusion_power"] = pow;
@@ -354,9 +354,9 @@ spret_type cast_song_of_slaying(int pow, bool fail)
     fail_check();
 
     if (you.duration[DUR_SONG_OF_SLAYING])
-        mpr("You start a new song!");
+        mpr("당신은 새로 노래를 불렀다!");
     else
-        mpr("You start singing a song of slaying.");
+        mpr("당신은 살육의 노래를 부르기 시작했다.");
 
     you.increase_duration(DUR_SONG_OF_SLAYING, 20 + pow / 3, 20 + pow / 3);
 
@@ -370,7 +370,7 @@ spret_type cast_song_of_shielding(int pow, bool fail)
 {
     fail_check();
     you.increase_duration(DUR_SONG_OF_SHIELDING, 10 + random2(pow) / 3, 40);
-    mpr("You are being protected by your magic.");
+    mpr("마력으로 보호받음이 느껴졌다.");
     return SPRET_SUCCESS;
 }
 

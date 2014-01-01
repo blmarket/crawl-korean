@@ -323,12 +323,12 @@ static void _adjust_spell(void)
 
     int keyin = 0;
     if (Options.auto_list)
-        keyin = list_spells(false, false, false, "Adjust which spell?");
+        keyin = list_spells(false, false, false, _("Adjust which spell?"));
     else
     {
         keyin = get_ch();
         if (keyin == '?' || keyin == '*')
-            keyin = list_spells(false, false, false, "Adjust which spell?");
+            keyin = list_spells(false, false, false, _("Adjust which spell?"));
     }
 
     if (!isaalpha(keyin))
@@ -364,7 +364,7 @@ static void _adjust_spell(void)
         // FIXME: It would be nice if the user really could select letters
         // without spells from this menu.
         if (keyin == '?' || keyin == '*')
-            keyin = list_spells(true, false, false, "Adjust to which letter?");
+            keyin = list_spells(true, false, false, _("Adjust to which letter?"));
     }
 
     const int input_2 = keyin;
@@ -1203,7 +1203,7 @@ static bool _append_books(string &desc, item_def &item, string key)
         desc += comma_separated_line(rods.begin(), rods.end(), "\n", "\n");
     }
     else
-        desc += "\n\nThis spell is not found in any books or rods.";
+        desc += _("\n\nThis spell is not found in any books or rods.");
 
     return true;
 }

@@ -3110,7 +3110,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
         if (you.attribute[ATTR_XP_DRAIN] <= 0)
         {
             you.attribute[ATTR_XP_DRAIN] = 0;
-            mpr("Your life force feels restored.", MSGCH_RECOVERY);
+            mpr(_("Your life force feels restored."), MSGCH_RECOVERY);
         }
     }
 }
@@ -3631,7 +3631,7 @@ void level_change(int source, const char* aux, bool skip_attribute_increase)
                 if (you.experience_level == 14)
                 {
                     perma_mutate(MUT_BIG_WINGS, 1, "gargoyle growth");
-                    mpr("You can now fly continuously.", MSGCH_INTRINSIC_GAIN);
+                    mpr(_("You can now fly continuously."), MSGCH_INTRINSIC_GAIN);
                 }
 
                 break;
@@ -5552,7 +5552,7 @@ void fly_player(int pow, bool already_flying)
 
     if (you.duration[DUR_GRASPING_ROOTS])
     {
-        mpr("The grasping roots prevent you from becoming airborne.");
+        mpr(_("The grasping roots prevent you from becoming airborne."));
         return;
     }
 

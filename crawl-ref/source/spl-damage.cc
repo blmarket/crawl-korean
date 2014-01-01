@@ -2740,9 +2740,9 @@ spret_type cast_toxic_radiance(actor *agent, int pow, bool fail, bool mon_tracer
         fail_check();
 
         if (!you.duration[DUR_TOXIC_RADIANCE])
-            mpr("You begin to radiate toxic energy.");
+            mpr(_("You begin to radiate toxic energy."));
         else
-            mpr("Your toxic radiance grows in intensity.");
+            mpr(_("Your toxic radiance grows in intensity."));
 
         you.increase_duration(DUR_TOXIC_RADIANCE, 3 + random2(pow/20), 15);
 
@@ -2784,11 +2784,11 @@ spret_type cast_toxic_radiance(actor *agent, int pow, bool fail, bool mon_tracer
         if (!mon_agent->has_ench(ENCH_TOXIC_RADIANCE))
         {
             simple_monster_message(mon_agent,
-                                   " begins to radiate toxic energy.");
+                                   _(" begins to radiate toxic energy."));
         }
         else if (you.can_see(mon_agent))
         {
-            mprf("%s toxic radiance grows in intensity.",
+            mprf(_("%s toxic radiance grows in intensity."),
                  mon_agent->name(DESC_ITS).c_str());
         }
 
@@ -2883,7 +2883,7 @@ void handle_searing_ray()
 
     if (!enough_mp(1, true))
     {
-        mpr("Without enough magic to sustain it, your searing ray dissipates.");
+        mpr(_("Without enough magic to sustain it, your searing ray dissipates."));
         end_searing_ray();
         return;
     }
@@ -2901,7 +2901,7 @@ void handle_searing_ray()
     // If friendlies have moved into the beam path, give a chance to abort
     if (!player_tracer(zap, pow, beam))
     {
-        mpr("You stop channeling your searing ray.");
+        mpr(_("You stop channeling your searing ray."));
         end_searing_ray();
         return;
     }

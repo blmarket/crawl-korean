@@ -629,7 +629,7 @@ bool zin_check_able_to_recite(bool quiet)
     if (you.duration[DUR_RECITE])
     {
         if (!quiet)
-            mpr("Finish your current sermon first, please.");
+            mpr(_("Finish your current sermon first, please."));
         return false;
     }
 
@@ -1278,8 +1278,8 @@ void zin_recite_interrupt()
 {
     if (!you.duration[DUR_RECITE])
         return;
-    mpr("Your recitation is interrupted.", MSGCH_DURATION);
-    mpr("You feel short of breath.");
+    mpr(_("Your recitation is interrupted."), MSGCH_DURATION);
+    mpr(_("You feel short of breath."));
     you.duration[DUR_RECITE] = 0;
 
     you.increase_duration(DUR_BREATH_WEAPON, random2(10) + random2(30));
@@ -1506,7 +1506,7 @@ bool trog_burn_spellbooks()
             if (item_is_spellbook(*si))
             {
                 mprf(_("Burning your own %s might not be such a smart idea!"),
-                        you.foot_name(true).c_str());
+                        _(you.foot_name(true).c_str()));
                 return false;
             }
         }

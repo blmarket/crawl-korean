@@ -2097,7 +2097,7 @@ static bool _awaken_vines(monster* mon, bool test_only = false)
     else
     {
         if (seen)
-            mpr("Vines fly forth from the trees!");
+            mpr(_("Vines fly forth from the trees!"));
         return true;
     }
 }
@@ -2263,7 +2263,7 @@ static bool _wall_of_brambles(monster* mons)
     }
 
     if (seen)
-        mpr("Thorny briars emerge from the ground!");
+        mpr(_("Thorny briars emerge from the ground!"));
 
     return true;
 }
@@ -3255,7 +3255,7 @@ static bool _mons_cast_freeze(monster* mons)
 
     if (you.can_see(target))
     {
-        mprf("%s %s frozen.", target->name(DESC_THE).c_str(),
+        mprf(_("%s %s frozen."), target->name(DESC_THE).c_str(),
                               target->conj_verb("are").c_str());
     }
 
@@ -4858,7 +4858,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
     case SPELL_CONTROL_WINDS:
         if (you.can_see(mons))
-            mprf("The winds start to flow at %s will.", mons->name(DESC_ITS).c_str());
+            mprf(_("The winds start to flow at %s will."), mons->name(DESC_ITS).c_str());
         mons->add_ench(mon_enchant(ENCH_CONTROL_WINDS, 1, mons, 200 + random2(150)));
         return;
 
@@ -4883,7 +4883,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
                 && !mi->has_ench(ENCH_HASTE))
             {
                 mi->add_ench(ENCH_HASTE);
-                simple_monster_message(*mi, " seems to speed up.");
+                simple_monster_message(*mi, _(" seems to speed up."));
                 --num;
             }
         }
@@ -4895,7 +4895,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         actor *foe = mons->get_foe();
         if (foe && mons->can_see(foe))
         {
-            simple_monster_message(mons, " summons a great blast of wind!");
+            simple_monster_message(mons, _(" summons a great blast of wind!"));
             wind_blast(mons, 12 * mons->hit_dice, foe->pos());
         }
         return;

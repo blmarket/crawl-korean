@@ -1642,7 +1642,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
                 return hurted;
 
             if (original > hurted)
-                simple_monster_message(mons, " resists.");
+                simple_monster_message(mons, _(" resists."));
 
             if (mons->observable())
                 pbolt.obvious_effect = true;
@@ -2386,7 +2386,7 @@ static void _malign_offering_effect(actor* victim, const actor* agent, int damag
     // get_los_no_trans on that monster.
     const los_base * const victim_los = victim->get_los_no_trans();
 
-    mprf("%s life force is offered up.", victim->name(DESC_ITS).c_str());
+    mprf(_("%s life force is offered up."), victim->name(DESC_ITS).c_str());
     damage = victim->hurt(agent, damage, BEAM_NEG);
 
     // Actors that had LOS to the victim (blocked by glass, clouds, etc),
@@ -2398,7 +2398,7 @@ static void _malign_offering_effect(actor* victim, const actor* agent, int damag
         {
             if (ai->heal(max(1, damage * 2 / 3)) && you.can_see(*ai))
             {
-                mprf("%s %s healed.", ai->name(DESC_THE).c_str(),
+                mprf(_("%s %s healed."), ai->name(DESC_THE).c_str(),
                                       ai->conj_verb("are").c_str());
             }
         }
@@ -3715,8 +3715,8 @@ void bolt::affect_player()
         if (real_flavour == BEAM_CHAOS || real_flavour == BEAM_RANDOM)
         {
             if (hit_verb.empty())
-                hit_verb = engulfs ? "engulfs" : "hits";
-            mprf("The %s %s you!", name.c_str(), hit_verb.c_str());
+                hit_verb = engulfs ? pgettext("engulforhit","engulfs") : pgettext("engulforhit","hits");
+            mprf(pgettext("engulforhit","The %s %s you!"), name.c_str(), hit_verb.c_str());
         }
         affect_player_enchantment();
         return;
@@ -4544,11 +4544,11 @@ void bolt::affect_monster(monster* mon)
         if (real_flavour == BEAM_CHAOS || real_flavour == BEAM_RANDOM)
         {
             if (hit_verb.empty())
-                hit_verb = engulfs ? "engulfs" : "hits";
+                hit_verb = engulfs ? pgettext("engulforhit","engulfs") : pgettext("engulforhit","hits");
             if (mons_near(mon))
-                mprf("The %s %s %s.", name.c_str(), hit_verb.c_str(),
+                mprf(pgettext("engulforhit","The %s %s %s."), name.c_str(), hit_verb.c_str(),
                      mon->observable() ? mon->name(DESC_THE).c_str()
-                                       : "something");
+                                       : pgettext("engulforhit","something"));
             else if (heard && !noise_msg.empty())
                 mprf(MSGCH_SOUND, "%s", noise_msg.c_str());
         }
@@ -5302,7 +5302,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         {
             if (you.can_see(mon))
             {
-                mprf("%s magical defenses are stripped away.",
+                mprf(_("%s magical defenses are stripped away."),
                      mon->name(DESC_ITS).c_str());
                 obvious_effect = true;
             }

@@ -2160,7 +2160,7 @@ void treant_release_wasps(monster* mons)
 
     if (created && you.can_see(mons))
     {
-        mprf("Angry insects surge out from beneath %s foliage!",
+        mprf(_("Angry insects surge out from beneath %s foliage!"),
             mons->name(DESC_ITS).c_str());
     }
 }
@@ -2219,16 +2219,16 @@ bool apply_grasping_roots(monster* mons)
                 if (x_chance_in_y(10, 50 - ai->melee_evasion(NULL)))
                 {
                     if (ai->is_player())
-                        mpr("Roots rise up to grasp you, but you nimbly evade.");
+                        mpr(_("Roots rise up to grasp you, but you nimbly evade."));
                 }
                 else
                 {
                     if (you.can_see(*ai))
                     {
-                        mprf("Roots rise up from beneath %s and drag %s%s"
-                                "to the ground.", ai->name(DESC_THE).c_str(),
-                                ai->is_monster() ? "it" : "you",
-                                ai->is_monster() ? " " : " back");
+                        mprf(_("Roots rise up from beneath %s and drag %s%s"
+                                "to the ground."), ai->name(DESC_THE).c_str(),
+                                ai->is_monster() ? pgettext("grasp","it") : pgettext("grasp","you"),
+                                ai->is_monster() ? pgettext("grasp"," ") : pgettext("grasp"," back"));
                     }
                     _entangle_actor(*ai);
                 }
@@ -2237,7 +2237,7 @@ bool apply_grasping_roots(monster* mons)
             {
                 if (ai->is_player() && !you.duration[DUR_GRASPING_ROOTS])
                 {
-                    mprf("Roots grasp at your %s, making movement difficult.",
+                    mprf(_("Roots grasp at your %s, making movement difficult."),
                         you.foot_name(true).c_str());
                 }
                 _entangle_actor(*ai);
@@ -2265,7 +2265,7 @@ void check_grasping_roots(actor* act, bool quiet)
         if (act->is_player())
         {
             if (!quiet)
-                mpr("You escape the reach of the grasping roots.");
+                mpr(_("You escape the reach of the grasping roots."));
             you.duration[DUR_GRASPING_ROOTS] = 0;
             you.redraw_evasion = true;
         }
@@ -3109,7 +3109,7 @@ void move_solo_tentacle(monster* tentacle)
     {
         if (you.can_see(tentacle))
         {
-            mprf("The vine drags %s backwards!",
+            mprf(_("The vine drags %s backwards!"),
                     constrictee->name(DESC_THE).c_str());
         }
 
@@ -4234,7 +4234,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
     case MONS_SHADOW:
         if (!mons->invisible() && !mons->backlit() && one_chance_in(6))
         {
-            if (enchant_monster_invisible(mons, "slips into darkness"))
+            if (enchant_monster_invisible(mons, _("slips into darkness")))
             {
                 mon_enchant invis = mons->get_ench(ENCH_INVIS);
                 invis.duration = 40 + random2(60);
@@ -4252,7 +4252,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         actor *foe = mons->get_foe();
         if (foe && mons->can_see(foe) && one_chance_in(4))
         {
-            simple_monster_message(mons, " exhales a fierce blast of wind!");
+            simple_monster_message(mons, _(" exhales a fierce blast of wind!"));
             wind_blast(mons, 12 * mons->hit_dice, foe->pos());
             mon_enchant breath_timeout =
                 mon_enchant(ENCH_BREATH_WEAPON, 1, mons,
@@ -4329,7 +4329,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             if (you.props["spirit_wolf_total"].get_int() < 3)
                 break;
 
-            simple_monster_message(mons, " howls for its pack!", MSGCH_MONSTER_SPELL);
+            simple_monster_message(mons, _(" howls for its pack!"), MSGCH_MONSTER_SPELL);
             you.duration[DUR_SPIRIT_HOWL] = 450 + random2(350);
             spawn_spirit_pack(&you);
             you.props["next_spirit_pack"].get_int() = you.elapsed_time + 40 + random2(85);
@@ -4352,7 +4352,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
                 {
                     if (mons->move_to_pos(spot))
                     {
-                        simple_monster_message(mons, " flows with the water.");
+                        simple_monster_message(mons, _(" flows with the water."));
                         used = true;
                     }
                 }
@@ -4377,13 +4377,13 @@ bool mon_special_ability(monster* mons, bolt & beem)
                                        random_range(3, 7) * BASELINE_DELAY));
             if (you.can_see(mons))
             {
-                mprf(MSGCH_MONSTER_SPELL, "%s reaches out with a gnarled limb.",
+                mprf(MSGCH_MONSTER_SPELL, _("%s reaches out with a gnarled limb."),
                      mons->name(DESC_THE).c_str());
-                mprf("Grasping roots rise from the ground around %s!",
+                mprf(_("Grasping roots rise from the ground around %s!"),
                      mons->name(DESC_THE).c_str());
             }
             else if (you.see_cell(mons->pos()))
-                mpr("Grasping roots begin to rise from the ground!");
+                mpr(_("Grasping roots begin to rise from the ground!"));
 
             used = true;
         }
@@ -4410,7 +4410,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         {
             // In the odd case we're invisible somehow
             mons->del_ench(ENCH_INVIS);
-            simple_monster_message(mons, " flashes a warning beacon!",
+            simple_monster_message(mons, _(" flashes a warning beacon!"),
                                    MSGCH_MONSTER_SPELL);
 
             circle_def range(mons->pos(), 13, C_ROUND);
@@ -4455,7 +4455,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             }
 
             if (!you.see_cell(mons->pos()) && range.contains(you.pos()))
-                mpr("You see a distant pulse of light.");
+                mpr(_("You see a distant pulse of light."));
         }
         break;
 

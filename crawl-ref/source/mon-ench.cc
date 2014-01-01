@@ -823,17 +823,17 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
 
     case ENCH_CONTROL_WINDS:
         if (!quiet && you.can_see(this))
-            mprf("The winds cease moving at %s will.", name(DESC_ITS).c_str());
+            mprf(_("The winds cease moving at %s will."), name(DESC_ITS).c_str());
         break;
 
     case ENCH_TOXIC_RADIANCE:
         if (!quiet && you.can_see(this))
-            mprf("%s toxic aura wanes.", name(DESC_ITS).c_str());
+            mprf(_("%s toxic aura wanes."), name(DESC_ITS).c_str());
         break;
 
     case ENCH_GRASPING_ROOTS_SOURCE:
         if (!quiet && you.see_cell(pos()))
-            mpr("The grasping roots settle back into the ground.");
+            mpr(_("The grasping roots settle back into the ground."));
 
         // Done here to avoid duplicate messages
         if (you.duration[DUR_GRASPING_ROOTS])
@@ -843,7 +843,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
 
     case ENCH_FIRE_VULN:
         if (!quiet)
-            simple_monster_message(this, " is no longer more vulnerable to fire.");
+            simple_monster_message(this, _(" is no longer more vulnerable to fire."));
         break;
 
     default:

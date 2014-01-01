@@ -3036,8 +3036,8 @@ void MiscastEffect::_zot()
             }
             break;
         case 8:
-            you_msg      = "You are engulfed in negative energy!";
-            mon_msg_seen = "@The_monster@ is engulfed in negative energy!";
+            you_msg      = _("You are engulfed in negative energy!");
+            mon_msg_seen = _("@The_monster@ is engulfed in negative energy!");
             do_msg();
             target->drain_exp(act_source, false, 100);
             break;
@@ -3074,7 +3074,7 @@ void MiscastEffect::_zot()
                 }
             }
             if (!wands.empty())
-                mpr_comma_separated_list("Magical energy is drained from your ", wands);
+                mpr_comma_separated_list(_("Magical energy is drained from your "), wands);
             else
                 do_msg(); // For canned_msg(MSG_NOTHING_HAPPENS)
             break;

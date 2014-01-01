@@ -129,7 +129,7 @@ static void _CEREBOV_melee_effect(item_def* weapon, actor* attacker,
             && defender->res_fire() <= 3
             && !you.duration[DUR_FIRE_VULN])
         {
-            mpr("The Sword of Cerebov burns away your fire resistance.");
+            mpr(_("The Sword of Cerebov burns away your fire resistance."));
             you.increase_duration(DUR_FIRE_VULN, 3 + random2(dam), 50);
         }
         if (defender->is_monster()
@@ -137,7 +137,7 @@ static void _CEREBOV_melee_effect(item_def* weapon, actor* attacker,
             && !defender->as_monster()->res_hellfire()
             && !defender->as_monster()->has_ench(ENCH_FIRE_VULN))
         {
-            mprf("The Sword of Cerebov burns away %s fire resistance.",
+            mprf(_("The Sword of Cerebov burns away %s fire resistance."),
                  defender->name(DESC_ITS).c_str());
             defender->as_monster()->add_ench(
                 mon_enchant(ENCH_FIRE_VULN, 1, attacker,
@@ -455,7 +455,7 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
 {
     if (you.species == SP_DJINNI)
     {
-        mpr("The staff is unable to affect your essence.");
+        mpr(_("The staff is unable to affect your essence."));
         *unevokable = true;
         return true;
     }

@@ -1791,7 +1791,7 @@ static void _pre_monster_move(monster* mons)
         monster* awakener = monster_by_mid(mons->props["vine_awakener"].get_int());
         if (awakener && !awakener->can_see(mons))
         {
-            simple_monster_message(mons, " falls limply to the ground.");
+            simple_monster_message(mons, _(" falls limply to the ground."));
             monster_die(mons, KILL_RESET, NON_MONSTER);
             return;
         }
@@ -3889,7 +3889,7 @@ static bool _monster_move(monster* mons)
                 _mons_fire_wand(mons, wand, beem, you.can_see(mons), false);
             }
             else
-                simple_monster_message(mons, " falters for a moment.");
+                simple_monster_message(mons, _(" falters for a moment."));
             mons->lose_energy(EUT_SPELL);
             return true;
         }

@@ -5682,12 +5682,12 @@ void monster::react_to_damage(const actor *oppressor, int damage,
             {
 
                 if (owner->is_player())
-                    mpr("Your spectral weapon shares its damage with you!");
+                    mpr(_("Your spectral weapon shares its damage with you!"));
                 else if (owner->alive() && you.can_see(owner))
                 {
-                    string buf = " shares ";
+                    string buf = _(" shares ");
                     buf += owner->pronoun(PRONOUN_POSSESSIVE);
-                    buf += " spectral weapon's damage!";
+                    buf += _(" spectral weapon's damage!");
                     simple_monster_message(owner->as_monster(), buf.c_str());
                 }
 

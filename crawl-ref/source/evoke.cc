@@ -589,8 +589,8 @@ void finish_manual(int slot)
     item_def& manual(you.inv[slot]);
     const skill_type skill = static_cast<skill_type>(manual.plus);
 
-    mprf("You have finished your manual of %s and toss it away.",
-         skill_name(skill));
+    mprf(_("You have finished your manual of %s and toss it away."),
+         _(skill_name(skill)));
     dec_inv_item_quantity(slot, 1);
 }
 
@@ -710,7 +710,7 @@ static bool _box_of_beasts(item_def &box)
 
     if (!box.plus)
     {
-        mpr("...but the box appears empty, and falls apart.");
+        mpr(_("...but the box appears empty, and falls apart."));
         ASSERT(in_inventory(box));
         dec_inv_item_quantity(box.link, 1);
         return false;
@@ -771,11 +771,11 @@ static bool _box_of_beasts(item_def &box)
 
 static bool _sack_of_spiders(item_def &sack)
 {
-    mpr("You reach into the bag...");
+    mpr(_("You reach into the bag..."));
 
     if (!sack.plus)
     {
-        mpr("...but the bag is empty, and unravels at your touch.");
+        mpr(_("...but the bag is empty, and unravels at your touch."));
         ASSERT(in_inventory(sack));
         dec_inv_item_quantity(sack.link, 1);
         return false;
@@ -1412,7 +1412,7 @@ static bool _stone_of_tremors()
             rubble_pos.push_back(*di);
     }
 
-    mpr("The dungeon trembles and rubble falls from the walls!");
+    mpr(_("The dungeon trembles and rubble falls from the walls!"));
     noisy(15, you.pos());
 
     bolt rubble;
@@ -1454,7 +1454,7 @@ static bool _stone_of_tremors()
     for (unsigned int i = 0; i < door_pos.size(); ++i)
     {
         nuke_wall(door_pos[i]);
-        mpr("The door collapses!");
+        mpr(_("The door collapses!"));
     }
 
     // Collapse some walls and mark collapsed walls as valid elemental positions.

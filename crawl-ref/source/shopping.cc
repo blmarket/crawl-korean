@@ -2825,7 +2825,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
                 to_del.push_back(listed);
                 if (!_in_shop_now)
                 {
-                    mprf("Shopping-list: removing %s",
+                    mprf(_("Shopping-list: removing %s"),
                          describe_thing(thing, DESC_A).c_str());
                 }
             }
@@ -3139,7 +3139,7 @@ void ShoppingList::display()
             del_thing_at_index(index);
             if (list->empty())
             {
-                mpr("Your shopping list is now empty.");
+                mpr(_("Your shopping list is now empty."));
                 break;
             }
 

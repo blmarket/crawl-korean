@@ -2460,7 +2460,7 @@ static void _rebrand_weapon(item_def& wpn)
     if (old_brand == SPWPN_DISTORTION)
     {
         // you can't get rid of distortion this easily
-        mprf("%s twongs alarmingly.", itname.c_str());
+        mprf(_("%s twongs alarmingly."), itname.c_str());
 
         // from unwield_item
         MiscastEffect(&you, NON_MONSTER, SPTYP_TRANSLOCATION, 9, 90,
@@ -2535,7 +2535,7 @@ static void _brand_weapon(bool alreadyknown, item_def &wpn)
 
     case SPWPN_VENOM:
         if (rebranded)
-            mprf("%s drips with poison.", itname.c_str());
+            mprf(_("%s drips with poison."), itname.c_str());
         else
             mprf(_("%s seems more permanently poisoned."), itname.c_str());
         toxic_radiance_effect(&you, 1);
@@ -2642,7 +2642,7 @@ static bool _handle_brand_weapon(bool alreadyknown, string *pre_msg)
 
     while (true)
     {
-        item_slot = prompt_invent_item("Brand which weapon?", MT_INVLIST,
+        item_slot = prompt_invent_item(_("Brand which weapon?"), MT_INVLIST,
                                        OSEL_BRANDABLE_WEAPON, true, true, false);
 
         // The scroll is used up if we didn't know what it was originally.
@@ -2652,7 +2652,7 @@ static bool _handle_brand_weapon(bool alreadyknown, string *pre_msg)
         if (item_slot == PROMPT_ABORT)
         {
             if (alreadyknown
-                || yesno("Really abort (and waste the scroll)?"))
+                || yesno(_("Really abort (and waste the scroll)?")))
             {
                 canned_msg(MSG_OK);
                 return !alreadyknown;
@@ -2668,7 +2668,7 @@ static bool _handle_brand_weapon(bool alreadyknown, string *pre_msg)
 
         if (!is_brandable_weapon(wpn, true))
         {
-            mpr("Choose a weapon to brand, or Esc to abort.");
+            mpr(_("Choose a weapon to brand, or Esc to abort."));
             if (Options.auto_list)
                 more();
 
@@ -3481,7 +3481,7 @@ void read_scroll(int slot)
         if (!alreadyknown)
             mpr(pre_succ_msg.c_str());
         if (you.spell_no == 0)
-            mpr("You feel forgetful for a moment.");
+            mpr(_("You feel forgetful for a moment."));
         else if (!alreadyknown)
             cast_selective_amnesia();
         else

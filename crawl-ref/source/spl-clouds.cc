@@ -200,7 +200,7 @@ spret_type cast_big_c(int pow, cloud_type cty, const actor *caster, bolt &beam,
             beam.name = "freezing blast";
             break;
         default:
-            mpr("That kind of cloud doesn't exist!");
+            mpr(_("That kind of cloud doesn't exist!"));
             return SPRET_ABORT;
     }
 
@@ -419,7 +419,7 @@ void apply_control_winds(const monster* mon)
         if (cl->type == CLOUD_FOREST_FIRE)
         {
             if (you.see_cell(cl->pos))
-                mpr("The forest fire is smothered by the winds.");
+                mpr(_("The forest fire is smothered by the winds."));
             delete_cloud(cloud_list[i]);
             continue;
         }

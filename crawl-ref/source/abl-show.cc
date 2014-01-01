@@ -789,16 +789,16 @@ static const string _detailed_cost_description(ability_type ability)
         ret << gettext("\nYou can use it even if confused.");
 
     if (abil.flags & ABFLAG_LEVEL_DRAIN)
-        ret << "\nIt will lower your experience level by one when used.";
+        ret << _("\nIt will lower your experience level by one when used.");
 
     if (abil.flags & ABFLAG_STAT_DRAIN)
-        ret << "\nIt will temporarily drain your strength, intelligence or dexterity when used.";
+        ret << _("\nIt will temporarily drain your strength, intelligence or dexterity when used.");
 
     if (abil.flags & ABFLAG_LEVEL_DRAIN)
-        ret << "\nIt will lower your experience level by one when used.";
+        ret << _("\nIt will lower your experience level by one when used.");
 
     if (abil.flags & ABFLAG_STAT_DRAIN)
-        ret << "\nIt will temporarily drain your strength, intelligence or dexterity when used.";
+        ret << _("\nIt will temporarily drain your strength, intelligence or dexterity when used.");
 
     return ret.str();
 }
@@ -2173,7 +2173,7 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_STOP_SINGING:
         you.duration[DUR_SONG_OF_SLAYING] = 0;
-        mpr("You stop singing.");
+        mpr(_("You stop singing."));
         break;
 
     case ABIL_STOP_FLYING:
@@ -2197,7 +2197,7 @@ static bool _do_ability(const ability_def& abil)
             you.attribute[ATTR_RECITE_SEED] = random2(2187); // 3^7
             you.attribute[ATTR_RECITE_HP]   = you.hp;
             you.duration[DUR_RECITE] = 3 * BASELINE_DELAY;
-            mprf(MSGCH_PLAIN, "You clear your throat and prepare to recite %s.",
+            mprf(MSGCH_PLAIN, _("You clear your throat and prepare to recite %s."),
                  zin_recite_text(you.attribute[ATTR_RECITE_SEED],
                                  prayertype, -1).c_str());
         }

@@ -627,9 +627,9 @@ void direct_effect(monster* source, spell_type spell,
             if (defender->is_player() || you.can_see(defender))
             {
                 if (defender->flight_mode())
-                    mprf("The water rises up and strikes %s!", defender->name(DESC_THE).c_str());
+                    mprf(_("The water rises up and strikes %s!"), defender->name(DESC_THE).c_str());
                 else
-                    mprf("The water swirls and strikes %s!", defender->name(DESC_THE).c_str());
+                    mprf(_("The water swirls and strikes %s!"), defender->name(DESC_THE).c_str());
             }
 
             pbolt.name       = "waterstrike";
@@ -2137,13 +2137,13 @@ static void _magic_contamination_effects()
 
     if (glow_effect && is_sanctuary(you.pos()))
     {
-        mpr("Your body momentarily shudders from a surge of wild "
-            "energies until Zin's power calms it.", MSGCH_GOD);
+        mpr(_("Your body momentarily shudders from a surge of wild "
+            "energies until Zin's power calms it."), MSGCH_GOD);
     }
     else if (glow_effect)
     {
-        mpr("Your body shudders with the violent release "
-            "of wild energies!", MSGCH_WARN);
+        mpr(_("Your body shudders with the violent release "
+            "of wild energies!"), MSGCH_WARN);
 
         // For particularly violent releases, make a little boom.
         if (you.magic_contamination > 10000 && coinflip())

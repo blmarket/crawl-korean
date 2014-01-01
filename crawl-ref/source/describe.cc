@@ -2850,8 +2850,8 @@ static int _get_spell_description(const spell_type spell,
     // Report summon cap
     if (const int limit = summons_limit(spell))
     {
-        description += "You can sustain at most " + number_in_words(limit)
-                       + " creatures summoned by this spell.\n";
+        description += _("You can sustain at most ") + number_in_words(limit)
+                       + _(" creatures summoned by this spell.\n");
     }
 
     const bool rod = item && item->base_type == OBJ_RODS;
@@ -3179,7 +3179,7 @@ static string _monster_spells_description(const monster_info& mi)
     const bool caster = mons_class_flag(mi.type, M_ACTUAL_SPELLS);
     const bool priest = mons_class_flag(mi.type, M_PRIEST);
     const bool natural = mons_class_flag(mi.type, M_FAKE_SPELLS);
-    string adj = priest ? "divine" : natural ? "special" : "magical";
+    string adj = priest ? pgettext("descript","divine") : natural ? pgettext("descript","special") : pgettext("descript","magical");
 
     const monsterentry *m = get_monster_data(mi.type);
     mon_spellbook_type book = (m->sec);
@@ -3201,15 +3201,15 @@ static string _monster_spells_description(const monster_info& mi)
     // are not flagged with M_ACTUAL_SPELLS.  Possibly these should be
     // combined.
     if (caster && book == MST_NO_SPELLS)
-        result << " has mastered one of the following spellbooks:\n";
+        result << _(" has mastered one of the following spellbooks:\n");
     else if (caster)
-        result << " has mastered the following spells: ";
+        result << _(" has mastered the following spells: ");
     else if (book != MST_NO_SPELLS)
-        result << " possesses the following " << adj << " abilities: ";
+        result << _(" possesses the following ") << adj << _(" abilities: ");
     else
     {
-        result << " possesses one of the following sets of " << adj
-               << " abilities: \n";
+        result << _(" possesses one of the following sets of ") << adj
+               << _(" abilities: \n");
     }
 
     // Loop through books and display spells/abilities for each of them
@@ -3244,7 +3244,7 @@ static string _monster_spells_description(const monster_info& mi)
            const spell_type spell = book_spells[j];
            if (j > 0)
                result << ", ";
-           result << spell_title(spell);
+           result << _(spell_title(spell));
        }
        result << "\n";
     }

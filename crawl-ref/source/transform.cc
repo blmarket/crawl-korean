@@ -811,7 +811,7 @@ bool transform(int pow, transformation_type which_trans, bool involuntary,
         && (which_trans == TRAN_ICE_BEAST || which_trans == TRAN_STATUE))
     {
         if (!involuntary)
-            mpr("Your temperature is too high to benefit from that spell.");
+            mpr(_("Your temperature is too high to benefit from that spell."));
         return _abort_or_fizzle(just_check);
     }
 
