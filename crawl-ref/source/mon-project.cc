@@ -211,8 +211,8 @@ static bool _boulder_hit(monster& mon, const coord_def &pos)
     actor *victim = actor_at(pos);
     if (victim)
     {
-        simple_monster_message(&mon, (string(" smashes into ")
-                               + victim->name(DESC_THE) + "!").c_str());
+        simple_monster_message(&mon, (//string(_(" smashes into ")) +
+                                victim->name(DESC_THE) + pgettext("smashesinto","!")).c_str());
 
         int dam = victim->apply_ac(roll_dice(3, 20));
         if (victim->is_player())

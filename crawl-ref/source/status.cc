@@ -574,7 +574,7 @@ bool fill_status_info(int status, status_info* inf)
         break;
 
     case DUR_SONG_OF_SLAYING:
-        inf->light_text = make_stringf("Slay (%u)",
+        inf->light_text = make_stringf(_(M_("Slay (%u)")),
                                        you.props["song_of_slaying_bonus"].get_int());
         break;
 
@@ -627,23 +627,23 @@ bool fill_status_info(int status, status_info* inf)
         if (you.attribute[ATTR_XP_DRAIN] > 250)
         {
             inf->light_colour = RED;
-            inf->light_text   = "Drain";
-            inf->short_text   = "very heavily drained";
-            inf->long_text    = "Your life force is very heavily drained.";
+            inf->light_text   = _(M_("Drain"));
+            inf->short_text   = _("very heavily drained");
+            inf->long_text    = _("Your life force is very heavily drained.");
         }
         else if (you.attribute[ATTR_XP_DRAIN] > 100)
         {
             inf->light_colour = LIGHTRED;
-            inf->light_text   = "Drain";
-            inf->short_text   = "heavily drained";
-            inf->long_text    = "Your life force is heavily drained.";
+            inf->light_text   = _(M_("Drain"));
+            inf->short_text   = _("heavily drained");
+            inf->long_text    = _("Your life force is heavily drained.");
         }
         else if (you.attribute[ATTR_XP_DRAIN])
         {
             inf->light_colour = YELLOW;
-            inf->light_text   = "Drain";
-            inf->short_text   = "drained";
-            inf->long_text    = "Your life force is drained.";
+            inf->light_text   = _(M_("Drain"));
+            inf->short_text   = _("drained");
+            inf->long_text    = _("Your life force is drained.");
         }
         break;
 
@@ -651,7 +651,7 @@ bool fill_status_info(int status, status_info* inf)
         if (you.attribute[ATTR_SEARING_RAY])
         {
             inf->light_colour = WHITE;
-            inf->light_text   = "Ray";
+            inf->light_text   = _(M_("Ray"));
         }
         break;
 

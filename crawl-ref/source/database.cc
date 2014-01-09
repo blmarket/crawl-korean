@@ -71,7 +71,7 @@ static void _add_entry(DBM *db, const string &k, string &v);
 
 static TextDB AllDBs[] =
 {
-    TextDB("descriptions", "descript/ko/",
+    TextDB("descriptions", "descript/",
             "features.txt",
             "items.txt",
             "unident.txt",
@@ -86,7 +86,7 @@ static TextDB AllDBs[] =
             "commands.txt",
             NULL),
 
-    TextDB("gamestart", "descript/ko/",
+    TextDB("gamestart", "descript/",
             "species.txt",
             "backgrounds.txt",
             NULL),
@@ -132,7 +132,7 @@ static TextDB AllDBs[] =
             "FAQ.txt",      // database for Frequently Asked Questions
             NULL),
 
-    TextDB("hints", "descript/ko/",
+    TextDB("hints", "descript/",
             "hints.txt",    // hints mode
             "tutorial.txt", // tutorial mode
             NULL),

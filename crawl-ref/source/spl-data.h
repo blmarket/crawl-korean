@@ -3011,7 +3011,7 @@ struct spell_desc
 },
 
 {
-    SPELL_GHOSTLY_FLAMES, "Ghostly Flames",
+    SPELL_GHOSTLY_FLAMES, M_("Ghostly Flames"),
      SPTYP_CONJURATION | SPTYP_NECROMANCY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_UNHOLY,
      5,
@@ -3024,7 +3024,7 @@ struct spell_desc
 },
 
 {
-    SPELL_GHOSTLY_FIREBALL, "Ghostly Fireball",
+    SPELL_GHOSTLY_FIREBALL, M_("Ghostly Fireball"),
      SPTYP_CONJURATION | SPTYP_NECROMANCY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_UNHOLY,
      5,
@@ -3037,7 +3037,7 @@ struct spell_desc
 },
 
 {
-    SPELL_CALL_LOST_SOUL, "Call Lost Soul",
+    SPELL_CALL_LOST_SOUL, M_("Call Lost Soul"),
      SPTYP_SUMMONING | SPTYP_NECROMANCY,
      SPFLAG_UNHOLY | SPFLAG_BATTLE | SPFLAG_MONSTER,
      5,
@@ -3050,7 +3050,7 @@ struct spell_desc
 },
 
 {
-    SPELL_DIMENSION_ANCHOR, "Dimension Anchor",
+    SPELL_DIMENSION_ANCHOR, M_("Dimension Anchor"),
      SPTYP_TRANSLOCATION | SPTYP_HEXES,
      SPFLAG_DIR_OR_TARGET,
      4,
@@ -3063,7 +3063,7 @@ struct spell_desc
 },
 
 {
-    SPELL_BLINK_ALLIES_ENCIRCLE, "Blink Allies Encircling",
+    SPELL_BLINK_ALLIES_ENCIRCLE, M_("Blink Allies Encircling"),
      SPTYP_TRANSLOCATION,
      SPFLAG_AREA,
      6,
@@ -3076,7 +3076,7 @@ struct spell_desc
 },
 
 {
-    SPELL_AWAKEN_VINES, "Awaken Vines",
+    SPELL_AWAKEN_VINES, M_("Awaken Vines"),
      SPTYP_HEXES,
      SPFLAG_AREA | SPFLAG_MONSTER,
      6,
@@ -3089,7 +3089,7 @@ struct spell_desc
 },
 
 {
-    SPELL_CONTROL_WINDS, "Control Winds",
+    SPELL_CONTROL_WINDS, M_("Control Winds"),
      SPTYP_CHARMS | SPTYP_AIR,
      SPFLAG_AREA | SPFLAG_MONSTER,
      6,
@@ -3102,7 +3102,7 @@ struct spell_desc
 },
 
 {
-    SPELL_THORN_VOLLEY, "Volley of Thorns",
+    SPELL_THORN_VOLLEY, M_("Volley of Thorns"),
      SPTYP_CONJURATION | SPTYP_EARTH,
      SPFLAG_DIR_OR_TARGET,
      4,
@@ -3115,7 +3115,7 @@ struct spell_desc
 },
 
 {
-    SPELL_WALL_OF_BRAMBLES, "Wall of Brambles",
+    SPELL_WALL_OF_BRAMBLES, M_("Wall of Brambles"),
      SPTYP_CONJURATION | SPTYP_EARTH,
      SPFLAG_AREA | SPFLAG_MONSTER,
      5,
@@ -3128,7 +3128,7 @@ struct spell_desc
 },
 
 {
-    SPELL_WATERSTRIKE, "Waterstrike",
+    SPELL_WATERSTRIKE, M_("Waterstrike"),
      SPTYP_ICE,
      SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_BATTLE | SPFLAG_MONSTER,
      4,
@@ -3141,7 +3141,7 @@ struct spell_desc
 },
 
 {
-    SPELL_HASTE_PLANTS, "Haste Plants",
+    SPELL_HASTE_PLANTS, M_("Haste Plants"),
      SPTYP_CHARMS,
      SPFLAG_AREA | SPFLAG_HELPFUL,
      6,
@@ -3154,7 +3154,7 @@ struct spell_desc
 },
 
 {
-    SPELL_WIND_BLAST, "Wind Blast",
+    SPELL_WIND_BLAST, M_("Wind Blast"),
      SPTYP_AIR,
      SPFLAG_AREA,
      3,
@@ -3167,7 +3167,7 @@ struct spell_desc
 },
 
 {
-    SPELL_STRIP_RESISTANCE, "Strip Resistance",
+    SPELL_STRIP_RESISTANCE, M_("Strip Resistance"),
      SPTYP_HEXES,
      SPFLAG_DIR_OR_TARGET,
      5,
@@ -3180,7 +3180,7 @@ struct spell_desc
 },
 
 {
-    SPELL_INFUSION, "Infusion",
+    SPELL_INFUSION, M_("Infusion"),
      SPTYP_CHARMS,
      SPFLAG_BATTLE,
      1,
@@ -3193,7 +3193,7 @@ struct spell_desc
 },
 
 {
-    SPELL_SONG_OF_SLAYING, "Song of Slaying",
+    SPELL_SONG_OF_SLAYING, M_("Song of Slaying"),
      SPTYP_CHARMS,
      SPFLAG_BATTLE,
      2,
@@ -3206,7 +3206,7 @@ struct spell_desc
 },
 
 {
-    SPELL_SONG_OF_SHIELDING, "Song of Shielding",
+    SPELL_SONG_OF_SHIELDING, M_("Song of Shielding"),
      SPTYP_CHARMS,
      SPFLAG_BATTLE,
      4,
@@ -3219,7 +3219,7 @@ struct spell_desc
 },
 
 {
-    SPELL_SPECTRAL_WEAPON, "Spectral Weapon",
+    SPELL_SPECTRAL_WEAPON, M_("Spectral Weapon"),
      SPTYP_HEXES | SPTYP_CHARMS,
      SPFLAG_BATTLE,
      3,
@@ -3232,7 +3232,7 @@ struct spell_desc
 },
 
 {
-    SPELL_SUMMON_VERMIN, "Summon Vermin",
+    SPELL_SUMMON_VERMIN, M_("Summon Vermin"),
      SPTYP_SUMMONING,
      SPFLAG_MONSTER,
      5,
@@ -3245,7 +3245,7 @@ struct spell_desc
 },
 
 {
-    SPELL_MALIGN_OFFERING, "Malign Offering",
+    SPELL_MALIGN_OFFERING, M_("Malign Offering"),
      SPTYP_NECROMANCY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
      5,
@@ -3258,7 +3258,7 @@ struct spell_desc
 },
 
 {
-    SPELL_SEARING_RAY, "Searing Ray",
+    SPELL_SEARING_RAY, M_("Searing Ray"),
      SPTYP_CONJURATION,
      SPFLAG_DIR_OR_TARGET,
      2,
@@ -3271,7 +3271,7 @@ struct spell_desc
 },
 
 {
-    SPELL_DISCORD, "Discord",
+    SPELL_DISCORD, M_("Discord"),
      SPTYP_HEXES,
      SPFLAG_AREA | SPFLAG_HASTY,
      8,

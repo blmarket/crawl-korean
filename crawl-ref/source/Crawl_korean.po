@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-01 17:13+0900\n"
+"POT-Creation-Date: 2014-01-09 22:43+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -246,6 +246,7 @@ msgstr "수증기가 모여, 인간 모양 얼음의 결정을 이루었다."
 msgid ""
 "Quartz juts from the ground and forms a humanoid shape. You smell citrus."
 msgstr ""
+"Quartz juts from the ground and forms a humanoid shape. You smell citrus."
 
 #: abl-show.cc:559 abl-show.cc:559 abl-show.cc:556 abl-show.cc:569
 #: abl-show.cc:514 abl-show.cc:516 abl-show.cc:518 abl-show.cc:519
@@ -17356,6 +17357,18 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
 #: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533 godabil.cc:1530 godabil.cc:1531 godabil.cc:1534
 #: godabil.cc:1541 godabil.cc:1542 spl-clouds.cc:114 godabil.cc:1569
@@ -22482,6 +22495,18 @@ msgstr "%s은(는) 형형색색으로 빛나는 혼돈의 기운을 방출했다
 msgid "%s shrieks out in agony!"
 msgstr "%s에서 고통의 비명이 새어나왔다!"
 
+#. [dshaligram] Attempting to fix a distortion brand gets you a free
+#. distortion effect, and no permabranding. Sorry, them's the breaks.
+#. you can't get rid of distortion this easily
+#. [dshaligram] Attempting to fix a distortion brand gets you a free
+#. distortion effect, and no permabranding. Sorry, them's the breaks.
+#. you can't get rid of distortion this easily
+#. [dshaligram] Attempting to fix a distortion brand gets you a free
+#. distortion effect, and no permabranding. Sorry, them's the breaks.
+#. you can't get rid of distortion this easily
+#. [dshaligram] Attempting to fix a distortion brand gets you a free
+#. distortion effect, and no permabranding. Sorry, them's the breaks.
+#. you can't get rid of distortion this easily
 #. [dshaligram] Attempting to fix a distortion brand gets you a free
 #. distortion effect, and no permabranding. Sorry, them's the breaks.
 #. you can't get rid of distortion this easily
@@ -32744,6 +32769,14 @@ msgstr "마법 지팡이와 막대"
 #. ' '); (130601, �̺κп��� item drop�� ƨ��� ������ �ֽ��ϴ�. �ѱ��ǿ��� �ʿ������ ����)
 #. subtitle += string(strwidth(str) - strwidth(subtitle),
 #. ' '); (130601, �̺κп��� item drop�� ƨ��� ������ �ֽ��ϴ�. �ѱ��ǿ��� �ʿ������ ����)
+#. subtitle += string(strwidth(str) - strwidth(subtitle),
+#. ' '); (130601, �̺κп��� item drop�� ƨ��� ������ �ֽ��ϴ�. �ѱ��ǿ��� �ʿ������ ����)
+#. subtitle += string(strwidth(str) - strwidth(subtitle),
+#. ' '); (130601, �̺κп��� item drop�� ƨ��� ������ �ֽ��ϴ�. �ѱ��ǿ��� �ʿ������ ����)
+#. subtitle += string(strwidth(str) - strwidth(subtitle),
+#. ' '); (130601, �̺κп��� item drop�� ƨ��� ������ �ֽ��ϴ�. �ѱ��ǿ��� �ʿ������ ����)
+#. subtitle += string(strwidth(str) - strwidth(subtitle),
+#. ' '); (130601, �̺κп��� item drop�� ƨ��� ������ �ֽ��ϴ�. �ѱ��ǿ��� �ʿ������ ����)
 #: invent.cc:838 invent.cc:846 invent.cc:841 invent.cc:844 invent.cc:827
 #: invent.cc:826 invent.cc:832
 msgid "(select all with <w>"
@@ -35566,6 +35599,14 @@ msgstr "뽑았다"
 #. / 1. dealt or draw 2. card name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025 decks.cc:2965
 #: decks.cc:3032 decks.cc:1732 decks.cc:2966 decks.cc:3033 decks.cc:2960
@@ -35591,7 +35632,7 @@ msgstr "무언가 적대적인 존재가 근처에 있음이 느껴진다."
 #: delay.cc:674 delay.cc:676 delay.cc:677 delay.cc:652
 #, c-format
 msgid "You start bottling blood from %s."
-msgstr ""
+msgstr "%s(으)로부터 피를 뽑아내기 시작했다."
 
 #. / 1. 아이템 이름, 2. knife, claws, teeth, beak and talons, 혹은 아이템 이름 중 하나.
 #. 1. 아이템 이름, 2. knife, claws, teeth, beak and talons, 혹은 아이템 이름 중 하나.
@@ -38413,10 +38454,6 @@ msgstr "(_ 키: 도움말)"
 #: itemname.cc:2573
 msgid "You haven't found any runes yet."
 msgstr "당신은 아직 아무 룬도 찾지 못했다."
-
-#: output.cc:2171
-msgid "walk through water"
-msgstr ""
 
 #: describe.cc:838 describe.cc:832 describe.cc:826 describe.cc:825
 #: describe.cc:823 describe.cc:829
@@ -42552,7 +42589,7 @@ msgstr "%1$s은(는) 정신적인 공격을 받아, 고통에 몸부림쳤다.%2
 #: mon-abil.cc:1306 mon-abil.cc:1311 mon-abil.cc:1315
 #, c-format
 msgid "%s holy creatures are roused to righteous anger!"
-msgstr "성스러운 존재들이 찬송가로부터 기운을 얻었다!%1%.0s"
+msgstr "성스러운 존재들이 찬송가로부터 기운을 얻었다!%1$.0s"
 
 #: mon-abil.cc:1708 mon-abil.cc:1716 mon-abil.cc:1721 mon-abil.cc:1722
 #: mon-abil.cc:1719 mon-abil.cc:1739 mon-abil.cc:1763
@@ -45187,7 +45224,7 @@ msgstr "당신은 %s 위로 떠올랐다."
 #: player.cc:5536 player.cc:5547 player.cc:5545 player.cc:5556 player.cc:5561
 #: player.cc:5572 player.cc:5608 player.cc:5619 player.cc:5612 player.cc:5623
 msgid "You gasp with relief as air once again reaches your lungs."
-msgstr ""
+msgstr "다시 숨을 쉴 수 있게 되었다."
 
 #: player.cc:5545 player.cc:5554 player.cc:5570 player.cc:5617 player.cc:5621
 msgid "The water engulfing you falls away."
@@ -46364,7 +46401,7 @@ msgstr "당신은 독기를 내뿜기 시작했다."
 
 #: spl-damage.cc:2745
 msgid "Your toxic radiance grows in intensity."
-msgstr ""
+msgstr "당신의 독기가 더욱 강해졌다."
 
 #: spl-damage.cc:2787
 msgid " begins to radiate toxic energy."
@@ -46460,3 +46497,88 @@ msgstr "은(는) 다음과 같은 "
 #: describe.cc:3212
 msgid " abilities: \n"
 msgstr "능력들을 보유하고 있다: \n"
+
+#: status.cc:631
+msgid "very heavily drained"
+msgstr "심각한 능력치 저하"
+
+#: status.cc:632
+msgid "Your life force is very heavily drained."
+msgstr "음에너지에 의해, 당신의 능력은 심각하게 저하되었다."
+
+#: status.cc:638
+msgid "heavily drained"
+msgstr "상당한 능력치 저하"
+
+#: status.cc:639
+msgid "Your life force is heavily drained."
+msgstr "음에너지에 의해, 당신의 능력은 상당히 저하되었다."
+
+#: status.cc:645
+msgid "drained"
+msgstr "능력치 저하"
+
+#: status.cc:646
+msgid "Your life force is drained."
+msgstr "음에너지에 의해, 당신의 능력은 저하되었다."
+
+#: spl-damage.cc:1708
+msgctxt "ignite"
+msgid "You are standing "
+msgstr "당신"
+
+#: spl-damage.cc:1717
+msgctxt "ignite"
+msgid "in a cloud of "
+msgstr "은"
+
+#. (item.quantity == 1 ? " " : "") + (item.name(true, DESC_PLAIN));
+#: spl-damage.cc:1719 spl-damage.cc:1734 spl-damage.cc:1746 spl-damage.cc:1758
+#: spl-damage.cc:1767
+msgctxt "ignite"
+msgid "! Ignite poison anyway?"
+msgstr " 위에 서 있다! 그래도 '독의 연소'를 시전할 것인가?"
+
+#: spl-damage.cc:1732 spl-damage.cc:1744 spl-damage.cc:1756 spl-damage.cc:1765
+msgctxt "ignite"
+msgid "over "
+msgstr "은"
+
+#: main.cc:2963
+msgid "Your attacks are no longer magically infused."
+msgstr "당신의 공격에 부여된 마력이 사라졌다."
+
+#: main.cc:2965
+msgid "You are feeling less magically infused."
+msgstr "공격에 부여된 마력이 사라지는 것 같다."
+
+#: main.cc:2968
+msgid "Your song has ended."
+msgstr "노래가 끝났다."
+
+#: main.cc:2970
+msgid "Your song is almost over."
+msgstr "노래가 거의 끝나간다."
+
+#: main.cc:2973
+msgid "Your magic is no longer protecting you."
+msgstr "당신을 보호하는 마력이 사라졌다."
+
+#: main.cc:2975
+msgid "You are feeling less protected by your magic."
+msgstr "마력의 보호가 사라져감이 느껴졌다."
+
+#: chardump.cc:227
+#, c-format
+msgid "You %s overload with stuff.\n"
+msgstr "짐이 너무 무거워, 행동에 큰 방해가 되고 있다.%1$.0s \n"
+
+#: chardump.cc:230
+#, c-format
+msgid "You %s encumbered.\n"
+msgstr "짐이 무거워, 행동에 지장을 주고 있다.%1$.0s \n"
+
+#: mon-project.cc:215
+msgctxt "smashesinto"
+msgid "!"
+msgstr "이(가) 당신에게 몸통을 부딪혔다!"

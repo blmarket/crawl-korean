@@ -224,10 +224,10 @@ static void _sdump_burden(dump_params &par)
     switch (you.burden_state)
     {
     case BS_OVERLOADED:
-        par.text += make_stringf("You %s overload with stuff.\n", verb.c_str()); // "You " + verb + " overloaded with stuff.\n";
+        par.text += make_stringf(_("You %s overload with stuff.\n"), verb.c_str()); // "You " + verb + " overloaded with stuff.\n";
         break;
     case BS_ENCUMBERED:
-        par.text += make_stringf("You %s encumbered.\n", verb.c_str()); // "You " + verb + " encumbered.\n";
+        par.text += make_stringf(_("You %s encumbered.\n"), verb.c_str()); // "You " + verb + " encumbered.\n";
         break;
     default:
         break;

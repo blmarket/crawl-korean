@@ -2298,7 +2298,7 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
     if (!mon_name.find("the ")) // no "your the royal jelly" nor "the the RJ"
         mon_name.erase(0, 4);
     if (adj.find("your"))
-        adj = _(M_("the ")) + adj;
+        adj = "the " + adj;
     mon_name = adj + mon_name;
     string verb;
     if (beam_attack)

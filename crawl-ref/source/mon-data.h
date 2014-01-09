@@ -4980,7 +4980,7 @@ static monsterentry mondata[] = {
 
 // mimics
 {
-    MONS_INEPT_ITEM_MIMIC, 'X', BLACK, M_("inept item mimic"),
+    MONS_INEPT_ITEM_MIMIC, 'X', BLACK, "inept item mimic",
     M_NO_FLAGS,
     MR_NO_FLAGS,
     0, 10, MONS_ITEM_MIMIC, MONS_ITEM_MIMIC, MH_NONLIVING, -3,
@@ -4992,7 +4992,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_INEPT_FEATURE_MIMIC, 'X', BLACK, M_("inept feature mimic"),
+    MONS_INEPT_FEATURE_MIMIC, 'X', BLACK, "inept feature mimic",
     M_NO_FLAGS,
     MR_NO_FLAGS,
     0, 10, MONS_FEATURE_MIMIC, MONS_FEATURE_MIMIC, MH_NONLIVING, -3,
@@ -5004,7 +5004,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ITEM_MIMIC, 'X', BLACK, M_("item mimic"),
+    MONS_ITEM_MIMIC, 'X', BLACK, "item mimic",
     M_NO_FLAGS,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_ITEM_MIMIC, MONS_ITEM_MIMIC, MH_NONLIVING, -3,
@@ -5017,7 +5017,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FEATURE_MIMIC, 'X', BLACK, M_("feature mimic"),
+    MONS_FEATURE_MIMIC, 'X', BLACK, "feature mimic",
     M_NO_FLAGS,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_FEATURE_MIMIC, MONS_FEATURE_MIMIC, MH_NONLIVING, -3,
@@ -5970,7 +5970,7 @@ static monsterentry mondata[] = {
 },
 
 // non-human uniques
-// M_("A")ngels.
+// "A"ngels.
 {
     MONS_MENNAS, 'A', ETC_SILVER, M_("Mennas"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS
@@ -5985,7 +5985,7 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// M_("c")entaurs.
+// "c"entaurs.
 {
     MONS_NESSOS, 'c', MAGENTA, M_("Nessos"),
     M_UNIQUE | M_WARM_BLOOD | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SPEAKS,

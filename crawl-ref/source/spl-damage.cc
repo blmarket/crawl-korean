@@ -1705,7 +1705,7 @@ static bool maybe_abort_ignite() // 메모
     if (you.duration[DUR_FIRE_SHIELD] || you.mutation[MUT_IGNITE_BLOOD])
         return false;
 
-    string prompt = "You are standing ";
+    string prompt = pgettext("ignite","You are standing ");
 
     const int i = env.cgrid(you.pos());
     if (i != EMPTY_CLOUD)
@@ -1714,9 +1714,9 @@ static bool maybe_abort_ignite() // 메모
 
         if (cloud.type == CLOUD_MEPHITIC || cloud.type == CLOUD_POISON)
         {
-            prompt += "in a cloud of ";
-            prompt += cloud_type_name(cloud.type, true);
-            prompt += "! Ignite poison anyway?";
+            prompt += pgettext("ignite","in a cloud of ");
+            prompt += _(cloud_type_name(cloud.type, true).c_str());
+            prompt += pgettext("ignite","! Ignite poison anyway?");
             return (!yesno(prompt.c_str(), false, 'n'));
         }
     }
@@ -1729,9 +1729,9 @@ static bool maybe_abort_ignite() // 메모
 
         if (item.base_type == OBJ_MISSILES && item.special == SPMSL_POISONED)
         {
-            prompt += "over ";
-            prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
-            prompt += "! Ignite poison anyway?";
+            prompt += pgettext("ignite","over ");
+            prompt += item.name(true, DESC_PLAIN); //(item.quantity == 1 ? " " : "") + (item.name(true, DESC_PLAIN));
+            prompt += pgettext("ignite","! Ignite poison anyway?");
             return (!yesno(prompt.c_str(), false, 'n'));
         }
         else if (item.base_type == OBJ_POTIONS && item_type_known(item))
@@ -1741,9 +1741,9 @@ static bool maybe_abort_ignite() // 메모
             case POT_STRONG_POISON:
             case POT_DEGENERATION:
             case POT_POISON:
-                prompt += "over ";
-                prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
-                prompt += "! Ignite poison anyway?";
+                prompt += pgettext("ignite","over ");
+                prompt += item.name(true, DESC_PLAIN); //(item.quantity == 1 ? " " : "") + (item.name(true, DESC_PLAIN));
+                prompt += pgettext("ignite","! Ignite poison anyway?");
                 return (!yesno(prompt.c_str(), false, 'n'));
             default:
                 break;
@@ -1753,18 +1753,18 @@ static bool maybe_abort_ignite() // 메모
                  && item.sub_type == CORPSE_BODY
                  && chunk_is_poisonous(mons_corpse_effect(item.mon_type)))
         {
-            prompt += "over ";
-            prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
-            prompt += "! Ignite poison anyway?";
+            prompt += pgettext("ignite","over ");
+            prompt += item.name(true, DESC_PLAIN); //(item.quantity == 1 ? " " : "") + (item.name(true, DESC_PLAIN));
+            prompt += pgettext("ignite","! Ignite poison anyway?");
             return (!yesno(prompt.c_str(), false, 'n'));
         }
         else if (item.base_type == OBJ_FOOD &&
                  item.sub_type == FOOD_CHUNK &&
                  chunk_is_poisonous(mons_corpse_effect(item.mon_type)))
         {
-            prompt += "over ";
-            prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
-            prompt += "! Ignite poison anyway?";
+            prompt += pgettext("ignite","over ");
+            prompt += item.name(true, DESC_PLAIN); //(item.quantity == 1 ? " " : "") + (item.name(true, DESC_PLAIN));
+            prompt += pgettext("ignite","! Ignite poison anyway?");
             return (!yesno(prompt.c_str(), false, 'n'));
         }
     }

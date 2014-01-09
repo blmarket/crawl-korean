@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-01 17:13+0900\n"
+"POT-Creation-Date: 2014-01-09 22:43+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9481,17 +9481,6 @@ msgstr "의 시체"
 msgid "skeleton"
 msgstr "의 해골"
 
-#: itemname.cc:192 itemname.cc:219 itemname.cc:223 itemname.cc:223
-msgid "The "
-msgstr ""
-
-#: itemname.cc:193 itemname.cc:220 itemname.cc:224 itemname.cc:224
-#: misc.cc:2310 misc.cc:2338 misc.cc:2341 misc.cc:2336 misc.cc:2340
-#: misc.cc:2344 misc.cc:2345 misc.cc:2350 misc.cc:2354 misc.cc:2323
-#: misc.cc:2333 misc.cc:2301
-msgid "the "
-msgstr ""
-
 #: itemname.cc:194 itemname.cc:223 itemname.cc:227 itemname.cc:227
 #: item_use.cc:2505 item_use.cc:2506 item_use.cc:2504 item_use.cc:2503
 #: item_use.cc:2557 item_use.cc:2563 item_use.cc:2567 item_use.cc:2740
@@ -9510,22 +9499,6 @@ msgstr "당신의 "
 #: itemname.cc:196 itemname.cc:225 itemname.cc:229 itemname.cc:229
 msgid "its "
 msgstr "그것의 "
-
-#: itemname.cc:221 itemname.cc:225 itemname.cc:225
-msgid "An "
-msgstr ""
-
-#: itemname.cc:221 itemname.cc:225 itemname.cc:225
-msgid "A "
-msgstr ""
-
-#: itemname.cc:230 itemname.cc:234 itemname.cc:234 itemname.cc:233
-msgid "an "
-msgstr ""
-
-#: itemname.cc:230 itemname.cc:234 itemname.cc:234 itemname.cc:233
-msgid "a "
-msgstr ""
 
 #: mon-util.cc:3062 mon-util.cc:3068 mon-util.cc:3068 mon-util.cc:3102
 msgid "He"
@@ -9889,11 +9862,6 @@ msgstr "남쪽"
 #: traps.cc:512
 msgid "north"
 msgstr "북쪽"
-
-#: mon-abil.cc:911 mon-abil.cc:911 mon-abil.cc:1077 mon-abil.cc:1072
-#: mon-abil.cc:1220 mon-abil.cc:1225 mon-abil.cc:1229
-msgid "The"
-msgstr ""
 
 #: status.cc:30
 msgid "agile"
@@ -10562,7 +10530,7 @@ msgstr "붕괴"
 #: status.cc:924 status.cc:929 status.cc:930 status.cc:914 status.cc:954
 #: status.cc:963 status.cc:978 status.cc:1018
 msgid "Brainless"
-msgstr "질식"
+msgstr "파멸"
 
 #: status.cc:799 status.cc:800 status.cc:856 status.cc:920 status.cc:919
 #: status.cc:924 status.cc:929 status.cc:930 status.cc:914 status.cc:954
@@ -12284,10 +12252,6 @@ msgstr "독 저항"
 msgid "Alter Self"
 msgstr "변신"
 
-#: spl-data.h:1882
-msgid "Fragment what (e.g. a wall or monster)?"
-msgstr ""
-
 #: spl-data.h:2086 spl-data.h:2079 spl-data.h:1951 spl-data.h:1982
 #: spl-data.h:1984 spl-data.h:1981 spl-data.h:1969
 msgid "Vampire Summon"
@@ -12361,231 +12325,231 @@ msgstr "역병의 기운"
 #: spl-data.h:2268 spl-data.h:2261 spl-data.h:2133 spl-data.h:2165
 #: spl-data.h:2167 spl-data.h:2164 spl-data.h:2152
 msgid "Summon Drakes"
-msgstr ""
+msgstr "드레이크 소환"
 
 #: spl-data.h:2281 spl-data.h:2274 spl-data.h:2146 spl-data.h:2178
 #: spl-data.h:2180 spl-data.h:2177 spl-data.h:2165
 msgid "Blink Other"
-msgstr ""
+msgstr "타인 순간이동"
 
 #: spl-data.h:2294 spl-data.h:2287 spl-data.h:2159 spl-data.h:2191
 #: spl-data.h:2193 spl-data.h:2190 spl-data.h:2178
 msgid "Blink Other Close"
-msgstr ""
+msgstr "타인 순간 소집"
 
 #: spl-data.h:2307 spl-data.h:2300 spl-data.h:2172 spl-data.h:2204
 #: spl-data.h:2206 spl-data.h:2203 spl-data.h:2191
 msgid "Summon Mushrooms"
-msgstr ""
+msgstr "버섯 소환"
 
 #: spl-data.h:2320 spl-data.h:2313 spl-data.h:2185 spl-data.h:2217
 #: spl-data.h:2219 spl-data.h:2216
 msgid "Acid Splash"
-msgstr ""
+msgstr "산성액 폭발"
 
 #: spl-data.h:2334 spl-data.h:2327 spl-data.h:2199 spl-data.h:2231
 #: spl-data.h:2233 spl-data.h:2230 spl-data.h:2218
 msgid "Sticky Flame Range"
-msgstr ""
+msgstr "장거리 소각의 불꽃"
 
 #: spl-data.h:2347 spl-data.h:2340 spl-data.h:2212 spl-data.h:2244
 #: spl-data.h:2246 spl-data.h:2243 spl-data.h:2231
 msgid "Sticky Flame Splash"
-msgstr ""
+msgstr "소각의 불바다"
 
 #: spl-data.h:2360 spl-data.h:2353 spl-data.h:2225 spl-data.h:2257
 #: spl-data.h:2259 spl-data.h:2256 spl-data.h:2244
 msgid "Fire Breath"
-msgstr ""
+msgstr "화염 입김"
 
 #: spl-data.h:2373 spl-data.h:2366 spl-data.h:2238 spl-data.h:2283
 #: spl-data.h:2285 spl-data.h:2282 spl-data.h:2270
 msgid "Cold Breath"
-msgstr ""
+msgstr "냉기 입김"
 
 #: spl-data.h:2386 spl-data.h:2379 spl-data.h:2251 spl-data.h:2296
 #: spl-data.h:2298 spl-data.h:2295 spl-data.h:2283
 msgid "Draconian Breath"
-msgstr ""
+msgstr "드라코니언 입김"
 
 #: spl-data.h:2399 spl-data.h:2392 spl-data.h:2264 spl-data.h:2309
 #: spl-data.h:2311 spl-data.h:2308 spl-data.h:2296
 msgid "Summon Water Elementals"
-msgstr ""
+msgstr "물의 정령 소환"
 
 #: spl-data.h:2412 spl-data.h:2405 spl-data.h:2277 spl-data.h:2322
 #: spl-data.h:2324 spl-data.h:2321 spl-data.h:2309
 msgid "Porkalator"
-msgstr ""
+msgstr "돼지 변신"
 
 #: spl-data.h:2425 spl-data.h:2418 spl-data.h:2290 spl-data.h:2335
 #: spl-data.h:2337 spl-data.h:2334 spl-data.h:2322
 msgid "Spawn Tentacles"
-msgstr ""
+msgstr "촉수 소환"
 
 #: spl-data.h:2438 spl-data.h:2431 spl-data.h:2303 spl-data.h:2348
 #: spl-data.h:2350 spl-data.h:2347 spl-data.h:2335
 msgid "Tomb of Doroklohe"
-msgstr ""
+msgstr "도로크로헤의 무덤"
 
 #: spl-data.h:2451 spl-data.h:2444 spl-data.h:2316 spl-data.h:2361
 #: spl-data.h:2363 spl-data.h:2360 spl-data.h:2348
 msgid "Summon Eyeballs"
-msgstr ""
+msgstr "눈알 소환"
 
 #: spl-data.h:2464 spl-data.h:2457 spl-data.h:2329 spl-data.h:2374
 #: spl-data.h:2376 spl-data.h:2373 spl-data.h:2361
 msgid "Haste Other"
-msgstr ""
+msgstr "타인 가속"
 
 #: spl-data.h:2477 spl-data.h:2470 spl-data.h:2342 spl-data.h:2387
 #: spl-data.h:2389 spl-data.h:2386 spl-data.h:2374
 msgid "Summon Earth Elementals"
-msgstr ""
+msgstr "대지 정령 소환"
 
 #: spl-data.h:2490 spl-data.h:2483 spl-data.h:2355 spl-data.h:2400
 #: spl-data.h:2402 spl-data.h:2399 spl-data.h:2387
 msgid "Summon Air Elementals"
-msgstr ""
+msgstr "대기 정령 소환"
 
 #: spl-data.h:2503 spl-data.h:2496 spl-data.h:2368 spl-data.h:2413
 #: spl-data.h:2415 spl-data.h:2412 spl-data.h:2400
 msgid "Summon Fire Elementals"
-msgstr ""
+msgstr "불의 정령 소환"
 
 #: spl-data.h:2516 spl-data.h:2509 spl-data.h:2381 spl-data.h:2426
 #: spl-data.h:2428 spl-data.h:2425 spl-data.h:2413
 msgid "Summon Iron Elementals"
-msgstr ""
+msgstr "철의 정령 소환"
 
 #: spl-data.h:2529 spl-data.h:2522 spl-data.h:2394 spl-data.h:2439
 #: spl-data.h:2441 spl-data.h:2438 spl-data.h:2426
 msgid "Sleep"
-msgstr ""
+msgstr "수면"
 
 #: spl-data.h:2542 spl-data.h:2535 spl-data.h:2407 spl-data.h:2452
 #: spl-data.h:2454 spl-data.h:2451 spl-data.h:2439
 msgid "Mara Summon"
-msgstr ""
+msgstr "마라 소환"
 
 #: spl-data.h:2555 spl-data.h:2548 spl-data.h:2420 spl-data.h:2465
 #: spl-data.h:2467 spl-data.h:2464 spl-data.h:2453
 msgid "Summon Rakshasa"
-msgstr ""
+msgstr "락샤사 소환"
 
 #: spl-data.h:2568 spl-data.h:2561 spl-data.h:2433 spl-data.h:2478
 #: spl-data.h:2480 spl-data.h:2477 spl-data.h:2467
 msgid "Mislead"
-msgstr ""
+msgstr "환각"
 
 #: spl-data.h:2581 spl-data.h:2574 spl-data.h:2446 spl-data.h:2491
 #: spl-data.h:2493 spl-data.h:2490 spl-data.h:2480
 msgid "Summon Illusion"
-msgstr ""
+msgstr "환영 소환"
 
 #: spl-data.h:2594 spl-data.h:2587 spl-data.h:2459 spl-data.h:2504
 #: spl-data.h:2506 spl-data.h:2503 spl-data.h:2493
 msgid "Primal Wave"
-msgstr ""
+msgstr "프라이멀 웨이브"
 
 #: spl-data.h:2607 spl-data.h:2600 spl-data.h:2472 spl-data.h:2517
 #: spl-data.h:2519 spl-data.h:2516 spl-data.h:2506
 msgid "Call Tide"
-msgstr ""
+msgstr "파도 일으키기"
 
 #: spl-data.h:2633 spl-data.h:2626 spl-data.h:2498 spl-data.h:2543
 #: spl-data.h:2545 spl-data.h:2542 spl-data.h:2532
 msgid "Ink Cloud"
-msgstr ""
+msgstr "먹구름"
 
 #: spl-data.h:2646 spl-data.h:2639 spl-data.h:2511 spl-data.h:2556
 #: spl-data.h:2558 spl-data.h:2555 spl-data.h:2545
 msgid "Might"
-msgstr ""
+msgstr "근력 강화"
 
 #: spl-data.h:2659 spl-data.h:2652 spl-data.h:2524 spl-data.h:2582
 #: spl-data.h:2584 spl-data.h:2581 spl-data.h:2571
 msgid "Sunray"
-msgstr ""
+msgstr "햇빛"
 
 #: spl-data.h:2672 spl-data.h:2665 spl-data.h:2537 spl-data.h:2595
 #: spl-data.h:2597 spl-data.h:2594 spl-data.h:2584
 msgid "Awaken Forest"
-msgstr ""
+msgstr "나무 일으키기"
 
 #: spl-data.h:2685 spl-data.h:2678 spl-data.h:2550 spl-data.h:2608
 #: spl-data.h:2610 spl-data.h:2607
 msgid "Summon Caniforms"
-msgstr ""
+msgstr "견족 소환"
 
 #: spl-data.h:2724 spl-data.h:2717 spl-data.h:2589 spl-data.h:2647
 #: spl-data.h:2649 spl-data.h:2646 spl-data.h:2636
 msgid "Summon Spectral Orcs"
-msgstr ""
+msgstr "오크 혼령 소환"
 
 #: spl-data.h:2737 spl-data.h:2730 spl-data.h:2602 spl-data.h:2661
 #: spl-data.h:2663
 msgid "Resurrection"
-msgstr ""
+msgstr "부활"
 
 #: spl-data.h:2750
 msgid "Light Beam"
-msgstr ""
+msgstr "빛줄기"
 
 #: spl-data.h:2763 spl-data.h:2756 spl-data.h:2628
 msgid "Summon Holies"
-msgstr ""
+msgstr "성스러운 존재 소환"
 
 #: spl-data.h:2776 spl-data.h:2769 spl-data.h:2642
 msgid "Summon Greater Holy"
-msgstr ""
+msgstr "거룩한 존재 소환"
 
 #: spl-data.h:2789 spl-data.h:2782 spl-data.h:2656
 msgid "Holy Word"
-msgstr ""
+msgstr "성스러운 언어"
 
 #: spl-data.h:2802 spl-data.h:2795 spl-data.h:2669 spl-data.h:2688
 #: spl-data.h:2690 spl-data.h:2675 spl-data.h:2672 spl-data.h:2662
 msgid "Heal Other"
-msgstr ""
+msgstr "타인 회복"
 
 #: spl-data.h:2815 spl-data.h:2808 spl-data.h:2682
 msgid "Sacrifice"
-msgstr ""
+msgstr "희생"
 
 #: spl-data.h:2828 spl-data.h:2821 spl-data.h:2695 spl-data.h:2701
 #: spl-data.h:2703 spl-data.h:2688 spl-data.h:2685 spl-data.h:2675
 msgid "Holy Flames"
-msgstr ""
+msgstr "성스러운 불꽃"
 
 #: spl-data.h:2841 spl-data.h:2834 spl-data.h:2708 spl-data.h:2714
 #: spl-data.h:2716 spl-data.h:2701 spl-data.h:2698 spl-data.h:2688
 msgid "Holy Breath"
-msgstr ""
+msgstr "성스러운 입김"
 
 #: spl-data.h:2854 spl-data.h:2847 spl-data.h:2721 spl-data.h:2727
 #: spl-data.h:2729 spl-data.h:2714 spl-data.h:2711
 msgid "Mirror Damage"
-msgstr ""
+msgstr "피해 반사"
 
 #: spl-data.h:2919 spl-data.h:2912 spl-data.h:2786 spl-data.h:2792
 #: spl-data.h:2794 spl-data.h:2779 spl-data.h:2776 spl-data.h:2766
 msgid "Mesmerise"
-msgstr ""
+msgstr "유혹"
 
 #: spl-data.h:2932 spl-data.h:2925 spl-data.h:2799 spl-data.h:2805
 #: spl-data.h:2807 spl-data.h:2792 spl-data.h:2789
 msgid "melee"
-msgstr ""
+msgstr "근접 공격"
 
 #: spl-data.h:2945 spl-data.h:2938 spl-data.h:2812 spl-data.h:2818
 #: spl-data.h:2820 spl-data.h:2805 spl-data.h:2802 spl-data.h:2792
 msgid "Fire Summon"
-msgstr ""
+msgstr "불꽃 소환"
 
 #: spl-data.h:2997 spl-data.h:3016 spl-data.h:2916
 msgid "nonexistent spell"
-msgstr ""
+msgstr "존재하지 않는 주문"
 
 #: effects.cc:278 effects.cc:278 spl-data.h:1511 effects.cc:279
 #: spl-data.h:1513 effects.cc:260 spl-data.h:1402 spl-data.h:1417
@@ -13688,6 +13652,14 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -13844,13 +13816,6 @@ msgstr "해방된 노예"
 
 msgid "Freed slave"
 msgstr "해방된 노예"
-
-# (deceit, 110914) 실수로 M_()을 친 부분. 해석하지 말것
-#. You mean, you wanted this... guaranteed?
-#. but the eruption _is_ guaranteed.  What it will do is not.
-#: item_use.cc:4516
-msgid "chaos eruption"
-msgstr ""
 
 #. sentinel values
 #: branch-data.h:22 branch-data.h:21
@@ -14475,7 +14440,7 @@ msgstr "거미 둥지로 통하는 구멍"
 #: directn.cc:3107 directn.cc:3073 directn.cc:3092 directn.cc:3093
 #: directn.cc:3094 directn.cc:3099 directn.cc:3110
 msgid "staircase to the Enchanted Forest"
-msgstr "Enchanted Forest로 통하는 계단"
+msgstr "마법의 숲으로 통하는 계단"
 
 #: directn.cc:3113 directn.cc:3079 directn.cc:3098 directn.cc:3099
 #: directn.cc:3100 directn.cc:3105 directn.cc:3116
@@ -14490,7 +14455,7 @@ msgstr "짐승 소굴로 돌아가는 구멍"
 #: itemname.cc:525 itemname.cc:474 itemname.cc:487 itemname.cc:489
 #: itemname.cc:521 itemname.cc:526 itemname.cc:524 itemname.cc:528
 msgid "speedy slithering"
-msgstr ""
+msgstr "고속"
 
 #: itemname.cc:662 itemname.cc:611 itemname.cc:620 itemname.cc:622
 #: itemname.cc:654 itemname.cc:658 itemname.cc:659 itemname.cc:657
@@ -14544,47 +14509,47 @@ msgstr "야수화"
 
 #: xom.cc:1284 xom.cc:1191 xom.cc:1121 xom.cc:1193 xom.cc:1192
 msgid "(curing)"
-msgstr ""
+msgstr "(회복)"
 
 #: xom.cc:1285 xom.cc:1192 xom.cc:1122 xom.cc:1194 xom.cc:1193
 msgid "(heal wounds)"
-msgstr ""
+msgstr "(상처 치료)"
 
 #: xom.cc:1286 xom.cc:1193 xom.cc:1123 xom.cc:1195 xom.cc:1194
 msgid "(magic)"
-msgstr ""
+msgstr "(마력)"
 
 #: xom.cc:1287 xom.cc:1194 xom.cc:1124 xom.cc:1196 xom.cc:1195
 msgid "(speed)"
-msgstr ""
+msgstr "(가속)"
 
 #: xom.cc:1288 xom.cc:1195 xom.cc:1125 xom.cc:1197 xom.cc:1196
 msgid "(might)"
-msgstr ""
+msgstr "(힘 강화)"
 
 #: xom.cc:1289 xom.cc:1196 xom.cc:1126 xom.cc:1198 xom.cc:1197
 msgid "(agility)"
-msgstr ""
+msgstr "(민첩 강화)"
 
 #: xom.cc:1290 xom.cc:1197 xom.cc:1127 xom.cc:1199 xom.cc:1198
 msgid "(brilliance)"
-msgstr ""
+msgstr "(지능 강화)"
 
 #: xom.cc:1291 xom.cc:1198 xom.cc:1128 xom.cc:1200 xom.cc:1199
 msgid "(invisibility)"
-msgstr ""
+msgstr "(투명)"
 
 #: xom.cc:1292 xom.cc:1199 xom.cc:1129 xom.cc:1201 xom.cc:1200
 msgid "(berserk)"
-msgstr ""
+msgstr "(광폭화)"
 
 #: xom.cc:1293 xom.cc:1200 xom.cc:1130 xom.cc:1202 xom.cc:1201
 msgid "(experience)"
-msgstr ""
+msgstr "(경험)"
 
 #: xom.cc:1294 xom.cc:1201 xom.cc:1131 xom.cc:1203 xom.cc:1202
 msgid "(other)"
-msgstr ""
+msgstr "(기타)"
 
 #: mon-data.h:904 mon-data.h:869 mon-data.h:871 mon-data.h:895 mon-data.h:907
 #: mon-data.h:909
@@ -14607,18 +14572,6 @@ msgstr "타락한 천사"
 #: mon-data.h:3375 mon-data.h:3308
 msgid "tengu"
 msgstr "텐구"
-
-#: mon-data.h:4446 mon-data.h:4520 mon-data.h:4725 mon-data.h:4761
-#: mon-data.h:4757 mon-data.h:4747 mon-data.h:4912 mon-data.h:4885
-#: mon-data.h:5060 mon-data.h:5007
-msgid "item mimic"
-msgstr ""
-
-#: mon-data.h:4459 mon-data.h:4533 mon-data.h:4738 mon-data.h:4774
-#: mon-data.h:4770 mon-data.h:4760 mon-data.h:4925 mon-data.h:4898
-#: mon-data.h:5073 mon-data.h:5020
-msgid "feature mimic"
-msgstr ""
 
 #: mon-data.h:4519 mon-data.h:4632 mon-data.h:4839 mon-data.h:4875
 #: mon-data.h:4871 mon-data.h:4861 mon-data.h:5026 mon-data.h:4999
@@ -14675,7 +14628,7 @@ msgstr "희박한 먼지"
 
 #: decks.cc:350 decks.cc:353
 msgid "the Mercenary"
-msgstr ""
+msgstr "용병"
 
 #: directn.cc:2909 directn.cc:2925 directn.cc:2926 directn.cc:2927
 #: directn.cc:2932 directn.cc:2936
@@ -14695,7 +14648,7 @@ msgstr "용암 건너편"
 #: directn.cc:2967 directn.cc:2984 directn.cc:2985 directn.cc:2986
 #: directn.cc:2991 directn.cc:2996
 msgid "mangrove"
-msgstr ""
+msgstr "열대 나무"
 
 #: directn.cc:2976 directn.cc:2993 directn.cc:2994 directn.cc:2995
 #: directn.cc:3000 directn.cc:3005
@@ -14719,7 +14672,7 @@ msgstr "지면"
 
 #: directn.cc:3005 directn.cc:3022
 msgid "teleporter"
-msgstr ""
+msgstr "순간이동 장치"
 
 #: directn.cc:3033 directn.cc:3052 directn.cc:3053 directn.cc:3054
 #: directn.cc:3059 directn.cc:3068
@@ -14746,12 +14699,6 @@ msgstr "탐지된 상점/관문"
 msgid "a scroll of immolation"
 msgstr "희생의 두루마리"
 
-# msgid "a fiery explosion"
-# msgstr ""
-# msgid "an exploding Tome of Destruction"
-# msgstr ""
-# msgid "fiery explosion"
-# msgstr ""
 #: effects.cc:364 effects.cc:368 effects.cc:378 food.cc:1817 food.cc:1818
 #: food.cc:1916 food.cc:1919 food.cc:1926 food.cc:1928 food.cc:1882
 #: food.cc:1885 food.cc:1907 food.cc:1918 food.cc:1898
@@ -14789,7 +14736,7 @@ msgstr "환영"
 #: mon-info.cc:935 mon-info.cc:950 mon-info.cc:964 mon-info.cc:978
 #: mon-info.cc:1030 mon-info.cc:1031
 msgid "shaped pillar of salt"
-msgstr ""
+msgstr "조각된 소금 기둥"
 
 #. / GREY_DRACONIAN 종족의 색깔.
 #: mutation.cc:457 mutation.cc:461 mutation.cc:447
@@ -14829,18 +14776,6 @@ msgstr "작은 뱀"
 #: mon-data.h:3977
 msgid "adder"
 msgstr "뱀"
-
-#: mon-data.h:4496 mon-data.h:4701 mon-data.h:4737 mon-data.h:4733
-#: mon-data.h:4723 mon-data.h:4888 mon-data.h:4861 mon-data.h:5036
-#: mon-data.h:4983
-msgid "inept item mimic"
-msgstr ""
-
-#: mon-data.h:4508 mon-data.h:4713 mon-data.h:4749 mon-data.h:4745
-#: mon-data.h:4735 mon-data.h:4900 mon-data.h:4873 mon-data.h:5048
-#: mon-data.h:4995
-msgid "inept feature mimic"
-msgstr ""
 
 #: mon-data.h:5054 mon-data.h:5260 mon-data.h:5296 mon-data.h:5292
 #: mon-data.h:5282 mon-data.h:5447 mon-data.h:5420 mon-data.h:5595
@@ -20129,12 +20064,12 @@ msgstr "작열하는 냉기의 숨결"
 #: mon-stuff.cc:1175 mon-stuff.cc:1176 mon-stuff.cc:1190 mon-stuff.cc:1203
 #: mon-stuff.cc:1205
 msgid "set off by themself"
-msgstr ""
+msgstr "이(가) 스스로 일으킨 폭발"
 
 #: mon-stuff.cc:1177 mon-stuff.cc:1178 mon-stuff.cc:1192 mon-stuff.cc:1205
 #: mon-stuff.cc:1207
 msgid "set off by their pet"
-msgstr ""
+msgstr "의 소환물이 스스로 일으킨 폭발"
 
 #: spl-damage.cc:196 spl-damage.cc:197 spl-damage.cc:200
 msgid "chain lightning"
@@ -20244,15 +20179,15 @@ msgstr "액체 위로 부유"
 
 #: status.cc:576 status.cc:585 status.cc:600 status.cc:608
 msgid "Engulf"
-msgstr "빠짐"
+msgstr "질식"
 
 #: status.cc:579 status.cc:588 status.cc:603 status.cc:611
 msgid "engulfed"
-msgstr "빠짐"
+msgstr "질식"
 
 #: status.cc:588 status.cc:597 status.cc:612 status.cc:620
 msgid "engulfed (cannot breathe)"
-msgstr "빠짐 (호흡 불가)"
+msgstr "질식 (호흡 불가)"
 
 #: mon-data.h:377 mon-data.h:389
 msgid "faun"
@@ -20368,7 +20303,7 @@ msgstr "노래 중지"
 
 #: itemname.cc:966 itemname.cc:969
 msgid "sack of spiders"
-msgstr ""
+msgstr "거미 주머니"
 
 #: itemname.cc:1028 itemname.cc:1031
 msgid "Battle"
@@ -20594,3 +20529,100 @@ msgstr "근접 공격"
 #: directn.cc:3510
 msgid "expiring"
 msgstr "곧 소환이 만료됨"
+
+#: status.cc:630 status.cc:637 status.cc:644
+msgid "Drain"
+msgstr "저하"
+
+#: status.cc:654
+msgid "Ray"
+msgstr "광채"
+
+#: spl-data.h:3014
+msgid "Ghostly Flames"
+msgstr "혼령의 불꽃"
+
+#: spl-data.h:3027
+msgid "Ghostly Fireball"
+msgstr "혼령의 화염구"
+
+#: spl-data.h:3040
+msgid "Call Lost Soul"
+msgstr "잃어버린 영혼 소집"
+
+#: spl-data.h:3053
+msgid "Dimension Anchor"
+msgstr "차원 고정"
+
+#: spl-data.h:3066
+msgid "Blink Allies Encircling"
+msgstr "순간 동료 소집"
+
+#: spl-data.h:3079
+msgid "Awaken Vines"
+msgstr "줄기 일으키기"
+
+#: spl-data.h:3092
+msgid "Control Winds"
+msgstr "바람 조종"
+
+#: spl-data.h:3105
+msgid "Volley of Thorns"
+msgstr "가시 사격"
+
+#: spl-data.h:3118
+msgid "Wall of Brambles"
+msgstr "덩굴벽"
+
+#: spl-data.h:3131
+msgid "Waterstrike"
+msgstr "물대포"
+
+#: spl-data.h:3144
+msgid "Haste Plants"
+msgstr "성장 촉진"
+
+#: spl-data.h:3157
+msgid "Wind Blast"
+msgstr "돌풍"
+
+#: spl-data.h:3170
+msgid "Strip Resistance"
+msgstr "벗기기 저항"
+
+#: spl-data.h:3183
+msgid "Infusion"
+msgstr "인퓨전"
+
+#: spl-data.h:3196
+msgid "Song of Slaying"
+msgstr "살육의 노래"
+
+#: spl-data.h:3209
+msgid "Song of Shielding"
+msgstr "차폐의 노래"
+
+#: spl-data.h:3222
+msgid "Spectral Weapon"
+msgstr "혼령 무기"
+
+#: spl-data.h:3235
+msgid "Summon Vermin"
+msgstr "해충 소환"
+
+#: spl-data.h:3248
+msgid "Malign Offering"
+msgstr "이계의 개입"
+
+#: spl-data.h:3261
+msgid "Searing Ray"
+msgstr "타오르는 광선"
+
+#: spl-data.h:3274
+msgid "Discord"
+msgstr "불협화음"
+
+#: status.cc:577
+#, c-format
+msgid "Slay (%u)"
+msgstr "살육 (%u)"

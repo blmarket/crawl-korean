@@ -917,13 +917,13 @@ void hints_monster_seen(const monster& mon)
             "몬스터 위로 마우스를 올리면 됩니다. 좀 더 자세하면서도 보기 편한 몬스터의 정보를 보려면 "
             "몬스터를 <w>마우스 우클릭</w>하시면 됩니다.";
     }
-    else
+    else // Tile이 아닌 Console에서만 나오는 힌트 메시지이므로,번역이 필요하지 않음. (아스키로 돌죽하는 사람한테 힌트모드가 필요할리가 -_-;;;)
     {
         text +=
             glyph_to_tagstr(get_mons_glyph(mi)) +
             " is a monster, usually depicted by a letter. Some typical "
             "early monsters look like <brown>r</brown>, <green>l</green>, "
-            "<brown>K</brown> or <lightgrey>g</lightgrey>. ";
+            "<brown>K</brown> or <lightgrey>g</lightgrey>. "; 
         if (crawl_view.mlistsz.y > 0)
         {
             text += "Your console settings allowing, you'll always see a "
