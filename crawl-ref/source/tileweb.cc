@@ -797,16 +797,16 @@ void TilesFramework::_send_item(item_info& current, const item_info& next,
     // Derived stuff
     if (changed)
     {
-        string name = next.name(DESC_A, true, false, true);
-        if (force_full || current.name(DESC_A, true, false, true) != name)
+        string name = next.name(true, DESC_A, true, false, true);
+        if (force_full || current.name(true, DESC_A, true, false, true) != name)
         {
             json_write_string("name", name);
 
             const string current_prefix = item_prefix(current);
             const string prefix = item_prefix(next);
 
-            const int current_prefcol = menu_colour(current.name(DESC_INVENTORY), current_prefix);
-            const int prefcol = menu_colour(next.name(DESC_INVENTORY), prefix);
+            const int current_prefcol = menu_colour(current.name(false, DESC_INVENTORY), current_prefix);
+            const int prefcol = menu_colour(next.name(false, DESC_INVENTORY), prefix);
             if (current_prefcol != prefcol)
                 json_write_int("col", prefcol);
         }
